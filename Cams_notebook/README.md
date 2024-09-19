@@ -1,3 +1,3 @@
 Table oc contents
 
- - [./vuejs.md](vue.js)
+ - [vue.js](./vuejs.md)
