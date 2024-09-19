@@ -1,13 +1,3 @@
----
-id: 1726751266-IUBB
-aliases:
-  - Vue
-tags:
-  - javascript
-  - frameworks
-  - vue
----
-
 # Vue
 
 This is a collection of the information I have gathered on [vue.js](vuejs.org)
