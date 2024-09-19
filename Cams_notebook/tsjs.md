@@ -1,12 +1,3 @@
----
-id: 1726784240-YMSF
-aliases:
-  - TypeScript
-tags:
-  - javascript
-  - typescript
----
-
 # TypeScript
 
 Typescript is Javascript with extra steps, but those steps make JS better for bigger projects
