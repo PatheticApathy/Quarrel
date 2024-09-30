@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shit website</title>
+</head>
+
+<body>
+
+  <p id="name"></p>
+  <p id="password"></p>
+
+  <script>
+    window
+      .fetch('http://127.0.0.1:8000')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error, make sure server is on')
+        }
+        return response.json()
+      })
+      .then((user) => {
+        document.getElementById("name").innerHTML = user.name;
+        document.getElementById("password").innerHTML = user.password;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  </script>
+</body>
+
+</html>
