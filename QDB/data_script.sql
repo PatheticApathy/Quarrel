@@ -1,51 +1,65 @@
-INSERT INTO User (Name,Username,Password,Follow_count) 
-VALUES 
-("Alice","Adog","1234",0),
-("Bob","Beware",5678,0),
-("Clancy","Coll guy6","9012",3),
-("Dane","Dman","deez_nutz",1);
+-- Insert Users
+INSERT INTO User (Name, Username, Password, Follow_count) VALUES
+('Alice Smith', 'alice123', 'password1', 10),
+('Bob Johnson', 'bobthebuilder', 'password2', 5),
+('Charlie Brown', 'charlie.b', 'password3', 15),
+('Diana Prince', 'wonderwoman', 'password4', 20),
+('Evan Harris', 'evan_h', 'password5', 8);
 
+-- Insert Followers
+INSERT INTO Follower (Follows, Influencer) VALUES
+(1, 2),  -- Alice follows Bob
+(1, 3),  -- Alice follows Charlie
+(2, 1),  -- Bob follows Alice
+(3, 1),  -- Charlie follows Alice
+(4, 2),  -- Diana follows Bob
+(5, 3);  -- Evan follows Charlie
 
-# Clancy(3) should have 2 followers. Dane(1) should have 1 follower 
-INSERT INTO Follower (Follows,Influencer)
-VALUES
-(1,3),
-(2,3),
-(1,4);
+-- Insert Arguments
+INSERT INTO Arguments (Comment, Likes, Views, Hyperlink, Poster, T1_votes, T2_votes) VALUES
+('Lua is the best programming language?', 5, 100, 'http://example.com', 1, 10, 5),
+('Is pineapple on pizza a crime?', 10, 150, NULL, 2, 20, 2),
+('Can AI surpass human intelligence?', 8, 200, 'http://example.com/ai', 3, 15, 10);
 
-INSERT INTO Arguments (Comment,Likes,Views,Hyperlink,Poster,T1_votes,T2_votes)
-VALUES
-("Dogs are better than cats",1,4,NULL,1,2,2),
-("We should burn all buildings",4,0,"https://imgs.search.brave.com/1yTp7pArHlHtkfbRbm1bAD6p23Jwn0G1F_73GWrGNh8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTU3/Mzc1OTc0L3Bob3Rv/L2J1cm5pbmctaG91/c2UtdXBwZXItZmxv/b3ItYW5kLWFuZC1h/c2NlbmRpbmctYmxh/Y2stc21va2UuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPWUt/R0hrT29ua3pUeVdC/STJPeW1PN05mdTlL/UGNrVjVkWjZyOVJK/ckNUNmM9",4,0,0);
+-- Insert Posts
+INSERT INTO Post (Comment, Likes, Views, Poster, Hyperlink) VALUES
+('I love programming!', 15, 250, 1, NULL),
+('Pizza is life!', 20, 300, 2, NULL),
+('AI is the future.', 25, 400, 3, 'http://example.com/ai-future');
 
+-- Insert Replies
+INSERT INTO Replies (Comment, Likes, Views, Poster) VALUES
+('Absolutely agree!', 3, 30, 2),
+('I think Python is the best.', 5, 50, 3),
+('That’s a hot take!', 4, 40, 4);
 
-INSERT INTO Post (Comment,Likes,Views,Hyperlink,Poster)
-VALUES
-("Bob sucks",2,2,NULL,1),
-("Eat dirt",0,0,NULL,1);
+-- Insert Replies to Arguments
+INSERT INTO Replies_to_args (reply, arg) VALUES
+(1, 1),
+(2, 2),
+(3, 1);
 
-INSERT INTO Replies (Comment,Likes,Views,Poster,arg_reply,post_reply)
-VALUES
-("I like cheese",2,1,1,2,1),
-("I dont like cheese",0,1,2,1,1);
+-- Insert Replies to Posts
+INSERT INTO Replies_to_post (reply, post) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
 
-INSERT INTO Arg_tags(arg,tag)
-VALUES
-(2,"anarchy"),
-(2,"Burn baybe burn"),
-(1,"Pets");
-INSERT INTO Post_tags(post,tag)
-VALUES
-(1,"hate"),
-(2,"dirt"),
-(1,"bob");
+-- Insert Categories
+INSERT INTO Categories (Category, tag) VALUES
+('Technology', 'tech'),
+('Food', 'food'),
+('Health', 'health');
 
-INSERT INTO Categories(Category,tag)
-VALUES
-("Communism","anarchy"),
-("Pyro","Burn bayby burn"),
-("animals","pets"),
-("Plants","dirt"),
-("Celebrities","bob"),
-("Communism","hate");
+-- Insert Arg_tags
+INSERT INTO Arg_tags (arg, tag) VALUES
+(1, 'programming'),
+(2, 'food'),
+(3, 'AI');
+
+-- Insert Post_tags
+INSERT INTO Post_tags (post, tag) VALUES
+(1, 'programming'),
+(2, 'food'),
+(3, 'AI');
 

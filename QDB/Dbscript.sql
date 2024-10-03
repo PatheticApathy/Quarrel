@@ -12,8 +12,10 @@ CREATE TABLE IF NOT EXISTS User (
 );
 
 CREATE TABLE IF NOT EXISTS Follower (
+  FR int NOT NULL AUTO_INCREMENT,
   Follows int,
   Influencer int,
+  PRIMARY KEY(FR),
   FOREIGN KEY(Follows) REFERENCES User(UID),
   FOREIGN KEY(Influencer) REFERENCES User(UID)
 );
@@ -52,33 +54,46 @@ CREATE TABLE IF NOT EXISTS Replies (
   FOREIGN KEY(Poster) REFERENCES User(UID)
 );
 
+CREATE TABLE IF NOT EXISTS Replies_to_args(
+  ARID int NOT NULL AUTO_INCREMENT,
+  reply int,
+  arg int,
+  PRIMARY KEY(ARID),
+  FOREIGN KEY(reply) REFERENCES Replies(RID),
+  FOREIGN KEY(arg) REFERENCES Arguments(AID)
+);
+
+CREATE TABLE IF NOT EXISTS Replies_to_post(
+  PRID int NOT NULL AUTO_INCREMENT,
+  reply int,
+  post int,
+  PRIMARY KEY(PRID),
+  FOREIGN KEY(reply) REFERENCES Replies(RID),
+  FOREIGN KEY(post) REFERENCES Post(PID)
+);
+
 CREATE TABLE IF NOT EXISTS Categories (
+  CTID int NOT NULL AUTO_INCREMENT,
   Category varchar(50),
-  tag varchar(20)
+  tag varchar(20),
+  PRIMARY KEY(CTID)
 );
 
 CREATE TABLE IF NOT EXISTS Arg_tags (
+  ATID int NOT NULL AUTO_INCREMENT,
   arg int,
   tag varchar(20),
+  PRIMARY KEY(ATID),
   FOREIGN KEY(arg) REFERENCES Arguments(AID)
 );
 
 CREATE TABLE IF NOT EXISTS Post_tags (
+  PTID int NOT NULL AUTO_INCREMENT,
   post int,
   tag varchar(20),
+  PRIMARY KEY(PTID),
   FOREIGN KEY(post) REFERENCES Post(PID)
 );
-
-ALTER TABLE Replies
-ADD column arg_reply int,
-ADD CONSTRAINT arg_reply
-FOREIGN KEY(arg_reply) REFERENCES Arguments(AID);
-
-ALTER TABLE Replies
-ADD column post_reply int,
-ADD CONSTRAINT post_reply
-FOREIGN KEY(post_reply) REFERENCES Post(PID);
-
 
 FLUSH PRIVILEGES;
 CREATE USER 'qapi'@'localhost' IDENTIFIED BY 'ARGS';
