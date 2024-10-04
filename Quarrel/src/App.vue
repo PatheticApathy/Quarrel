@@ -86,6 +86,10 @@ import HelloWorld from './components/HelloWorld.vue'
       </nav>
     </div>
 
+    <div class="post">
+      <RouterLink to="/compose/post">
+    </div>
+
   </header>
 
   <RouterView />
@@ -122,6 +126,17 @@ nav a {
   font-size: 3rem;
   text-align: left;
   color: navy;
+}
+
+.post {
+  background-color: violet;
+  display: circle;
+}
+
+.postButton {
+  background-color: violet;
+  border-color: violet;
+  display: ;
 }
 
 .leftNavBarNav {
