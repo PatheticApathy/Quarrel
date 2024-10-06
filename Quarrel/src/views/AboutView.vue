@@ -1,7 +1,12 @@
+<script setup lang="ts">
+import Navbar from './NavBarView.vue'
+</script>
+
 <template>
   <div class="about">
     <h1>This is an about page</h1>
   </div>
+  <Navbar />
 </template>
 
 <style>

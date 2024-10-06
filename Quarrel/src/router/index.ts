@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'navbar',
-      component: () => import('../views/NavBar.vue')
+      component: () => import('../views/NavBarView.vue')
     },
     {
       path: '/home',
