@@ -6,90 +6,6 @@ import HelloWorld from './components/HelloWorld.vue'
 <template>
   <header>
 
-    <div class="logo">
-      <span class="logospan">Quarrel</span>
-    </div>
-    
-    <div class="leftNavBarDiv1">
-      <nav class="leftNavBarNav" aria-label="Primary" role="Navigation">
-        <RouterLink to="/">
-          <div class="leftNavBarDiv2">
-            <div class="leftNavBarDiv3">
-              <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="placeholder"></path>
-                </g>
-              </svg>
-            </div>
-            <div class="leftNavBarDiv4">
-              <span class="leftNavBarSpan" style="text-overflow:unset;">Home
-              </span>
-            </div>
-          </div>
-        </RouterLink>
-        <RouterLink to="/about">
-          <div class="leftNavBarDiv2">
-            <div class="leftNavBarDiv3">
-              <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="placeholder"></path>
-                </g>
-              </svg>
-            </div>
-            <div class="leftNavBarDiv4">
-              <span class="leftNavBarSpan" style="text-overflow:unset;">About</span>
-            </div>
-          </div>
-        </RouterLink>
-        <RouterLink to="/explore">
-          <div class="leftNavBarDiv2">
-            <div class="leftNavBarDiv3">
-              <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="placeholder"></path>
-                </g>
-              </svg>
-            </div>
-            <div class="leftNavBarDiv4">
-              <span class="leftNavBarSpan" style="text-overflow:unset;">Explore</span>
-            </div>
-          </div>
-        </RouterLink>
-        <RouterLink to="/messages">
-          <div class="leftNavBarDiv2">
-            <div class="leftNavBarDiv3">
-              <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="placeholder"></path>
-                </g>
-              </svg>
-            </div>
-            <div class="leftNavBarDiv4">
-              <span class="leftNavBarSpan" style="text-overflow:unset;">Messages (Coming Soon)</span>
-            </div>
-          </div>
-        </RouterLink>
-        <RouterLink to="/profile">
-          <div class="leftNavBarDiv2">
-            <div class="leftNavBarDiv3">
-              <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="placeholder"></path>
-                </g>
-              </svg>
-            </div>
-            <div class="leftNavBarDiv4">
-              <span class="leftNavBarSpan" style="text-overflow:unset;">Profile</span>
-            </div>
-          </div>
-        </RouterLink>
-      </nav>
-    </div>
-
-    <div class="post">
-      <RouterLink to="/compose/post">
-    </div>
-
   </header>
 
   <RouterView />
@@ -126,17 +42,6 @@ nav a {
   font-size: 3rem;
   text-align: left;
   color: navy;
-}
-
-.post {
-  background-color: violet;
-  display: circle;
-}
-
-.postButton {
-  background-color: violet;
-  border-color: violet;
-  display: ;
 }
 
 .leftNavBarNav {
