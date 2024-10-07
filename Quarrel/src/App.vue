@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+//import HelloWorld from './components/HelloWorld.vue'
+import SignupView from './components/SignupView.vue'
+import LoginView from './components/LoginView.vue'
 </script>
 
 <template>
   <header>
-
+    bruh
   </header>
-
   <RouterView />
 </template>
 
-<style scoped>
-
+<style>
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -61,5 +61,12 @@ nav a {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+}
+div {
+  padding: 40px
+}
+
+body {
+  background-image: linear-gradient(mediumpurple, thistle);
 }
 </style>
