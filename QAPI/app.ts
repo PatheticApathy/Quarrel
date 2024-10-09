@@ -1,19 +1,17 @@
-import { createConnection, Connection } from 'mysql';
-import { user_routes, greeting_route } from './routes';
+import { createPool, Pool } from 'mysql';
+import { user_routes, greeting_route } from './routes/routes';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http'
 
 const port: String = '8081';
 
-const connection = createConnection({
+const pool = createPool({
   host: 'localhost',
   user: 'qapi',
   password: 'ARGS',
   database: 'QuarrelDB'
 });
 
-connection.connect();
-
-function route_request(req: IncomingMessage, res: ServerResponse, mysql: Connection): void {
+function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): void {
   if (req.url == '/') {
     greeting_route(req, res);
     return
@@ -32,7 +30,7 @@ function route_request(req: IncomingMessage, res: ServerResponse, mysql: Connect
 }
 
 const sever = createServer((req, res) => {
-  route_request(req, res, connection);
+  route_request(req, res, pool);
 });
 
 console.log(`Running on localhost:${port}`);
