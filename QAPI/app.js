@@ -1,18 +1,35 @@
-var mysql = require('mysql');
-var http = require('node:http');
-var connection = mysql.createConnection({
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var mysql_1 = require("mysql");
+var routes_1 = require("./routes");
+var node_http_1 = require("node:http");
+var port = '8081';
+var connection = (0, mysql_1.createConnection)({
     host: 'localhost',
     user: 'qapi',
     password: 'ARGS',
     database: 'QuarrelDB'
 });
 connection.connect();
-var sever = http.createServer(function (req, res) {
-    if (req.url == '/bob') {
-        console.log("been here");
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify('bob'));
+function route_request(req, res, mysql) {
+    if (req.url == '/') {
+        (0, routes_1.greeting_route)(req, res);
+        return;
     }
+    var route = req.url.split('/');
+    switch (route[1]) {
+        case 'user':
+            //get user or add user
+            (0, routes_1.user_routes)(req, res, route, mysql);
+            break;
+        default:
+            res.writeHead(404);
+            res.end("route does not exist yet");
+    }
+}
+var sever = (0, node_http_1.createServer)(function (req, res) {
+    route_request(req, res, connection);
 });
-console.log("Running on localhost:8000");
-sever.listen('8000');
+console.log("Running on localhost:".concat(port));
+sever.listen(port);
