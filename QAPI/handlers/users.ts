@@ -10,7 +10,7 @@ export function add_user_handler(res: ServerResponse, user: User, sql: Pool): vo
       res.writeHead(500);
       res.end('Coud not complete transaction');
     }
-    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     res.end(JSON.stringify(result));
   });
 
@@ -22,7 +22,7 @@ export function get_id_handler(res: ServerResponse, id: number, sql: Pool): void
       res.writeHead(500);
       res.end('Coud not complete transaction');
     }
-    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     res.end(JSON.stringify(user));
   });
 
@@ -35,7 +35,7 @@ export function get_username_handler(res: ServerResponse, username: string, sql:
       res.writeHead(500);
       res.end('Coud not complete transaction');
     }
-    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     res.end(JSON.stringify(user));
   });
 }

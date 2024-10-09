@@ -1,5 +1,5 @@
-import { hash, compare } from 'bcrypt'
-import { add_user_handler, get_id_handler } from '../handlers/handlers';
+import { hash } from 'bcrypt'
+import { add_user_handler, get_id_handler, get_username_handler } from '../handlers/handlers';
 import { stringify_body } from '../helper';
 import { Pool } from 'mysql';
 import { IncomingMessage, ServerResponse } from 'http';
@@ -10,33 +10,52 @@ export function user_routes(req: IncomingMessage, res: ServerResponse, route: Ar
   switch (route[2]) {
     case 'signup':
       //validate rest of route and request method and sanatize data
-      if (req.method == 'PUT' && route.length == 2) {
-        var user: User = JSON.parse(stringify_body(req));
-        hash(user.Password, saltrounds, function (err, hash: string) {
+      if (req.method == 'POST' && route.length == 3) {
+        stringify_body(req, (err, json) => {
           if (err) {
-            console.error(`Error, could not hash password: ${err}`);
-            throw err;
+            console.error(`Error could not get http request body: ${err}`);
           }
-          user.Password = hash;
-          user.Follow_count = 0;
+          try {
+            const user: User = JSON.parse(json!);
+            hash(user.Password, saltrounds, function (err, hash: string) {
+              if (err) {
+                console.error(`Error, could not hash password: ${err}`);
+                res.writeHead(404);
+                res.end("Not a valid route");
+              }
+              user.Password = hash;
+              user.Follow_count = 0;
+              add_user_handler(res, user, sql);
+            })
+          }
+          catch (error) {
+            console.error(`Error, could not parse json: ${error}`);
+            res.writeHead(404);
+            res.end("Not a valid route");
+          }
         })
-        add_user_handler(res, user, sql);
-      } else {
-        res.writeHead(404);
-        res.end("Not a valid route");
       }
       break;
-
     case 'login':
-      if (req.method == 'GET' && route.length == 2) {
-        var user: User = JSON.parse(stringify_body(req));
-
-      } else {
-        res.writeHead(404);
-        res.end("Not a valid route");
+      if (req.method == 'GET' && route.length == 3) {
+        stringify_body(req, (err, json) => {
+          if (err) {
+            console.error(`Error could not get http request body: ${err}`);
+            res.writeHead(404);
+            res.end("Not a valid route");
+          }
+          try {
+            const user = JSON.parse(json!);
+            //TODO: Add login with username functionality
+          }
+          catch (error) {
+            console.error(`Error, could not parse json: ${error}`);
+            res.writeHead(404);
+            res.end("Not a valid route");
+          }
+        })
       }
-      break
-
+      break;
     case 'find':
       if (req.method == 'GET' && route.length == 4) {
         const id: number = Number(route[3]);
