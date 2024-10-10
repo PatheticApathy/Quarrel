@@ -12,10 +12,17 @@ const pool = createPool({
 });
 
 function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): void {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('access-control-allow-methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('access-control-allow-headers', 'Content-Type, Authorization');
   if (req.url == '/') {
     //TODO: Make greeting screen
     greeting_route(req, res);
     return
+  }
+  if (req.method == 'OPTIONS') {
+    res.writeHead(204)
+    res.end()
   }
   const route: string[] = req.url!.split('/');
   switch (route[1]) {
