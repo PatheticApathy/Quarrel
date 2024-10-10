@@ -14,6 +14,8 @@ export function user_routes(req: IncomingMessage, res: ServerResponse, route: Ar
         stringify_body(req, (err, json) => {
           if (err) {
             console.error(`Error could not get http request body: ${err}`);
+            res.writeHead(404);
+            res.end("Not a valid route");
           }
           try {
             const user: User = JSON.parse(json!);
