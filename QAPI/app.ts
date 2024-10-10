@@ -13,6 +13,7 @@ const pool = createPool({
 
 function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): void {
   if (req.url == '/') {
+    //TODO: Make greeting screen
     greeting_route(req, res);
     return
   }

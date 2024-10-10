@@ -3,7 +3,7 @@ import { Pool } from 'mysql';
 
 
 export function insert_new_user(user: User, sql: Pool, callback: (err: Error | undefined, user: User | undefined) => void): void {
-  sql.query('INSERT INTO User(username,password,follow_count) VALUES (?,?,?); SELECT @@IDENTITY;', [user.Username, user.Password, user.Follow_count], function (error, result: User, _) {
+  sql.query('INSERT INTO User(username,password,follow_count) VALUES (?,?,?);', [user.Username, user.Password, user.Follow_count], function (error, result: User, _) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);
