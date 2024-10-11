@@ -1,6 +1,5 @@
 <template>
   <div class = "access_page">
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
     <div class="register">
         <h1>Sign Up</h1> 
         <br/>
@@ -123,15 +122,18 @@ export default {
     .signin {
         color: navy;
         font-family: Georgia, serif;
-
-
+        position: absolute;
+        top: 60px;
+        left: 600px;
     }
     .signin input {
         display: block;
         width: 400px;
         height: 40px;
         padding-left: 20px;
-        margin-bottom: 5px;
+        margin-bottom: 1px;
+        border: 3px solid navy;
+        border-radius: 5px;
         
     }
   
@@ -140,6 +142,10 @@ export default {
         height: 40px;
         border: 3px solid navy;
         background-color: navy;
+        color: white;
+        cursor: pointer;
+        margin-top: 10px;
+        border-radius: 5px;
     }
 
     .signin button:hover {
@@ -151,6 +157,9 @@ export default {
         font-family: Georgia, serif;
         font-weight: bold;
         font-size: 15px;
+        position: absolute;
+        top: 60px;
+        left: 100px;
     }
 
     .register input {
