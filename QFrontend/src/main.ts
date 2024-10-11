@@ -10,4 +10,4 @@ app.use(router)
 
 app.mount('#app')
 
-router.replace({ path: '/login' })
+router.replace({ path: '/welcome' })

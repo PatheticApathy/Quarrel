@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <div class="logo">
       <span class="logospan">Quarrel</span>
     </div>
-
+    
     <div class="leftNavBarDiv1">
       <nav class="leftNavBarNav" aria-label="Primary" role="Navigation">
         <RouterLink to="/home">
@@ -85,11 +85,10 @@ import { RouterLink, RouterView } from 'vue-router'
       </nav>
     </div>
   </header>
-
-  <RouterView />
 </template>
 
 <style scoped>
+
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -99,6 +98,10 @@ nav a {
   display: inline-block;
   padding: 0 1rem;
 }
+
+nav a:hover {
+    background-color: violet;
+  }
 
 .logo {
   position: absolute;
@@ -179,4 +182,5 @@ path {
     margin-top: 1rem;
   }
 }
+
 </style>
