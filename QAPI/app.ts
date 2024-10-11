@@ -1,5 +1,5 @@
 import { createPool, Pool } from 'mysql';
-import { user_routes, greeting_route } from './routes/routes';
+import { user_routes, greeting_route, post_routes} from './routes/routes';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http'
 
 const port: String = '8081';
@@ -22,6 +22,10 @@ function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): 
     case 'user':
       //get user or add user
       user_routes(req, res, route, mysql);
+      break
+    
+    case 'post':
+      post_routes(req, res, route, mysql);
       break
 
     default:
