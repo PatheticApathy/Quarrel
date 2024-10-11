@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 //import HelloWorld from './components/HelloWorld.vue'
-import SignupView from './components/SignupView.vue'
-import LoginView from './components/LoginView.vue'
 </script>
 
 <template>
