@@ -31,6 +31,14 @@ interface Post {
     Hyperlink: string
 }
 
+interface Replies {
+    RID: number,
+    Comment: string,
+    Likes: number,
+    Views: number,
+    Poster: number
+}
+
 interface Replies_to_args {
     ARID: number,
     reply: number,

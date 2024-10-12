@@ -5,8 +5,8 @@ USE QuarrelDB;
 CREATE TABLE IF NOT EXISTS User (
     UID int NOT NULL AUTO_INCREMENT, 
     Name varchar(255),
-    Username varchar(30),
-    Password varchar(30),
+    Username varchar(30) NOT NULL UNIQUE,
+    Password varchar(255) NOT NULL,
     Follow_count INT,
     PRIMARY KEY(UID)
 );
@@ -23,12 +23,12 @@ CREATE TABLE IF NOT EXISTS Follower (
 CREATE TABLE IF NOT EXISTS Arguments (
   AID int NOT NULL AUTO_INCREMENT,
   Comment varchar(280),
-  Likes int,
-  Views int,
+  Likes int NOT NULL,
+  Views int NOT NULL,
   Hyperlink varchar(500) NULL,
   Poster int,
-  T1_votes int,
-  T2_votes int,
+  T1_votes int NOT NULL,
+  T2_votes int NOT NULL,
   PRIMARY KEY(AID),
   FOREIGN KEY(Poster) REFERENCES User(UID)
 );
@@ -36,20 +36,20 @@ CREATE TABLE IF NOT EXISTS Arguments (
 CREATE TABLE IF NOT EXISTS Post (
   PID int NOT NULL AUTO_INCREMENT,
   Comment varchar(280),
-  Likes int,
-  Views int,
-  Poster int,
-  PRIMARY KEY(PID),
+  Likes int NOT NULL,
+  Views int NOT NULL,
+  Poster int NOT NULL,
   Hyperlink varchar(500) NULL,
+  PRIMARY KEY(PID),
   FOREIGN KEY(Poster) REFERENCES User(UID)
 );
 
 CREATE TABLE IF NOT EXISTS Replies (
   RID int NOT NULL AUTO_INCREMENT,
   Comment varchar(280),
-  Likes int,
-  Views int,
-  Poster int,
+  Likes int NOT NULL,
+  Views int NOT NULL,
+  Poster int NOT NULL,
   PRIMARY KEY(RID),
   FOREIGN KEY(Poster) REFERENCES User(UID)
 );

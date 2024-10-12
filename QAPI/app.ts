@@ -1,22 +1,28 @@
-import { createConnection, Connection } from 'mysql';
-import { user_routes, greeting_route } from './routes';
+import { createPool, Pool } from 'mysql';
+import { user_routes, greeting_route } from './routes/routes';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http'
 
 const port: String = '8081';
 
-const connection = createConnection({
+const pool = createPool({
   host: 'localhost',
   user: 'qapi',
   password: 'ARGS',
   database: 'QuarrelDB'
 });
 
-connection.connect();
-
-function route_request(req: IncomingMessage, res: ServerResponse, mysql: Connection): void {
+function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): void {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('access-control-allow-methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('access-control-allow-headers', 'Content-Type, Authorization');
   if (req.url == '/') {
+    //TODO: Make greeting screen
     greeting_route(req, res);
     return
+  }
+  if (req.method == 'OPTIONS') {
+    res.writeHead(204)
+    res.end()
   }
   const route: string[] = req.url!.split('/');
   switch (route[1]) {
@@ -31,9 +37,9 @@ function route_request(req: IncomingMessage, res: ServerResponse, mysql: Connect
   }
 }
 
-const sever = createServer((req, res) => {
-  route_request(req, res, connection);
+const server = createServer((req: IncomingMessage, res: ServerResponse) => {
+  route_request(req, res, pool);
 });
 
 console.log(`Running on localhost:${port}`);
-sever.listen(port);
+server.listen(port);
