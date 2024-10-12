@@ -37,9 +37,9 @@ function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): 
   }
 }
 
-const sever = createServer((req, res) => {
+const server = createServer((req: IncomingMessage, res: ServerResponse) => {
   route_request(req, res, pool);
 });
 
 console.log(`Running on localhost:${port}`);
-sever.listen(port);
+server.listen(port);
