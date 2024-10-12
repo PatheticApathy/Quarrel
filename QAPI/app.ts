@@ -23,6 +23,7 @@ function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): 
   if (req.method == 'OPTIONS') {
     res.writeHead(204)
     res.end()
+    return
   }
   const route: string[] = req.url!.split('/');
   switch (route[1]) {
