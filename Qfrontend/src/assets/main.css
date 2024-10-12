@@ -10,7 +10,7 @@
 a,
 .green {
   text-decoration: none;
-  color: navy;
+  color: white;
   transition: 0.4s;
   padding: 3px;
 }
@@ -19,7 +19,8 @@ a,
   body {
     display: flex;
     place-items: center;
-    background-image: linear-gradient(mediumpurple, thistle);
+    background-image: linear-gradient(indigo, thistle);
+    color: white;
   }
 
   #app {
