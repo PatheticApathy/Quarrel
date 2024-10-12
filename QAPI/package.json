@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/mysql": "^2.15.26",
     "@types/node": "^22.7.4",
     "bcrypt": "^5.1.1",
