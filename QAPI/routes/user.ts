@@ -17,23 +17,25 @@ export function user_routes(req: IncomingMessage, res: ServerResponse, route: Ar
             res.writeHead(404);
             res.end("Not a valid route");
           }
-          try {
-            const user: User = JSON.parse(json!);
-            hash(user.Password, saltrounds, function (err, hash: string) {
-              if (err) {
-                console.error(`Error, could not hash password: ${err}`);
-                res.writeHead(404);
-                res.end("Not a valid route");
-              }
-              user.Password = hash;
-              user.Follow_count = 0;
-              add_user_handler(res, user, sql);
-            })
-          }
-          catch (error) {
-            console.error(`Error, could not parse json: ${error}`);
-            res.writeHead(404);
-            res.end("Not a valid route");
+          else {
+            try {
+              const user: User = JSON.parse(json!);
+              hash(user.Password, saltrounds, function (err, hash: string) {
+                if (err) {
+                  console.error(`Error, could not hash password: ${err}`);
+                  res.writeHead(404);
+                  res.end("Not a valid route");
+                }
+                user.Password = hash;
+                user.Follow_count = 0;
+                add_user_handler(res, user, sql);
+              })
+            }
+            catch (error) {
+              console.error(`Error, could not parse json: ${error}`);
+              res.writeHead(404);
+              res.end("Not a valid route");
+            }
           }
         })
       }
@@ -45,15 +47,16 @@ export function user_routes(req: IncomingMessage, res: ServerResponse, route: Ar
             console.error(`Error could not get http request body: ${err}`);
             res.writeHead(404);
             res.end("Not a valid route");
-          }
-          try {
-            const user = JSON.parse(json!);
-            //TODO: Add login with username functionality
-          }
-          catch (error) {
-            console.error(`Error, could not parse json: ${error}`);
-            res.writeHead(404);
-            res.end("Not a valid route");
+          } else {
+            try {
+              const user = JSON.parse(json!);
+              //TODO: Add login with username functionality
+            }
+            catch (error) {
+              console.error(`Error, could not parse json: ${error}`);
+              res.writeHead(404);
+              res.end("Not a valid route");
+            }
           }
         })
       }
