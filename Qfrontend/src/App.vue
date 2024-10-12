@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-//import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from 'vue-router'
+
 </script>
 
 <template>
@@ -64,6 +64,6 @@ div {
 }
 
 body {
-  background-image: linear-gradient(mediumpurple, thistle);
+  background-image: linear-gradient(black, black);
 }
 </style>
