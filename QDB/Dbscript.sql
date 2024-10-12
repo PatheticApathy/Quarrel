@@ -95,7 +95,9 @@ CREATE TABLE IF NOT EXISTS Post_tags (
   FOREIGN KEY(post) REFERENCES Post(PID)
 );
 
+
 FLUSH PRIVILEGES;
 CREATE USER 'qapi'@'localhost' IDENTIFIED BY 'ARGS';
 GRANT ALL PRIVILEGES ON QuarrelDB.* TO 'qapi'@'localhost';
+ALTER USER 'root'@'locolhost' IDENTIFIED WITH my_sql_native_password BY 'ARGS';
 FLUSH PRIVILEGES;
