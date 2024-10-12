@@ -62,4 +62,36 @@
     font-family: 'Verdana', 'sans-serif';
     font-weight: 900;
   }
+
+  .intro button {
+    width: 500px;
+    height: 40px;
+    border: 0px solid navy;
+    background-color: navy;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 0px;
+    font-family: 'Verdana', 'sans-serif';
+    font-weight: 900;
+    margin-top: 20px;
+    border-radius: 20px;
+  }
+
+  .intro button:hover {
+        background-color: violet;
+        animation: bubble 1s ease-out;
+    }
+
+  @keyframes bubble {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+}
   </style>
