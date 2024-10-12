@@ -2,8 +2,6 @@ import { createPool, Pool } from 'mysql';
 import { user_routes, greeting_route } from './routes/routes';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http'
 
-const port: String = '8081';
-
 const pool = createPool({
   host: 'localhost',
   user: 'qapi',
@@ -37,9 +35,8 @@ function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): 
   }
 }
 
-const sever = createServer((req, res) => {
+const server = createServer((req, res) => {
   route_request(req, res, pool);
-});
 
-console.log(`Running on localhost:${port}`);
-sever.listen(port);
+console.log("Running on localhost:8000");
+server.listen('8000');
