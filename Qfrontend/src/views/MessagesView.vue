@@ -9,6 +9,7 @@ import Navbar from './NavBarView.vue'
     <Navbar />
 </template>
 
+
 <style>
 @media (min-width: 1024px) {
   .about {
