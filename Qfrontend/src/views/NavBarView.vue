@@ -109,7 +109,9 @@ nav a:hover {
   top: 0.5rem;
   font-size: 3rem;
   text-align: left;
-  color: navy;
+  color: white;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
 }
 
 .leftNavBarNav {
@@ -134,7 +136,9 @@ nav a:hover {
 .leftNavBarDiv2 {
   height: 50.25px;
   width: 250px;
-  color: navy;
+  color: white;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
 }
 
 .leftNavBarDiv2:hover {

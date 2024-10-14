@@ -120,15 +120,16 @@ export default {
     }
 
     .signin {
-        color: navy;
-        font-family: Georgia, serif;
+        color: white;
+        font-family: 'Verdana', 'sans-serif';
+        font-weight: 900;
         position: absolute;
         top: 60px;
-        left: 600px;
+        left: 700px;
     }
     .signin input {
         display: block;
-        width: 400px;
+        width: 500px;
         height: 40px;
         padding-left: 20px;
         margin-bottom: 1px;
@@ -138,24 +139,29 @@ export default {
     }
   
     .signin button {
-        width: 400px;
-        height: 40px;
-        border: 3px solid navy;
-        background-color: navy;
-        color: white;
-        cursor: pointer;
-        margin-top: 10px;
-        border-radius: 5px;
-    }
+    width: 500px;
+    height: 40px;
+    border: 0px solid navy;
+    background-color: navy;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 0px;
+    font-family: 'Verdana', 'sans-serif';
+    font-weight: 900;
+    margin-top: 20px;
+    border-radius: 20px;
+  }
 
-    .signin button:hover {
-        background-color: darkblue;
+  .signin button:hover {
+        background-color: violet;
+        animation: bubble 1s ease-out;
     }
 
     .register {
-        color: navy;
-        font-family: Georgia, serif;
-        font-weight: bold;
+        color: white;
+        font-family: 'Verdana', 'sans-serif';
+        font-weight: 900;
         font-size: 15px;
         position: absolute;
         top: 60px;
@@ -164,7 +170,7 @@ export default {
 
     .register input {
         display: block;
-        width: 400px;
+        width: 500px;
         height: 40px;
         padding-left: 20px;
         margin-bottom: 1px;
@@ -173,17 +179,34 @@ export default {
     }
   
     .register button {
-        width: 400px;
-        height: 40px;
-        border: 3px solid navy;
-        background-color: navy;
-        color: white;
-        cursor: pointer;
-        margin-top: 10px;
-        border-radius: 5px;
+    width: 500px;
+    height: 40px;
+    border: 0px solid navy;
+    background-color: navy;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 0px;
+    font-family: 'Verdana', 'sans-serif';
+    font-weight: 900;
+    margin-top: 20px;
+    border-radius: 20px;
+  }
+
+  .register button:hover {
+        background-color: violet;
+        animation: bubble 1s ease-out;
     }
-  
-    .register button:hover {
-        background-color: darkblue;
+
+  @keyframes bubble {
+    0% {
+      transform: scale(1);
     }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+}
 </style>
