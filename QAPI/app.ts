@@ -1,5 +1,5 @@
 import { createPool, Pool } from 'mysql';
-import { user_routes, greeting_route, post_routes} from './routes/routes';
+import { user_routes, greeting_route, post_routes } from './routes/routes';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http'
 
 const port: String = '8081';
@@ -23,6 +23,7 @@ function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): 
   if (req.method == 'OPTIONS') {
     res.writeHead(204)
     res.end()
+    return
   }
   const route: string[] = req.url!.split('/');
   switch (route[1]) {
@@ -35,15 +36,20 @@ function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): 
       post_routes(req, res, route, mysql);
       break
 
+    case 'post':
+      //get user or add user
+      post_routes(req, res, route, mysql);
+      break
+
     default:
       res.writeHead(404);
       res.end("route does not exist yet");
   }
 }
 
-const sever = createServer((req, res) => {
+const server = createServer((req: IncomingMessage, res: ServerResponse) => {
   route_request(req, res, pool);
 });
 
 console.log(`Running on localhost:${port}`);
-sever.listen(port);
+server.listen(port);

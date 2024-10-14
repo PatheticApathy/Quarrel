@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-//import HelloWorld from './components/HelloWorld.vue'
-import SignupView from './components/SignupView.vue'
-import LoginView from './components/LoginView.vue'
+
 </script>
 
 <template>
   <header>
-    bruh
   </header>
   <RouterView />
 </template>
 
-<style>
+<style scoped>
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -67,6 +64,6 @@ div {
 }
 
 body {
-  background-image: linear-gradient(mediumpurple, thistle);
+  background-image: linear-gradient(black, black);
 }
 </style>

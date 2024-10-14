@@ -10,22 +10,17 @@
 a,
 .green {
   text-decoration: none;
-  color: navy;
+  color: white;
   transition: 0.4s;
   padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: violet;
-  }
 }
 
 @media (min-width: 1024px) {
   body {
     display: flex;
     place-items: center;
-    background-image: linear-gradient(mediumpurple, thistle);
+    background-image: linear-gradient(indigo, thistle);
+    color: white;
   }
 
   #app {
