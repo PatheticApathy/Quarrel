@@ -28,7 +28,7 @@
       <br />
       <button @click="signupSubmit()">Log In!</button>
       <br />
-      <button>Forgot Password?</button>
+      <button @click="goToHome()">Forgot Password?</button>
       <!--<p v-if="login_errorMessage" style="color: red">{{ login_errorMessage }}</p>-->
     </div>
   </div>
@@ -170,19 +170,18 @@ async function registerUser() {
   animation: bubble 1s ease-out;
 }
 
-.signin button {
-  width: 500px;
-  height: 40px;
-  border: 3px solid navy;
-  background-color: navy;
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-  border-radius: 5px;
-}
+@keyframes bubble {
+  0% {
+    transform: scale(1);
+  }
 
-.signin button:hover {
-  background-color: darkblue;
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .register {

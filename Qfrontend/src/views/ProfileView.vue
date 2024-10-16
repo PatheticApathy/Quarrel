@@ -16,11 +16,13 @@ import Navbar from './NavBarView.vue'
       <p>Finally a doctor!</p>
       <p>Latech Computer Science</p>
     </div>
-    <div class="minions">
-      <button>Minions: 12,414</button>
-      <button>Enemies: 0</button>
+    <div class="followers">
+      <button>Followers: 12,414</button>
+      <button>Following: 0</button>
     </div>
-    <button @click="go_to_edit_profile">Edit Profile</button>
+    <div class="edit">
+      <button @click="go_to_edit_profile">Edit Profile</button>
+    </div>
     <Navbar />
 </template>
 
@@ -63,25 +65,27 @@ h1 {
   font-weight: 900;
 }
 
-.minions {
+.followers {
   display: flex;
   justify-content: space-between;
   gap: 40px;
   position: absolute;
   top: 450px;
   left: 575px;
-  font-size: 20px;
+  color: white;
+}
+
+.followers button {
+  border-radius: 40px;
+  background-color: navy;
+  color: white;
+  padding: 20px;
+  font-size: 15px;
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;
 }
 
-.minions button {
-  border-radius: 40px;
-  background-color: navy;
-  padding: 20px;
-}
-
-  button {
+  .edit button {
     position: absolute;
     top: 300px;
     left: 1050px;
