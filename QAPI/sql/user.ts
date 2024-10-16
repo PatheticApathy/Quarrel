@@ -8,7 +8,7 @@ export function insert_new_user(user: User, sql: Pool, callback: (err: Error | u
       console.error('Could not complete transaction:', error);
       callback(error, undefined);
     }
-    let id = result.insertID;
+    let id = result.insertId;
     console.log(`User ${id} added`);
     callback(undefined, id);
   });
