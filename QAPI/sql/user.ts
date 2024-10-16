@@ -2,14 +2,15 @@ import '../models';
 import { Pool } from 'mysql';
 
 
-export function insert_new_user(user: User, sql: Pool, callback: (err: Error | undefined, user: User | undefined) => void): void {
-  sql.query('INSERT INTO User(username,password,follow_count) VALUES (?,?,?);', [user.Username, user.Password, user.Follow_count], function (error, result: User, _) {
+export function insert_new_user(user: User, sql: Pool, callback: (err: Error | undefined, id: number | undefined) => void): void {
+  sql.query('INSERT INTO User(username,password,follow_count) VALUES (?,?,?);', [user.Username, user.Password, user.Follow_count], function (error, result, _) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);
     }
-    console.log(`User ${result} added`);
-    callback(undefined, result);
+    let id = result.insertID;
+    console.log(`User ${id} added`);
+    callback(undefined, id);
   });
 };
 
@@ -24,8 +25,8 @@ export function get_user_by_id(id: number, sql: Pool, callback: (err: Error | un
   })
 };
 
-export function get_user_by_username(username: string, sql: Pool, callback: (err: Error | undefined, user: User | undefined) => void): void {
-  const user = sql.query('SELECT * FROM User WHERE username=?;', username, function (error, result: User, _) {
+export function get_user_by_username(login_info: Login, sql: Pool, callback: (err: Error | undefined, user: User | undefined) => void): void {
+  sql.query('SELECT * FROM User WHERE username=? AND password=?;', [login_info.username, login_info.Password], function (error, result: User, _) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);

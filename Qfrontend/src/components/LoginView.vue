@@ -76,9 +76,6 @@ function goToHome() {
 
 function signupSubmit() {
   const signup_attempt = user.value
-  if (signup_attempt === undefined) {
-    errorMessage.value = "Please fill out all of the fields";
-  }
   if (signup_attempt.username === "" || signup_attempt.email === "" || signup_attempt.password === "" || signup_attempt.password2 === "") {
     errorMessage.value = "Please fill out all of the fields";
   }
@@ -97,8 +94,6 @@ async function registerUser() {
     Username: user.value.username,
     Password: user.value.password,
     Follow_count: 0
-
-
   }
   console.log(json);
   try {
@@ -110,12 +105,10 @@ async function registerUser() {
       }
     );
     if (!resp.ok) {
-      throw new Error(`Response status: ${resp.status}`);
+      throw new Error(`Response status: ${resp.status} with errror ${resp.body}`);
     }
     const johnny = await resp.json();
     console.log(johnny);
-    //const logged_user: User = JSON.parse(await resp.json());
-    //console.log(logged_user);
   }
   catch (err) {
     console.error(`Error parsing json: ${err}`)

@@ -1,5 +1,5 @@
 import { hash } from 'bcrypt'
-import { add_user_handler, get_id_handler, get_username_handler } from '../handlers/handlers';
+import { add_user_handler, get_id_handler, get_user_by_username_handler } from '../handlers/handlers';
 import { stringify_body } from '../helper';
 import { Pool } from 'mysql';
 import { IncomingMessage, ServerResponse } from 'http';
@@ -14,8 +14,8 @@ export function user_routes(req: IncomingMessage, res: ServerResponse, route: Ar
         stringify_body(req, (err, json) => {
           if (err) {
             console.error(`Error could not get http request body: ${err}`);
-            res.writeHead(404);
-            res.end("Not a valid route");
+            res.writeHead(500);
+            res.end(`Error accessing request body`);
           }
           else {
             try {
@@ -23,8 +23,8 @@ export function user_routes(req: IncomingMessage, res: ServerResponse, route: Ar
               hash(user.Password, saltrounds, function (err, hash: string) {
                 if (err) {
                   console.error(`Error, could not hash password: ${err}`);
-                  res.writeHead(404);
-                  res.end("Not a valid route");
+                  res.writeHead(500);
+                  res.end(`Error with logging`);
                 }
                 user.Password = hash;
                 user.Follow_count = 0;
@@ -33,8 +33,8 @@ export function user_routes(req: IncomingMessage, res: ServerResponse, route: Ar
             }
             catch (error) {
               console.error(`Error, could not parse json: ${error}`);
-              res.writeHead(404);
-              res.end("Not a valid route");
+              res.writeHead(500);
+              res.end(`Error parsing json`)
             }
           }
         })
@@ -45,17 +45,20 @@ export function user_routes(req: IncomingMessage, res: ServerResponse, route: Ar
         stringify_body(req, (err, json) => {
           if (err) {
             console.error(`Error could not get http request body: ${err}`);
-            res.writeHead(404);
-            res.end("Not a valid route");
+            res.writeHead(500);
+            res.end(`Error accessing request body`);
           } else {
             try {
-              const user = JSON.parse(json!);
-              //TODO: Add login with username functionality
+              const login_attempt: Login = JSON.parse(json!);
+              hash(login_attempt.Password, saltrounds, function (err, result: string) {
+                login_attempt.Password = result;
+                get_user_by_username_handler(res, login_attempt, sql)
+              });
             }
             catch (error) {
               console.error(`Error, could not parse json: ${error}`);
-              res.writeHead(404);
-              res.end("Not a valid route");
+              res.writeHead(500);
+              res.end(`Error parsing json`);
             }
           }
         })

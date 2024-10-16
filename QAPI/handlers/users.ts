@@ -31,11 +31,11 @@ export function get_id_handler(res: ServerResponse, id: number, sql: Pool): void
 };
 
 
-export function get_username_handler(res: ServerResponse, username: string, sql: Pool): void {
-  get_user_by_username(username, sql, (err, user) => {
+export function get_user_by_username_handler(res: ServerResponse, login_info: Login, sql: Pool): void {
+  get_user_by_username(login_info, sql, (err, user) => {
     if (err) {
       res.writeHead(500);
-      res.end('Could not complete transaction');
+      res.end('Could not complete transaction/Invalid login');
     } else {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(user));

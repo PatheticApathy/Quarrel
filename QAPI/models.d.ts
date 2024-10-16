@@ -68,3 +68,7 @@ interface Post_tags {
     post: number,
     tag: string
 }
+interface Login {
+  username: string,
+  Password: string
+}
