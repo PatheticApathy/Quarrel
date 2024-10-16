@@ -26,7 +26,7 @@
       <p>Password:</p>
       <input type="password" v-model="login.password" placeholder="Enter Password" />
       <br />
-      <button @click="signupSubmit()">Log In!</button>
+      <button @click="request_login">Log In!</button>
       <br />
       <button>Forgot Password?</button>
       <!--<p v-if="login_errorMessage" style="color: red">{{ login_errorMessage }}</p>-->
@@ -88,27 +88,50 @@ function signupSubmit() {
 }
 
 async function registerUser() {
-  console.log('Sending Login info');
-  const json: User = {
+  console.log('Sending Signup info');
+  const user_json: User = {
     UID: 0,
     Username: user.value.username,
     Password: user.value.password,
     Follow_count: 0
   }
-  console.log(json);
+  console.log(user_json);
   try {
     const resp = await fetch('http://localhost:8081/user/signup',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(json),
+        body: JSON.stringify(user_json),
       }
     );
     if (!resp.ok) {
       throw new Error(`Response status: ${resp.status} with errror ${resp.body}`);
     }
-    const johnny = await resp.json();
-    console.log(johnny);
+    const id: number = await resp.json();
+    console.log(`Logged in with id: ${id}`);
+
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
+async function request_login() {
+  console.log('Sending Login info');
+  try {
+    const resp = await fetch('http://localhost:8081/user/login',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(login.value),
+      }
+    );
+    if (!resp.ok) {
+      throw new Error(`Response status: ${resp.status} with errror ${resp.body}`);
+    }
+    const user: User = await resp.json();
+    const UID: number = user.UID;
+    console.log(`Logged in with id: ${UID}`);
   }
   catch (err) {
     console.error(`Error parsing json: ${err}`)

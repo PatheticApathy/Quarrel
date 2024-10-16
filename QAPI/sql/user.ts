@@ -15,23 +15,23 @@ export function insert_new_user(user: User, sql: Pool, callback: (err: Error | u
 };
 
 export function get_user_by_id(id: number, sql: Pool, callback: (err: Error | undefined, user: User | undefined) => void): void {
-  sql.query('SELECT * FROM User WHERE UID=?;', id, function (error, result: User, _) {
+  sql.query('SELECT * FROM User WHERE UID=?;', id, function (error, result, _) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);
     }
-    console.log(`User ${result} retrieved`);
-    callback(undefined, result);
+    console.log(`User ${result[0]} retrieved`);
+    callback(undefined, result[0]);
   })
 };
 
-export function post_id_request(login_info: Login, sql: Pool, callback: (err: Error | undefined, id: number | undefined) => void): void {
-  sql.query('SELECT UID FROM User WHERE username=? AND password=?;', [login_info.username, login_info.password], function (error, result: number, _) {
+export function get_user_by_login(login_info: Login, sql: Pool, callback: (err: Error | undefined, id: number | undefined) => void): void {
+  sql.query('SELECT UID FROM User WHERE username=? AND password=?;', [login_info.username, login_info.password], function (error, result, _) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);
     }
-    console.log(`User id: ${result} retrieved`);
-    callback(undefined, result);
+    console.log(`User id: ${result[0]} retrieved`);
+    callback(undefined, result[0]);
   })
 }
