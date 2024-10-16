@@ -41,7 +41,7 @@ export function user_routes(req: IncomingMessage, res: ServerResponse, route: Ar
       }
       break;
     case 'login':
-      if (req.method == 'GET' && route.length == 3) {
+      if (req.method == 'POST' && route.length == 3) {
         stringify_body(req, (err, json) => {
           if (err) {
             console.error(`Error could not get http request body: ${err}`);
@@ -50,8 +50,8 @@ export function user_routes(req: IncomingMessage, res: ServerResponse, route: Ar
           } else {
             try {
               const login_attempt: Login = JSON.parse(json!);
-              hash(login_attempt.Password, saltrounds, function (err, result: string) {
-                login_attempt.Password = result;
+              hash(login_attempt.password, saltrounds, function (err, result: string) {
+                login_attempt.password = result;
                 get_user_by_username_handler(res, login_attempt, sql)
               });
             }

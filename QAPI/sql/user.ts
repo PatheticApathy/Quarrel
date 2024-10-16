@@ -25,13 +25,13 @@ export function get_user_by_id(id: number, sql: Pool, callback: (err: Error | un
   })
 };
 
-export function get_user_by_username(login_info: Login, sql: Pool, callback: (err: Error | undefined, user: User | undefined) => void): void {
-  sql.query('SELECT * FROM User WHERE username=? AND password=?;', [login_info.username, login_info.Password], function (error, result: User, _) {
+export function post_id_request(login_info: Login, sql: Pool, callback: (err: Error | undefined, id: number | undefined) => void): void {
+  sql.query('SELECT UID FROM User WHERE username=? AND password=?;', [login_info.username, login_info.password], function (error, result: number, _) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);
     }
-    console.log(`User ${result} retrieved`);
+    console.log(`User id: ${result} retrieved`);
     callback(undefined, result);
   })
 }
