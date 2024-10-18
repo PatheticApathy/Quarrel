@@ -11,7 +11,7 @@ export function add_user_handler(res: ServerResponse, user: User, sql: Pool): vo
       res.end(JSON.stringify({ error: 'Could not complete transaction(user may already exist)' }));
     } else {
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ id: id }));
+      res.end(JSON.stringify({ UID: id }));
     }
   });
 };
@@ -46,7 +46,7 @@ export function post_login_request_handler(res: ServerResponse, login_info: Logi
       res.end(JSON.stringify({ error: "Invalid Username and Password combination" }));
     } else {
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ id: id }));
+      res.end(JSON.stringify({ UID: id }));
     }
   });
 }

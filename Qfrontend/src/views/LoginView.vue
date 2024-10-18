@@ -14,8 +14,8 @@
       <br />
       <input type="password" v-model="user.password2" placeholder="Confirm Password" />
       <br />
-      <button @click="signupSubmit">Sign Up!</button>
-      <p v-if="errorMessage" style="color: red">{{ errorMessage }}</p>
+      <button @click="signup_submit">Sign Up!</button>
+      <p v-if="signup_error_message" style="color: red">{{ signup_error_message }}</p>
     </div>
     <div class="signin">
       <h1>Log In</h1>
@@ -29,7 +29,7 @@
       <button @click="request_login">Log In!</button>
       <br />
       <button>Forgot Password?</button>
-      <!--<p v-if="login_errorMessage" style="color: red">{{ login_errorMessage }}</p>-->
+      <!--<p v-if="login_signup_error_message" style="color: red">{{ login_errorMessage }}</p>-->
     </div>
   </div>
 </template>
@@ -66,28 +66,29 @@ const signup_template: Signup = {
 const router = useRouter()
 const user = ref<Signup>(signup_template);
 const login = ref<Login>(login_template);
-var errorMessage = defineModel<string>();
-//var login_errorMessage = defineModel<string>();
+var signup_error_message = defineModel<string>();
+//var login_error_message = defineModel<string>();
+
 
 //functions
-function goToHome() {
+function go_to_home() {
   router.push('/home') // Navigate to home page after login
 }
 
-function signupSubmit() {
+function signup_submit() {
   const signup_attempt = user.value
   if (signup_attempt.username === "" || signup_attempt.email === "" || signup_attempt.password === "" || signup_attempt.password2 === "") {
-    errorMessage.value = "Please fill out all of the fields";
+    signup_error_message.value = "Please fill out all of the fields";
   }
   else if (signup_attempt.password !== signup_attempt.password2) {
-    errorMessage.value = "Passwords do not match";
+    signup_error_message.value = "Passwords do not match";
   }
   else {
-    registerUser();
+    register_user();
   }
 }
 
-async function registerUser() {
+async function register_user() {
   console.log('Sending Signup info');
   const user_json: User = {
     UID: 0,
@@ -95,7 +96,6 @@ async function registerUser() {
     Password: user.value.password,
     Follow_count: 0
   }
-  console.log(user_json);
   try {
     const resp = await fetch('http://localhost:8081/user/signup',
       {
@@ -105,11 +105,13 @@ async function registerUser() {
       }
     );
     if (!resp.ok) {
-      throw new Error(`Response status: ${resp.status} with errror ${resp.body}`);
+      const error: Api_Error = await resp.json();
+      signup_error_message.value = error.error;
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+    } else {
+      const id: UID = await resp.json();
+      console.log(`Logged in with id: ${id.UID}`);
     }
-    const id: number = await resp.json();
-    console.log(`Logged in with id: ${id}`);
-
   }
   catch (err) {
     console.error(`Error parsing json: ${err}`)
@@ -127,14 +129,21 @@ async function request_login() {
       }
     );
     if (!resp.ok) {
-      throw new Error(`Response status: ${resp.status} with errror ${resp.body}`);
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      signup_error_message.value = error.error;
+    } else {
+      const id: UID = await resp.json();
+      console.log(`Logged in with id: ${id.UID}`);
+      create_session_id(id.UID);
     }
-    const user: User = await resp.json();
-    const UID: number = user.UID;
-    console.log(`Logged in with id: ${UID}`);
   }
   catch (err) {
     console.error(`Error parsing json: ${err}`)
+  }
+
+  function create_session_id(session_id: number): void {
+
   }
 }
 </script>
