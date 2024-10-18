@@ -31,6 +31,10 @@ export function route_request(req: IncomingMessage, res: ServerResponse, mysql: 
       //get user or add user
       user_routes(req, res, route, mysql);
       break
+    
+    case 'post':
+      post_routes(req, res, route, mysql);
+      break
 
     case 'post':
       //get user or add user
