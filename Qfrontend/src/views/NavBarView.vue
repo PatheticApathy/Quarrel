@@ -4,85 +4,86 @@ import { RouterLink } from 'vue-router'
 
 <template>
   <header>
-
-    <div class="logo">
-      <span class="logospan">Quarrel</span>
-    </div>
-    
-    <div class="leftNavBarDiv1">
-      <nav class="leftNavBarNav" aria-label="Primary" role="Navigation">
-        <RouterLink to="/home">
-          <div class="leftNavBarDiv2">
-            <div class="leftNavBarDiv3">
-              <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="placeholder"></path>
-                </g>
-              </svg>
+    <div class="full">
+      <div class="logo">
+        <span class="logospan">Quarrel</span>
+      </div>
+      
+      <div class="leftNavBarDiv1">
+        <nav class="leftNavBarNav" aria-label="Primary" role="Navigation">
+          <RouterLink to="/home">
+            <div class="leftNavBarDiv2">
+              <div class="leftNavBarDiv3">
+                <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
+                  <g>
+                    <path d="placeholder"></path>
+                  </g>
+                </svg>
+              </div>
+              <div class="leftNavBarDiv4">
+                <span class="leftNavBarSpan" style="text-overflow:unset;">Home
+                </span>
+              </div>
             </div>
-            <div class="leftNavBarDiv4">
-              <span class="leftNavBarSpan" style="text-overflow:unset;">Home
-              </span>
+          </RouterLink>
+          <RouterLink to="/about">
+            <div class="leftNavBarDiv2">
+              <div class="leftNavBarDiv3">
+                <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
+                  <g>
+                    <path d="placeholder"></path>
+                  </g>
+                </svg>
+              </div>
+              <div class="leftNavBarDiv4">
+                <span class="leftNavBarSpan" style="text-overflow:unset;">About</span>
+              </div>
             </div>
-          </div>
-        </RouterLink>
-        <RouterLink to="/about">
-          <div class="leftNavBarDiv2">
-            <div class="leftNavBarDiv3">
-              <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="placeholder"></path>
-                </g>
-              </svg>
+          </RouterLink>
+          <RouterLink to="/explore">
+            <div class="leftNavBarDiv2">
+              <div class="leftNavBarDiv3">
+                <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
+                  <g>
+                    <path d="placeholder"></path>
+                  </g>
+                </svg>
+              </div>
+              <div class="leftNavBarDiv4">
+                <span class="leftNavBarSpan" style="text-overflow:unset;">Explore</span>
+              </div>
             </div>
-            <div class="leftNavBarDiv4">
-              <span class="leftNavBarSpan" style="text-overflow:unset;">About</span>
+          </RouterLink>
+          <RouterLink to="/messages">
+            <div class="leftNavBarDiv2">
+              <div class="leftNavBarDiv3">
+                <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
+                  <g>
+                    <path d="placeholder"></path>
+                  </g>
+                </svg>
+              </div>
+              <div class="leftNavBarDiv4">
+                <span class="leftNavBarSpan" style="text-overflow:unset;">Messages (Coming Soon)</span>
+              </div>
             </div>
-          </div>
-        </RouterLink>
-        <RouterLink to="/explore">
-          <div class="leftNavBarDiv2">
-            <div class="leftNavBarDiv3">
-              <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="placeholder"></path>
-                </g>
-              </svg>
+          </RouterLink>
+          <RouterLink to="/profile">
+            <div class="leftNavBarDiv2">
+              <div class="leftNavBarDiv3">
+                <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
+                  <g>
+                    <path d="placeholder"></path>
+                  </g>
+                </svg>
+              </div>
+              <div class="leftNavBarDiv4">
+                <span class="leftNavBarSpan" style="text-overflow:unset;">Profile</span>
+              </div>
             </div>
-            <div class="leftNavBarDiv4">
-              <span class="leftNavBarSpan" style="text-overflow:unset;">Explore</span>
-            </div>
-          </div>
-        </RouterLink>
-        <RouterLink to="/messages">
-          <div class="leftNavBarDiv2">
-            <div class="leftNavBarDiv3">
-              <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="placeholder"></path>
-                </g>
-              </svg>
-            </div>
-            <div class="leftNavBarDiv4">
-              <span class="leftNavBarSpan" style="text-overflow:unset;">Messages (Coming Soon)</span>
-            </div>
-          </div>
-        </RouterLink>
-        <RouterLink to="/profile">
-          <div class="leftNavBarDiv2">
-            <div class="leftNavBarDiv3">
-              <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="placeholder"></path>
-                </g>
-              </svg>
-            </div>
-            <div class="leftNavBarDiv4">
-              <span class="leftNavBarSpan" style="text-overflow:unset;">Profile</span>
-            </div>
-          </div>
-        </RouterLink>
-      </nav>
+          </RouterLink>
+        </nav>
+      </div>
     </div>
   </header>
 </template>
@@ -92,6 +93,15 @@ import { RouterLink } from 'vue-router'
 header {
   line-height: 1.5;
   max-height: 100vh;
+}
+
+.full {
+  height: 100%;
+  width: 396px;
+  border-right: 1px solid var(--color-border);
+  position: absolute;
+  left: 0rem;
+  top: 0rem;
 }
 
 nav a {
@@ -105,7 +115,7 @@ nav a:hover {
 
 .logo {
   position: absolute;
-  left: 10rem;
+  left: 6rem;
   top: 0.5rem;
   font-size: 3rem;
   text-align: left;
@@ -117,14 +127,13 @@ nav a:hover {
 .leftNavBarNav {
   height: 552.75px;
   width: 285px;
-  border-right: 1px solid var(--color-border);
 }
 
 .leftNavBarDiv1 {
   height: 552.75px;
   width: 259px;
   position: absolute;
-  left: 12rem;
+  left: 8rem;
   top: 5rem;
 }
 
@@ -157,7 +166,7 @@ nav a:hover {
 
 .leftNavBarDiv4 {
   height: 55.1334px;
-  width: 200px;
+  width: 250px;
 }
 
 .leftNavBarSpan {
