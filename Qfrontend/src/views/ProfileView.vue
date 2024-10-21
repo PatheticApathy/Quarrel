@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import Navbar from './NavBarView.vue'
+
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const go_to_edit_profile = () => {
+  router.push('/edit-profile') 
+}
 </script>
 
 <template>
