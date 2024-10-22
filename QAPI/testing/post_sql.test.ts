@@ -55,8 +55,28 @@ test('add post', (done) => {
 //test('get reply by id')
 //test('get reply by id(non exist')
 //test('add reply')
-//test('get random posts')
-//test('get random arguments')
+test('get random posts', (done) => {
+  post_sql.get_rand_posts(pool, (err, result) => {
+    if (err) {
+      done(err);
+    } else {
+      expect(result).toBeDefined();
+      done();
+    }
+  })
+})
+test('get random arguments', (done) => {
+  post_sql.get_rand_args(pool, (err, result) => {
+    if (err) {
+      done(err);
+    } else {
+      expect(result).toBeDefined();
+      done();
+    }
+  })
+})
+
+
 afterAll(() => {
   pool.query("DELETE FROM Post WHERE PID=?", [UID], (err, _bad, _also_bad) => { if (err) { throw err } })
 });

@@ -75,3 +75,35 @@ export function add_reply(replies: Replies, sql: Pool, callback: (err: Error | u
       callback(undefined, result);
     });
 };
+
+export function get_rand_posts(sql: Pool, callback: (err: Error | undefined, posts: Array<Post> | undefined) => void): void {
+  sql.query('SELECT * FROM Post ORDER BY RAND() LIMIT 10;', function (error, result: Array<Post>, _) {
+    if (error) {
+      console.error('Could not complete transaction:', error);
+      callback(error, undefined);
+    } else {
+      if (result.length === 0) {
+        callback(undefined, undefined);
+      } else {
+        console.log(`Random posts: ${JSON.stringify(result)} retrieved`);
+        callback(undefined, result);
+      }
+    }
+  })
+};
+
+export function get_rand_args(sql: Pool, callback: (err: Error | undefined, posts: Array<Post> | undefined) => void): void {
+  sql.query('SELECT * FROM Arguments ORDER BY RAND() LIMIT 10;', function (error, result: Array<Post>, _) {
+    if (error) {
+      console.error('Could not complete transaction:', error);
+      callback(error, undefined);
+    } else {
+      if (result.length === 0) {
+        callback(undefined, undefined);
+      } else {
+        console.log(`Random arguments: ${JSON.stringify(result)} retrieved`);
+        callback(undefined, result);
+      }
+    }
+  })
+};
