@@ -28,7 +28,7 @@ interface Post {
   Likes: number,
   Views: number,
   Poster: number,
-  Hyperlink: string
+  Hyperlink: string | undefined
 }
 
 interface Replies {
