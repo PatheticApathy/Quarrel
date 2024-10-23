@@ -8,6 +8,14 @@ const router = useRouter()
 const go_to_edit_profile = () => {
   router.push('/edit-profile') 
 }
+
+const go_to_followers = () => {
+   router.push('/followers')
+}
+
+const go_to_following = () => {
+  router.push('/following')
+}
 </script>
 
 <template>
@@ -25,8 +33,8 @@ const go_to_edit_profile = () => {
       <p>Latech Computer Science</p>
     </div>
     <div class="followers">
-      <button>Followers: 12,414</button>
-      <button>Following: 0</button>
+      <button @click="go_to_followers">Followers: 12,414</button>
+      <button @click="go_to_following">Following: 0</button>
     </div>
     <div class="edit">
       <button @click="go_to_edit_profile">Edit Profile</button>

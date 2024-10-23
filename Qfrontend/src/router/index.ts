@@ -45,12 +45,22 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../components/LoginView.vue')
+      component: () => import('../views/LoginView.vue')
     },
     {
       path: '/edit-profile',
       name: 'edit profile',
       component: () => import('../views/EditProfileView.vue')
+    },
+    {
+      path: '/followers',
+      name: 'followers',
+      component: () => import('../views/FollowersView.vue')
+    },
+    {
+      path: '/following',
+      name: 'following',
+      component: () => import('../views/FollowingView.vue')
     }
   ]
 })

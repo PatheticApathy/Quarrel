@@ -1,14 +1,10 @@
-<script setup lang="ts">
-import Navbar from './NavBarView.vue'
-</script>
-
 <template>
     <div class="back">
-        <button>Back to Profile Page</button>
+        <button @click="go_to_profile_page">Back to Profile Page</button>
         <h1>Edit Profile</h1>
     </div>
     <div class="save">
-        <button>Save</button>
+        <button @click="go_to_profile_page">Save</button>
     </div>
     <div class="upload_background_image">
         <button>
@@ -31,6 +27,16 @@ import Navbar from './NavBarView.vue'
     </div>
     <Navbar />
 </template>
+
+<script lang="ts" setup>
+import { useRouter } from 'vue-router'
+import Navbar from './NavBarView.vue'
+const router = useRouter();
+
+function go_to_profile_page(){
+    router.push("/profile");
+}
+</script>
 
 <style>
 .back button {
@@ -105,7 +111,7 @@ import Navbar from './NavBarView.vue'
 
 .bio {
     position: absolute;
-    top: 500px;
+    top: 475px;
     left: 500px;
 }
 
@@ -132,6 +138,16 @@ button:hover {
     display: flex;
     align-items: center;
   }
+}
+
+input {
+  display: block;
+  width: 800px;
+  height: 40px;
+  padding-left: 20px;
+  margin-bottom: 1px;
+  border: 3px solid navy;
+  border-radius: 5px;
 }
 
 </style>
