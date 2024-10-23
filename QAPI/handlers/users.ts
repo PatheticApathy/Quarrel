@@ -21,16 +21,13 @@ export function get_id_handler(res: ServerResponse, id: number, sql: Pool): void
     if (err) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: `Could not complete transaction: ${err}` }));
-      return;
     }
     else if (!user) {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: "User does not exist" }));
-      return;
     } else {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(user));
-      return;
     }
   });
 };
@@ -46,7 +43,7 @@ export function post_login_request_handler(res: ServerResponse, login_info: Logi
       res.end(JSON.stringify({ error: "Invalid Username and Password combination" }));
     } else {
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ UID: id }));
+      res.end(JSON.stringify(id));
     }
   });
 }

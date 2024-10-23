@@ -29,7 +29,7 @@
       <button @click="request_login">Log In!</button>
       <br />
       <button>Forgot Password?</button>
-      <!--<p v-if="login_signup_error_message" style="color: red">{{ login_errorMessage }}</p>-->
+      <p v-if="login_error_message" style="color: red">{{ login_error_message }}</p>
     </div>
   </div>
 </template>
@@ -66,9 +66,12 @@ const signup_template: Signup = {
 const router = useRouter()
 const user = ref<Signup>(signup_template);
 const login = ref<Login>(login_template);
-var signup_error_message = defineModel<string>();
-//var login_error_message = defineModel<string>();
+var signup_error_message = ref<string>("");
+var login_error_message = ref<string>("");
 
+
+//on load
+get_id()
 
 //functions
 function go_to_home() {
@@ -111,6 +114,8 @@ async function register_user() {
     } else {
       const id: UID = await resp.json();
       console.log(`Logged in with id: ${id.UID}`);
+      create_client_id(id.UID);
+      go_to_home();
     }
   }
   catch (err) {
@@ -131,19 +136,30 @@ async function request_login() {
     if (!resp.ok) {
       const error: Api_Error = await resp.json();
       console.error(`Response status: ${resp.status} with errror ${error.error}`);
-      signup_error_message.value = error.error;
+      login_error_message.value = error.error;
     } else {
       const id: UID = await resp.json();
-      console.log(`Logged in with id: ${id.UID}`);
-      create_session_id(id.UID);
+      console.log(`Logged in with id: ${JSON.stringify(id)}`);
+      create_client_id(id.UID);
+      go_to_home();
     }
   }
   catch (err) {
     console.error(`Error parsing json: ${err}`)
   }
 
-  function create_session_id(session_id: number): void {
+}
 
+function create_client_id(client_id: number): void {
+  localStorage.setItem('QuarrelSessionID', String(client_id));
+}
+
+function get_id() {
+  const client_id = localStorage.getItem('QuarrelSessionID');
+  if (!client_id) {
+    return;
+  } else {
+    go_to_home()
   }
 }
 </script>
