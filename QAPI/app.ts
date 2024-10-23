@@ -11,7 +11,7 @@ const pool = createPool({
   database: 'QuarrelDB'
 });
 
-function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): void {
+export function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): void {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('access-control-allow-methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('access-control-allow-headers', 'Content-Type, Authorization');
@@ -30,6 +30,10 @@ function route_request(req: IncomingMessage, res: ServerResponse, mysql: Pool): 
     case 'user':
       //get user or add user
       user_routes(req, res, route, mysql);
+      break
+    
+    case 'post':
+      post_routes(req, res, route, mysql);
       break
 
     case 'post':

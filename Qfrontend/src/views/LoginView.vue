@@ -14,8 +14,8 @@
       <br />
       <input type="password" v-model="user.password2" placeholder="Confirm Password" />
       <br />
-      <button @click="signupSubmit">Sign Up!</button>
-      <p v-if="errorMessage" style="color: red">{{ errorMessage }}</p>
+      <button @click="signup_submit">Sign Up!</button>
+      <p v-if="signup_error_message" style="color: red">{{ signup_error_message }}</p>
     </div>
     <div class="signin">
       <h1>Log In</h1>
@@ -26,10 +26,10 @@
       <p>Password:</p>
       <input type="password" v-model="login.password" placeholder="Enter Password" />
       <br />
-      <button @click="signupSubmit()">Log In!</button>
+      <button @click="request_login">Log In!</button>
       <br />
       <button>Forgot Password?</button>
-      <!--<p v-if="login_errorMessage" style="color: red">{{ login_errorMessage }}</p>-->
+      <p v-if="login_error_message" style="color: red">{{ login_error_message }}</p>
     </div>
   </div>
 </template>
@@ -66,59 +66,100 @@ const signup_template: Signup = {
 const router = useRouter()
 const user = ref<Signup>(signup_template);
 const login = ref<Login>(login_template);
-var errorMessage = defineModel<string>();
-//var login_errorMessage = defineModel<string>();
+var signup_error_message = ref<string>("");
+var login_error_message = ref<string>("");
+
+
+//on load
+get_id()
 
 //functions
-function goToHome() {
+function go_to_home() {
   router.push('/home') // Navigate to home page after login
 }
 
-function signupSubmit() {
+function signup_submit() {
   const signup_attempt = user.value
-  if (signup_attempt === undefined) {
-    errorMessage.value = "Please fill out all of the fields";
-  }
   if (signup_attempt.username === "" || signup_attempt.email === "" || signup_attempt.password === "" || signup_attempt.password2 === "") {
-    errorMessage.value = "Please fill out all of the fields";
+    signup_error_message.value = "Please fill out all of the fields";
   }
   else if (signup_attempt.password !== signup_attempt.password2) {
-    errorMessage.value = "Passwords do not match";
+    signup_error_message.value = "Passwords do not match";
   }
   else {
-    registerUser();
+    register_user();
   }
 }
 
-async function registerUser() {
-  console.log('Sending Login info');
-  const json: User = {
+async function register_user() {
+  console.log('Sending Signup info');
+  const user_json: User = {
     UID: 0,
     Username: user.value.username,
     Password: user.value.password,
     Follow_count: 0
-
-
   }
-  console.log(json);
   try {
     const resp = await fetch('http://localhost:8081/user/signup',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(json),
+        body: JSON.stringify(user_json),
       }
     );
     if (!resp.ok) {
-      throw new Error(`Response status: ${resp.status}`);
+      const error: Api_Error = await resp.json();
+      signup_error_message.value = error.error;
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+    } else {
+      const id: UID = await resp.json();
+      console.log(`Logged in with id: ${id.UID}`);
+      create_client_id(id.UID);
+      go_to_home();
     }
-    const johnny = await resp.json();
-    console.log(johnny);
-    //const logged_user: User = JSON.parse(await resp.json());
-    //console.log(logged_user);
   }
   catch (err) {
     console.error(`Error parsing json: ${err}`)
+  }
+}
+
+async function request_login() {
+  console.log('Sending Login info');
+  try {
+    const resp = await fetch('http://localhost:8081/user/login',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(login.value),
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      login_error_message.value = error.error;
+    } else {
+      const id: UID = await resp.json();
+      console.log(`Logged in with id: ${JSON.stringify(id)}`);
+      create_client_id(id.UID);
+      go_to_home();
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+
+}
+
+function create_client_id(client_id: number): void {
+  localStorage.setItem('QuarrelSessionID', String(client_id));
+}
+
+function get_id() {
+  const client_id = localStorage.getItem('QuarrelSessionID');
+  if (!client_id) {
+    return;
+  } else {
+    go_to_home()
   }
 }
 </script>
