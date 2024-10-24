@@ -46,7 +46,7 @@
 
 .full {
     height: 200%;
-    width: 300px;
+    width: 500px;
     position: absolute;
     left: 63rem;
     top: 0rem;
