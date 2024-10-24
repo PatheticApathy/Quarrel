@@ -72,3 +72,8 @@ interface Login {
   username: string,
   password: string
 }
+
+interface User_votes {
+  UID: number,
+  AID: number
+}

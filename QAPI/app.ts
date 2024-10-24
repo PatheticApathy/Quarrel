@@ -1,5 +1,5 @@
 import { createPool, Pool } from 'mysql';
-import { user_routes, greeting_route, post_routes } from './routes/routes';
+import { user_routes, greeting_route, post_routes, vote_routes } from './routes/routes';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http'
 
 const port: String = '8081';
@@ -34,6 +34,10 @@ export function route_request(req: IncomingMessage, res: ServerResponse, mysql: 
 
     case 'post':
       post_routes(req, res, route, mysql);
+      break
+
+    case 'vote':
+      vote_routes(req, res, route, mysql);
       break
 
     default:
