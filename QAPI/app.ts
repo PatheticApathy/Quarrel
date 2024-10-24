@@ -31,7 +31,7 @@ export function route_request(req: IncomingMessage, res: ServerResponse, mysql: 
       //get user or add user
       user_routes(req, res, route, mysql);
       break
-    
+
     case 'post':
       post_routes(req, res, route, mysql);
       break
@@ -46,9 +46,11 @@ export function route_request(req: IncomingMessage, res: ServerResponse, mysql: 
   }
 }
 
-const server = createServer((req: IncomingMessage, res: ServerResponse) => {
-  route_request(req, res, pool);
-});
+if (require.main === module) {
+  const server = createServer((req: IncomingMessage, res: ServerResponse) => {
+    route_request(req, res, pool);
+  });
 
-console.log(`Running on localhost:${port}`);
-server.listen(port);
+  console.log(`Running on localhost:${port}`);
+  server.listen(port);
+}
