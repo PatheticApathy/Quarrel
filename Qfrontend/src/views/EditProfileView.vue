@@ -1,29 +1,29 @@
 <template>
-    <div class="back">
-        <button @click="go_to_profile_page">Back to Profile Page</button>
-        <h1>Edit Profile</h1>
-    </div>
-    <div class="save">
-        <button @click="go_to_profile_page">Save</button>
-    </div>
-    <div class="upload_background_image">
-        <button>
-        <img src="../assets/upload-image.png" alt="Clickable Image" style="width: 50px; height: 50px;">
-        </button>
-    </div>
-    <span class="dot"></span>
-    <div class="upload_profile_pic">
-        <button>
-        <img src="../assets/upload-image.png" alt="Clickable Image" style="width: 50px; height: 50px;">
-        </button>
-    </div>
-    <div class="edit-name">
-        <p>Name:</p>
-        <input type="text" placeholder="enter new username...">
-    </div>
-    <div class="edit-bio">
-        <p>Bio:</p>
-        <input type="text" placeholder="enter new bio...">
+    <div class="edit-page">
+        <div class="top-bar">
+            <button @click="go_to_profile_page">Back to Profile Page</button>
+            <h1>Edit Profile</h1>
+            <button @click="go_to_profile_page">Save</button>
+        </div>
+        <div class="upload_background_image">
+            <button>
+            <img src="../assets/upload-image.png" alt="Clickable Image" style="width: 50px; height: 50px;">
+            </button>
+        </div>
+        <span class="dot"></span>
+        <div class="upload_profile_pic">
+            <button>
+            <img src="../assets/upload-image.png" alt="Clickable Image" style="width: 50px; height: 50px;">
+            </button>
+        </div>
+        <div class="edit-name">
+            <p>Name:</p>
+            <input type="text" placeholder="enter new username...">
+        </div>
+        <div class="edit-bio">
+            <p>Bio:</p>
+            <input type="text" placeholder="enter new bio...">
+        </div>
     </div>
     <Navbar />
 </template>
@@ -39,47 +39,30 @@ function go_to_profile_page(){
 </script>
 
 <style>
-.back button {
-    border-radius: 20px;
-    background-color: navy;
-    color: white;
-    padding: 20px;
-    font-size: 15px;
-    font-family: 'Verdana', 'sans-serif';
-    font-weight: 900;
-    position: absolute;
-    top: 20px;
-    left: 480px;
+.edit-page { 
+    display: flex;
+    flex-direction: column;
 }
-
-.back h1{
+.top-bar {
     position: absolute;
-    top: 25px;
-    left: 730px;
-}
-
-.save button {
-    border-radius: 20px;
-    background-color: navy;
-    color: white;
+    top: 10px;
+    right: 10px;
+    width: 67vw;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
     padding: 20px;
-    font-size: 15px;
-    font-family: 'Verdana', 'sans-serif';
-    font-weight: 900;
-    position: absolute;
-    top: 20px;
-    left: 1250px;
 }
 
 .upload_background_image button {
     background-color: transparent;
-    position: absolute;
-    top: 175px;
-    left: 875px;
     border: 0px;
     height: 100px;
     width: 100px;
     border-radius: 50%;
+    position: absolute;
+    top: 27vh;
+    right: 27vw; 
 }
 
 .dot {
@@ -105,14 +88,14 @@ function go_to_profile_page(){
 
 .edit-name {
     position: absolute;
-    top: 400px;
-    left: 500px;
+    top: 70vh;
+    right: 5vw;
 }
 
 .edit-bio {
     position: absolute;
-    top: 475px;
-    left: 500px;
+    top: 85vh;
+    right: 5vw;
 }
 
 button:hover {
@@ -142,7 +125,7 @@ button:hover {
 
 input {
   display: block;
-  width: 800px;
+  width: 60vw;
   height: 40px;
   padding-left: 20px;
   margin-bottom: 1px;

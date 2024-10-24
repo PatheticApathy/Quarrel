@@ -199,7 +199,6 @@ function get_id() {
   background-color: navy;
   color: white;
   cursor: pointer;
-  margin-top: 10px;
   border-radius: 0px;
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;

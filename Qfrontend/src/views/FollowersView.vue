@@ -1,9 +1,7 @@
 <template>
-    <div class="back">
+    <div class="top-row">
         <button @click="go_to_profile_page">Back to Profile Page</button>
         <h1>Followers</h1>
-    </div>
-    <div class="save">
         <button @click="go_to_profile_page">Save</button>
     </div>
     <div class="follower-info">
@@ -35,53 +33,22 @@ let followers = [
 </script>
 
 <style>
-.back button {
-    border-radius: 20px;
-    background-color: navy;
-    color: white;
-    padding: 20px;
-    font-size: 15px;
-    font-family: 'Verdana', 'sans-serif';
-    font-weight: 900;
+.top-row {
     position: absolute;
-    top: 20px;
-    left: 480px;
+    top: 10px;
+    right: 10px;
+    width: 67vw;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+
 }
 
 .back h1 {
     position: absolute;
     top: 25px;
     left: 730px;
-}
-
-.save button {
-    border-radius: 20px;
-    background-color: navy;
-    color: white;
-    padding: 20px;
-    font-size: 15px;
-    font-family: 'Verdana', 'sans-serif';
-    font-weight: 900;
-    position: absolute;
-    top: 20px;
-    left: 1250px;
-}
-
-button:hover {
-    background-color: violet;
-    animation: bubble 1s ease-out;
-}
-
-@keyframes bubble {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
 }
 
 #rectangle {
@@ -95,7 +62,8 @@ button:hover {
 .follower-info {
     position: absolute;
     top: 100px;
-    left: 480px;
+    right: 20px;
+    width: 65vw;
     display: flex;
     flex-direction: column;
     gap: 10px;

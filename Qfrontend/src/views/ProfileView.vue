@@ -54,27 +54,26 @@ const user = ref<User>({
 
 <style scoped>
 .profile-content{
-  display: flex;
+  display: block;
   flex-direction: column;
 }
-/* Layout container for the profile page */
+
 .profile-page {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-/* Container for background image and profile picture */
 .background-container {
-    position: absolute; /* Set it to cover the entire viewport */
-    top: 0; /* Align it to the top */
-    right: 0; /* Align it to the left */
-    width: 75vw; /* Full width of the viewport */
-    height: 40vh; /* Full height of the viewport */
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    width: 68vw; 
+    height: 40vh;
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
-    z-index: -1; /* Make sure it's behind other elements */
+    z-index: -1; 
 }
 .background-image {
     width: 100%;
@@ -83,10 +82,10 @@ const user = ref<User>({
     filter: blur(2px);
 }
 
-/* Profile picture styling and overlap */
+
 .profile-pic {
     position: absolute;
-    bottom: -75px; /* Overlapping the bottom of the background image */
+    bottom: -75px;
     left: 100px;
     width: 150px;
     height: 150px;
@@ -101,13 +100,12 @@ const user = ref<User>({
     object-fit: cover;
 }
 
-/* User info section: username, bio, and followers */
 .user-info {
     display: flex;
     flex-direction: column;
-    margin-left: -150px; /* Push to the right of profile picture */
-    margin-top: 100px;
-    gap: 30px;
+    margin-left: -200px; 
+    margin-top: 250px;
+    gap: 10px;
 }
 
 .username {
@@ -129,25 +127,25 @@ const user = ref<User>({
     display: flex;
     gap: 20px;
     margin-top: 10px;
-    flex-wrap: wrap; /* Ensure it stays contained */
+    flex-wrap: wrap;
 }
 
 .followers button {
-    border-radius: 20px;
+    border-radius: 40px;
     background-color: navy;
     color: white;
-    padding: 10px 20px;
+    padding: 10px;
     font-size: 1rem;
     font-family: 'Verdana', 'sans-serif';
     font-weight: 900;
     cursor: pointer;
 }
 
-/* Edit profile button styling */
+
 .edit-profile {
     position: absolute;
-    top: 370px; /* Placed to the right of the profile info */
-    right: 200px;
+    top: 350px; 
+    right: 150px;
 }
 
 .edit-profile button {

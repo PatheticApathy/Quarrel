@@ -1,12 +1,19 @@
 <template>
-    <div class="back">
-        <button @click="go_to_profile_page">Back to Profile Page</button>
-        <h1>Following</h1>
-    </div>
-    <div class="save">
-        <button @click="go_to_profile_page">Save</button>
-    </div>
-    <Navbar />
+  <div class="top-row">
+      <button @click="go_to_profile_page">Back to Profile Page</button>
+      <h1>Following</h1>
+      <button @click="go_to_profile_page">Save</button>
+  </div>
+  <div class="follower-info">
+      <!-- Use v-for to iterate through the followers array -->
+      <button v-for="(follower, index) in followers" :key="index" class="follower-button">
+          <div id="rectangle">
+              <img :src="follower[1]" width="50" height="50">
+              <span class="follower-name">{{ follower[0] }}</span>
+          </div>
+      </button>
+  </div>
+  <Navbar />
 </template>
 
 <script lang="ts" setup>
@@ -14,58 +21,77 @@ import { useRouter } from 'vue-router'
 import Navbar from './NavBarView.vue'
 const router = useRouter();
 
-function go_to_profile_page(){
-    router.push("/profile");
+function go_to_profile_page() {
+  router.push("/profile");
 }
+
+let followers = [
+  ["champ", "../assets/champ-profile-pic.jpg"],
+  ["alex", "../assets/alex-profile-pic.jpg"],
+  ["jordan", "../assets/jordan-profile-pic.jpg"]
+];
 </script>
 
 <style>
-.back button {
-    border-radius: 20px;
-    background-color: navy;
-    color: white;
-    padding: 20px;
-    font-size: 15px;
-    font-family: 'Verdana', 'sans-serif';
-    font-weight: 900;
-    position: absolute;
-    top: 20px;
-    left: 480px;
+.top-row {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 67vw;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+
 }
 
-.back h1{
-    position: absolute;
-    top: 25px;
-    left: 730px;
+.back h1 {
+  position: absolute;
+  top: 25px;
+  left: 730px;
 }
 
-.save button {
-    border-radius: 20px;
-    background-color: navy;
-    color: white;
-    padding: 20px;
-    font-size: 15px;
-    font-family: 'Verdana', 'sans-serif';
-    font-weight: 900;
-    position: absolute;
-    top: 20px;
-    left: 1250px;
+#rectangle {
+  width: 800px;
+  height: 50px;
+  background-color: violet;
+  display: flex;
+  align-items: center;
 }
 
-button:hover {
-        background-color: violet;
-        animation: bubble 1s ease-out;
-    }
+.follower-info {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  width: 65vw;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  @keyframes bubble {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
+.follower-button {
+  background-color: violet;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border: none;
+  width: fit-content;
+}
+
+.follower-info button{
+  background-color: violet;
+}
+
+.follower-info img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 2px solid black;
+  margin-right: 10px;
+}
+
+.follower-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
 </style>
