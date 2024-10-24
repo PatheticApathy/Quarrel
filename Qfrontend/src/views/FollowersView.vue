@@ -6,7 +6,7 @@
     <div class="save">
         <button @click="go_to_profile_page">Save</button>
     </div>
-    <div class="followers">
+    <div class="follower-info">
         <!-- Use v-for to iterate through the followers array -->
         <button v-for="(follower, index) in followers" :key="index" class="follower-button">
             <div id="rectangle">
@@ -92,7 +92,7 @@ button:hover {
     align-items: center;
 }
 
-.followers {
+.follower-info {
     position: absolute;
     top: 100px;
     left: 480px;
@@ -110,11 +110,11 @@ button:hover {
     width: fit-content;
 }
 
-.followers button{
+.follower-info button{
     background-color: violet;
 }
 
-.followers img {
+.follower-info img {
     height: 50px;
     width: 50px;
     border-radius: 50%;

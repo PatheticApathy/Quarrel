@@ -17,11 +17,11 @@
         <img src="../assets/upload-image.png" alt="Clickable Image" style="width: 50px; height: 50px;">
         </button>
     </div>
-    <div class="name">
+    <div class="edit-name">
         <p>Name:</p>
         <input type="text" placeholder="enter new username...">
     </div>
-    <div class="bio">
+    <div class="edit-bio">
         <p>Bio:</p>
         <input type="text" placeholder="enter new bio...">
     </div>
@@ -103,13 +103,13 @@ function go_to_profile_page(){
     border-radius: 50%;
 }
 
-.name {
+.edit-name {
     position: absolute;
     top: 400px;
     left: 500px;
 }
 
-.bio {
+.edit-bio {
     position: absolute;
     top: 475px;
     left: 500px;

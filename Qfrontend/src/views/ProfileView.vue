@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Navbar from './NavBarView.vue'
-
+import { ref } from "vue"
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -16,131 +16,166 @@ const go_to_followers = () => {
 const go_to_following = () => {
   router.push('/following')
 }
+
+const user = ref<User>({
+  UID: 12345,
+  Username: "Dr. Bowman",
+  Password: "imtotallyadoctor",
+  Follow_count: 12414,
+  Bio: "Finally a doctor! Latech Computer Science"
+})
 </script>
 
 <template>
-    <div class="background-image">
-      <img src="../assets/background-image.jpg" width = 1000 height = 250>
+    <div class="profile-page">
+        <Navbar />
+        <div class="profile-content">
+            <div class="background-container">
+                <img class="background-image" src="../assets/background-image.jpg" alt="Background Image">
+                <div class="profile-pic">
+                    <img src="../assets/profile-pic.jpg" alt="Profile Picture">
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="username">{{ user.Username }}
+                  <div class="edit-profile">
+                    <button @click="go_to_edit_profile">Edit Profile</button>
+                  </div>
+                </div>
+                <div class="bio">{{ user.Bio }}</div>
+                <div class="followers">
+                    <button @click="go_to_followers">Followers: {{ user.Follow_count }}</button>
+                    <button @click="go_to_following">Following: 0</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="profile-pic">
-      <img src="../assets/profile-pic.jpg" width = 150 height = 150>
-    </div>
-    <div class="explore">
-      <h1>Dr. Bowman</h1>
-    </div>
-    <div class="bio">
-      <p>Finally a doctor!</p>
-      <p>Latech Computer Science</p>
-    </div>
-    <div class="followers">
-      <button @click="go_to_followers">Followers: 12,414</button>
-      <button @click="go_to_following">Following: 0</button>
-    </div>
-    <div class="edit">
-      <button @click="go_to_edit_profile">Edit Profile</button>
-    </div>
-    <Navbar />
 </template>
 
-<style>
+<style scoped>
+.profile-content{
+  display: flex;
+  flex-direction: column;
+}
+/* Layout container for the profile page */
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
 
+/* Container for background image and profile picture */
+.background-container {
+    position: absolute; /* Set it to cover the entire viewport */
+    top: 0; /* Align it to the top */
+    right: 0; /* Align it to the left */
+    width: 75vw; /* Full width of the viewport */
+    height: 40vh; /* Full height of the viewport */
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    z-index: -1; /* Make sure it's behind other elements */
+}
 .background-image {
-    position: absolute;
-    top: 0px;
-    left: 460px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     filter: blur(2px);
-    -webkit-filter: blur(2px);
 }
 
+/* Profile picture styling and overlap */
 .profile-pic {
-  position: absolute;
-  top: 175px;
-  left: 550px;
-  border-radius: 50%;
-  border: 5px solid black;
-  overflow: hidden;
+    position: absolute;
+    bottom: -75px; /* Overlapping the bottom of the background image */
+    left: 100px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid white;
+    overflow: hidden;
 }
 
-h1 {
-  position: absolute;
-  top: 275px;
-  left: 730px;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* User info section: username, bio, and followers */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: -150px; /* Push to the right of profile picture */
+    margin-top: 100px;
+    gap: 30px;
+}
+
+.username {
+    font-size: 1.8rem;
+    font-family: 'Verdana', 'sans-serif';
+    font-weight: 900;
+    display: flex;
+    flex-direction: row;
 }
 
 .bio {
-  display: block;
-  justify-content: space-between;
-  gap: 10px;
-  position: absolute;
-  top: 375px;
-  left: 575px;
-  font-size: 15px;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
+    font-size: 1.2rem;
+    font-family: 'Verdana', 'sans-serif';
+    font-weight: 900;
+    max-width: 400px;
 }
 
 .followers {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  position: absolute;
-  top: 450px;
-  left: 575px;
-  color: white;
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    flex-wrap: wrap; /* Ensure it stays contained */
 }
 
 .followers button {
-  border-radius: 40px;
-  background-color: navy;
-  color: white;
-  padding: 20px;
-  font-size: 15px;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
-}
-
-  .edit button {
-    position: absolute;
-    top: 300px;
-    left: 1050px;
-    width: 150px;
-    height: 150px;
-    border: 0px solid navy;
+    border-radius: 20px;
     background-color: navy;
     color: white;
-    cursor: pointer;
-    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
     font-family: 'Verdana', 'sans-serif';
     font-weight: 900;
-    font-size: 15px;
-    margin-top: 20px;
-    border-radius: 50%;
-  }
+    cursor: pointer;
+}
 
-  button:hover {
-        background-color: violet;
-        animation: bubble 1s ease-out;
-    }
+/* Edit profile button styling */
+.edit-profile {
+    position: absolute;
+    top: 370px; /* Placed to the right of the profile info */
+    right: 200px;
+}
 
-  @keyframes bubble {
+.edit-profile button {
+    background-color: navy;
+    color: white;
+    border-radius: 50px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-family: 'Verdana', 'sans-serif';
+    font-weight: 900;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: violet;
+    animation: bubble 1s ease-out;
+}
+
+@keyframes bubble {
     0% {
-      transform: scale(1);
+        transform: scale(1);
     }
     50% {
-      transform: scale(1.2);
+        transform: scale(1.2);
     }
     100% {
-      transform: scale(1);
+        transform: scale(1);
     }
-  }
-
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
 }
 </style>
+
