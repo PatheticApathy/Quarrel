@@ -40,15 +40,15 @@ export function get_arg_by_id(id: number, sql: Pool, callback: (err: Error | und
   })
 };
 
-export function add_argument(argument: Arguments, sql: Pool, callback: (err: Error | undefined, argumet: Arguments | undefined) => void): void {
+export function add_argument(argument: Arguments, sql: Pool, callback: (err: Error | undefined, argumet: number | undefined) => void): void {
   sql.query('INSERT INTO Arguments (Comment, Likes, Views, Poster, T1_votes, T2_votes) VALUES (?, ?, ?, ?, ?, ?)',
-    [argument.Comment, argument.Likes, argument.Views, argument.Poster, argument.T1_votes, argument.T2_votes], function (error, result: Arguments, _) {
+    [argument.Comment, argument.Likes, argument.Views, argument.Poster, argument.T1_votes, argument.T2_votes], function (error, result: OkPacket, _) {
       if (error) {
         console.error('Could not complete transaction:', error);
         callback(error, undefined);
       }
-      console.log(`Argument ${result} added`);
-      callback(undefined, result);
+      console.log(`Argument ${result.insertId} added`);
+      callback(undefined, result.insertId);
     });
 };
 
