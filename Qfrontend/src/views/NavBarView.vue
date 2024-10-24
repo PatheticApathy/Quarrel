@@ -102,7 +102,7 @@ header {
   height: 100%;
   width: 396px;
   border-right: 1px solid var(--color-border);
-  position: absolute;
+  position: fixed;
   left: 0rem;
   top: 0rem;
 }
