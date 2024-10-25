@@ -4,7 +4,8 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  font-weight: normal;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
 }
 
 a,
@@ -15,12 +16,17 @@ a,
   padding: 3px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 0px) {
   body {
-    display: flex;
     place-items: center;
-    background-image: linear-gradient(indigo, thistle);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; 
+    background: linear-gradient(to bottom, indigo, thistle); 
+    background-attachment: fixed;
     color: white;
+    font-family: 'Verdana', 'sans-serif';
+    font-weight: 900;
   }
 
   #app {
@@ -28,4 +34,33 @@ a,
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
+
+  button {
+  border: 10px solid navy;
+  background-color: navy;
+  color: white;
+  cursor: pointer;
+  border-radius: 0px;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  border-radius: 20px;
+}
+button:hover {
+  background-color: violet;
+  border-color: violet;
+  animation: bubble 1s ease-out;
+}
+
+@keyframes bubble {
+0% {
+transform: scale(1);
+}
+50% {
+transform: scale(1.2);
+}
+100% {
+transform: scale(1);
+}
+}
+
 }

@@ -2,7 +2,8 @@ interface User {
   UID: number,
   Username: string,
   Password: string,
-  Follow_count: number
+  Follow_count: number,
+  Bio: string
 }
 
 interface Follower {

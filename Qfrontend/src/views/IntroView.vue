@@ -2,7 +2,7 @@
     <header>
       <div class = "intro_page">
       <div class = "letter">
-        <img src="../assets/Quarrel_letter.svg" width = 500 height = 600>
+        <img src="../assets/Quarrel_letter.svg" width = 450 height = 550>
       </div>
       <div class="intro">
           <h1>Happening Now</h1>
@@ -40,19 +40,19 @@
   .letter {
     position: absolute;
     top: 0px;
-    left: 80px;
+    left: 70px;
     filter: invert(100%);
   }
 
   .intro {
     position: absolute;
-    top: 100px;
+    top: 50px;
     left: 650px;
     margin-right: 40px;
   }
 
   h1 {
-    font-size: 70px;
+    font-size: 60px;
     font-family: 'Verdana', 'sans-serif';
     font-weight: 900;
   }
