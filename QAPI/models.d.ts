@@ -1,6 +1,8 @@
 interface User {
   UID: number,
   Username: string,
+  Bio: string,
+  Profile_pic: string,
   Password: string,
   Follow_count: number
 }
