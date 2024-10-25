@@ -69,8 +69,7 @@ async function get_args() {
       <h1>{{ p.Comment }}</h1>
       <div v-if="!p.Hyperlink"></div>
       <div v-else>
-        <img width%="73.529411764705882352941176470588" height%="32.15020576131687242798353909465"
-          v-bind:src=p.Hyperlink>
+        <img v-bind:src=p.Hyperlink>
       </div>
       <div style="text-align: left;">Likes: {{ p.Likes }} Views: {{ p.Views }} Replies: 10</div>
     </div>
@@ -93,5 +92,10 @@ async function get_args() {
   background-color: #708090;
   border-radius: 25px;
   padding: 20px;
+}
+
+img {
+  max-width: 450px;
+  max-height: 300px;
 }
 </style>
