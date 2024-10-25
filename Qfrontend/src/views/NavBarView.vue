@@ -103,23 +103,24 @@ header {
   width: 25.78125%;
   border-right: 1px solid var(--color-border);
   position: fixed;
-  left: 0rem;
-  top: 0rem;
+  left: 0%;
+  top: 0%;
 }
 
 nav a {
   display: inline-block;
-  padding: 0 1rem;
+  padding-left: 5.614035087719298245614035087719%;
+  width: 100%;
 }
 
 nav a:hover {
     background-color: violet;
-  }
+}
 
 .logo {
-  position: absolute;
-  left: 6rem;
-  top: 0.5rem;
+  position: relative;
+  left: 24.242424242424242424242424242424%;
+  top: 1.067235859124866595517609391676%;
   font-size: 3rem;
   text-align: left;
   color: white;
@@ -128,31 +129,26 @@ nav a:hover {
 }
 
 .leftNavBarNav {
-  height: 552.75px;
-  width: 285px;
+  height: 73.739327641408751334044823906083%;
+  width: 95%
 }
 
 .leftNavBarDiv1 {
-  height: 552.75px;
-  width: 259px;
-  position: absolute;
-  left: 8rem;
-  top: 5rem;
-}
-
-.leftNavBarA {
-  height: 50.25px;
-  width: 259px;
+  height: 73.739327641408751334044823906083%;
+  width: 75.757575757575757575757575757576%;
+  position: relative;
+  left: 32.323232323232323232323232323232%;
+  top: 0%;
 }
 
 .leftNavBarDiv2 {
-  height: 50.25px;
-  width: 250px;
+  height: 5%;
+  width: 90%;
   color: white;
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;
 }
-
+cd one
 .leftNavBarDiv2:hover {
   color: darkblue;
 }
@@ -168,13 +164,13 @@ nav a:hover {
 }
 
 .leftNavBarDiv4 {
-  height: 55.1334px;
-  width: 250px;
+  height: 5%;
+  width: 100%;
 }
 
 .leftNavBarSpan {
-  height: 55.1334px;
-  width: 200px;
+  height: 100%;
+  width: 100%;
 }
 
 g {
