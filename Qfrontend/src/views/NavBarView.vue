@@ -9,7 +9,7 @@ import { RouterLink } from 'vue-router'
         <div class="logo">
           <span class="logospan">Quarrel</span>
         </div>
-        
+
         <div class="leftNavBarDiv1">
           <nav class="leftNavBarNav" aria-label="Primary" role="Navigation">
             <RouterLink to="/home">
@@ -27,7 +27,7 @@ import { RouterLink } from 'vue-router'
                 </div>
               </div>
             </RouterLink>
-            <RouterLink to="/about">
+            <RouterLink to="/create">
               <div class="leftNavBarDiv2">
                 <div class="leftNavBarDiv3">
                   <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
@@ -37,7 +37,7 @@ import { RouterLink } from 'vue-router'
                   </svg>
                 </div>
                 <div class="leftNavBarDiv4">
-                  <span class="leftNavBarSpan" style="text-overflow:unset;">About</span>
+                  <span class="leftNavBarSpan" style="text-overflow:unset;">Create</span>
                 </div>
               </div>
             </RouterLink>
@@ -91,7 +91,6 @@ import { RouterLink } from 'vue-router'
 </template>
 
 <style scoped>
-
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -113,8 +112,8 @@ nav a {
 }
 
 nav a:hover {
-    background-color: violet;
-  }
+  background-color: violet;
+}
 
 .logo {
   position: absolute;
@@ -198,5 +197,4 @@ path {
     margin-top: 1rem;
   }
 }
-
 </style>
