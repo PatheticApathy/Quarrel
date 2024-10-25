@@ -71,7 +71,7 @@ export function reply_handler(res: ServerResponse, replies: Replies, sql: Pool):
       res.writeHead(500);
       res.end('Coud not complete transaction');
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(user));
     }
   });
