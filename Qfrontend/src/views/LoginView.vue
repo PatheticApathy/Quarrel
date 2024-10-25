@@ -28,7 +28,7 @@
       <br />
       <button @click="request_login">Log In!</button>
       <br />
-      <button>Forgot Password?</button>
+      <button @click="go_to_home">Forgot Password?</button>
       <p v-if="login_error_message" style="color: red">{{ login_error_message }}</p>
     </div>
   </div>
@@ -97,7 +97,8 @@ async function register_user() {
     UID: 0,
     Username: user.value.username,
     Password: user.value.password,
-    Follow_count: 0
+    Follow_count: 0,
+    Bio: "blah"
   }
   try {
     const resp = await fetch('http://localhost:8081/user/signup',
@@ -198,7 +199,6 @@ function get_id() {
   background-color: navy;
   color: white;
   cursor: pointer;
-  margin-top: 10px;
   border-radius: 0px;
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;
@@ -211,21 +211,6 @@ function get_id() {
   animation: bubble 1s ease-out;
 }
 
-.signin button {
-  width: 500px;
-  height: 40px;
-  border: 3px solid navy;
-  background-color: navy;
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-  border-radius: 5px;
-}
-
-.signin button:hover {
-  background-color: darkblue;
-}
-
 .register {
   color: white;
   font-family: 'Verdana', 'sans-serif';
@@ -234,31 +219,6 @@ function get_id() {
   position: absolute;
   top: 60px;
   left: 100px;
-}
-
-.register input {
-  display: block;
-  width: 500px;
-  height: 40px;
-  padding-left: 20px;
-  margin-bottom: 1px;
-  border: 3px solid navy;
-  border-radius: 5px;
-}
-
-.register button {
-  width: 500px;
-  height: 40px;
-  border: 3px solid navy;
-  background-color: navy;
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-  border-radius: 5px;
-}
-
-.register button:hover {
-  background-color: darkblue;
 }
 
 .register input {
