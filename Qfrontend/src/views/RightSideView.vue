@@ -26,15 +26,15 @@
         <div class="followSuggestions">Who to Follow
             <div class="follow">
                 <div class="followObject">
-                    <img src="../assets/profile-pic.jpg" width = 40 height = 40> 
+                    <img src="../assets/profile-pic.jpg" width = 12.313375404032630444820686470679%> 
                         <span> Bowman</span>
                 </div>
                 <div class="followObject">
-                    <img src="../assets/profile-pic.jpg" width = 40 height = 40> 
+                    <img src="../assets/profile-pic.jpg" width = 12.313375404032630444820686470679%> 
                         <span> Bowman</span>
                 </div>
                 <div class="followObject">
-                    <img src="../assets/profile-pic.jpg" width = 40 height = 40> 
+                    <img src="../assets/profile-pic.jpg" width = 12.313375404032630444820686470679%> 
                         <span> Bowman</span>
                 </div>
             </div>
@@ -56,13 +56,13 @@
 .searchDiv {
     position: relative;
     left: 6.666666666666666666666666666667%;
-    top: 1rem;
+    top: 0.82901554404145077720207253886%;
     border-radius: 50px;
     border: 2px solid var(--color-border);
     background-color: mediumpurple;
     border-color: mediumpurple;
     width: 70%;
-    height: 40px;
+    height: 2.668089647812166488794023479189%;
 }
 
 .searchDiv:focus-within {
@@ -71,11 +71,11 @@
 
 .search {
     position: relative;
-    top: 5px;
+    top: 12.5%;
     left: 8.571428571428571428571428571429%;
     background-color: mediumpurple;
     width: 80%;
-    height: 20px;
+    height: 50%;
     border: none;
 }
 
@@ -87,48 +87,48 @@
 
 .trendingSuggestions {
     position: relative;
-    left: 2.5rem;
-    top: 3rem;
+    left: 6.666666666666666666666666666667%;
+    top: 2.48704663212435233160621761658%;
     border-radius: 15px;
     border: 2px solid var(--color-border);
-    padding-top: 10px;
-    padding-left: 15px;
-    width: 350px;
-    height: 550px;
+    padding-top: 3.012048192771084337349397590361%;
+    padding-left: 4.285714285714285714285714285714%;
+    width: 70%;
+    height: 36.686232657417289220917822838847%;
     font-size: 25px;
-    padding-bottom: 10px;
+    padding-bottom: 3.012048192771084337349397590361%;
 }
 
 .trendingObject {
-    padding-bottom: 30px;
+    padding-bottom: 9.05454545454545454545454545454545%;
 }
 
 .trending {
-    padding-top: 30px;
+    padding-top: 9.036144578313253012048192771084%;
     font-size: 18px;
 }
 
 .followSuggestions {
     position: relative;
-    left: 2.5rem;
-    top: 5rem;
+    left: 6.666666666666666666666666666667%;
+    top: 4.145077720207253886010362694301%;
     border-radius: 15px;
     border: 2px solid var(--color-border);
-    padding-top: 10px;
-    padding-left: 15px;
-    width: 350px;
-    height: 350px;
+    padding-top: 2.857142857142857142857142857143%;
+    padding-left: 4.285714285714285714285714285714%;
+    width: 70%;
+    height: 23.345784418356456776947705442903%;
     font-size: 25px;
-    padding-bottom: 10px;
+    padding-bottom: 2.857142857142857142857142857143%;
 }
 
 .follow {
-    padding-top: 30px;
+    padding-top: 8.571428571428571428571428571429%;
     font-size: 20px;
 }
 
 .followObject {
-    padding-bottom: 30px;
+    padding-bottom: 8.571428571428571428571428571429%;
 }
 
 </style>
