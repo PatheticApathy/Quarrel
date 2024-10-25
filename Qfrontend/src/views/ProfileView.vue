@@ -54,8 +54,9 @@ const user = ref<User>({
 
 <style scoped>
 .profile-content{
-  display: block;
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .profile-page {
@@ -82,7 +83,6 @@ const user = ref<User>({
     filter: blur(2px);
 }
 
-
 .profile-pic {
     position: absolute;
     bottom: -75px;
@@ -103,8 +103,9 @@ const user = ref<User>({
 .user-info {
     display: flex;
     flex-direction: column;
-    margin-left: -200px; 
-    margin-top: 250px;
+    position: absolute;
+    bottom: 7vh;
+    left: 35vw;
     gap: 10px;
 }
 
@@ -114,6 +115,7 @@ const user = ref<User>({
     font-weight: 900;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .bio {
@@ -141,13 +143,6 @@ const user = ref<User>({
     cursor: pointer;
 }
 
-
-.edit-profile {
-    position: absolute;
-    top: 350px; 
-    right: 150px;
-}
-
 .edit-profile button {
     background-color: navy;
     color: white;
@@ -157,6 +152,7 @@ const user = ref<User>({
     font-family: 'Verdana', 'sans-serif';
     font-weight: 900;
     cursor: pointer;
+    margin-left: 20vw;
 }
 
 button:hover {
