@@ -20,21 +20,21 @@ import { ref } from 'vue'
 //  {
 //   PID: 27,
 //    Comment: "This shit may or may not work",
- //   Likes: 5000000000,
-  //  Views: 0,
-   // Poster: 2,
-   // Hyperlink: "https://imgs.search.brave.com/qqE_mtUsi44VqSRHrTcBOrjrwFYeo2FjIh8tpXTs_z8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/a2luZ2ljZS5jb20v/Y2RuL3Nob3AvZmls/ZXMvc29uaWMtdGhl/LWhlZGdlaG9nLXgt/a2luZy1pY2UtbWV0/YWwtc29uaWMtbmVj/a2xhY2Uta2luZy1p/Y2UtMzkxNTUyNDk1/NDUzOTEuanBnP3Y9/MTcyNzI5OTMxMyZ3/aWR0aD0xMTAw"
- // }
+//   Likes: 5000000000,
+//  Views: 0,
+// Poster: 2,
+// Hyperlink: "https://imgs.search.brave.com/qqE_mtUsi44VqSRHrTcBOrjrwFYeo2FjIh8tpXTs_z8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/a2luZ2ljZS5jb20v/Y2RuL3Nob3AvZmls/ZXMvc29uaWMtdGhl/LWhlZGdlaG9nLXgt/a2luZy1pY2UtbWV0/YWwtc29uaWMtbmVj/a2xhY2Uta2luZy1p/Y2UtMzkxNTUyNDk1/NDUzOTEuanBnP3Y9/MTcyNzI5OTMxMyZ3/aWR0aD0xMTAw"
+// }
 //]
 //)
 
-const list_post = await get_post();
-const posts = ref<Array<Post>>(list_post!);
+let posts = ref<Array<Post>>([]);
+get_post();
+
 const home_error_message = ref<String>('');
 
 async function get_post() {
-  //do shit
-  console.log('Sending Login info');
+  console.log('Fetching post');
   try {
     const resp = await fetch('http://localhost:8081/post/post/batch',
       {
@@ -47,8 +47,9 @@ async function get_post() {
       console.error(`Response status: ${resp.status} with errror ${error.error}`);
       home_error_message.value = error.error;
     } else {
-      const posts: Array<Post> = await resp.json();
-      return posts;
+      let text = await resp.text();
+      posts.value = JSON.parse(text);
+      console.log("Succesfully fetched");
     }
   }
   catch (err) {
@@ -66,15 +67,16 @@ async function get_args() {
   <div class="post_container">
     <div v-for="p in posts" class="post">
       <h1>{{ p.Comment }}</h1>
-        <div v-if="!p.Hyperlink"></div>
-        <div v-else>
-          <img width%="73.529411764705882352941176470588" height%="32.15020576131687242798353909465"
-            v-bind:src=p.Hyperlink>
-        </div>
-        <div style="text-align: left;">Likes: {{ p.Likes }} Views: {{ p.Views }} Replies: 10</div>        
+      <div v-if="!p.Hyperlink"></div>
+      <div v-else>
+        <img width%="73.529411764705882352941176470588" height%="32.15020576131687242798353909465"
+          v-bind:src=p.Hyperlink>
+      </div>
+      <div style="text-align: left;">Likes: {{ p.Likes }} Views: {{ p.Views }} Replies: 10</div>
     </div>
   </div>
 </template>
+
 
 <style>
 .post_container {
