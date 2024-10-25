@@ -77,7 +77,7 @@ export function add_reply(replies: Replies, sql: Pool, callback: (err: Error | u
 };
 
 export function get_rand_posts(sql: Pool, callback: (err: Error | undefined, posts: Array<Post> | undefined) => void): void {
-  sql.query('SELECT * FROM Post ORDER BY RAND() LIMIT 10;', function (error, result: Array<Post>, _) {
+  sql.query('SELECT * FROM Post ORDER BY RAND()+1 LIMIT 10;', function (error, result: Array<Post>, _) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);
@@ -93,7 +93,7 @@ export function get_rand_posts(sql: Pool, callback: (err: Error | undefined, pos
 };
 
 export function get_rand_args(sql: Pool, callback: (err: Error | undefined, posts: Array<Post> | undefined) => void): void {
-  sql.query('SELECT * FROM Arguments ORDER BY RAND() LIMIT 10;', function (error, result: Array<Post>, _) {
+  sql.query('SELECT * FROM Arguments ORDER BY RAND()+1 LIMIT 10;', function (error, result: Array<Post>, _) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);

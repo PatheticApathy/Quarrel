@@ -100,7 +100,7 @@ header {
 
 .full {
   height: 100%;
-  width: 396px;
+  width: 25.78125%;
   border-right: 1px solid var(--color-border);
   position: fixed;
   left: 0rem;
