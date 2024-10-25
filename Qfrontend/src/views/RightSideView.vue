@@ -46,22 +46,22 @@
 
 .full {
     height: 200%;
-    width: 500px;
+    width: 32.552083333333333333333333333333%;
     position: absolute;
-    left: 63rem;
-    top: 0rem;
+    left: 65.625%;
+    top: 0%;
     border-left: 1px solid var(--color-border);
 }
 
 .searchDiv {
     position: relative;
-    left: 2.5rem;
+    left: 6.666666666666666666666666666667%;
     top: 1rem;
     border-radius: 50px;
     border: 2px solid var(--color-border);
     background-color: mediumpurple;
     border-color: mediumpurple;
-    width: 350px;
+    width: 70%;
     height: 40px;
 }
 
@@ -72,9 +72,9 @@
 .search {
     position: relative;
     top: 5px;
-    left: 30px;
+    left: 8.571428571428571428571428571429%;
     background-color: mediumpurple;
-    width: 280px;
+    width: 80%;
     height: 20px;
     border: none;
 }
