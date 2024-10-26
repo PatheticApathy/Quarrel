@@ -9,10 +9,10 @@ const profile = ref<User>({UID: 0, Username: "Babaoey", Password: "", Follow_cou
 display_data();
 
 const go_to_edit_profile = () => {
-  router.push('/edit-profile') 
+  router.push('/edit-profile')
 }
 const go_to_followers = () => {
-   router.push('/followers')
+  router.push('/followers')
 }
 
 const go_to_following = () => {
@@ -81,123 +81,149 @@ async function display_data() {
 </template>
 
 <style scoped>
-.profile-content{
+.profile-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .profile-page {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .background-container {
-    position: absolute; 
-    top: 0; 
-    right: 0; 
-    width: 68vw; 
-    height: 40vh;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    z-index: -1; 
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 68vw;
+  height: 40vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  z-index: -1;
 }
+
 .background-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: blur(2px);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(2px);
 }
 
 .profile-pic {
-    position: absolute;
-    bottom: -75px;
-    left: 100px;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 5px solid white;
-    overflow: hidden;
+  position: absolute;
+  bottom: -75px;
+  left: 100px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid white;
+  overflow: hidden;
 }
 
 .profile-pic img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .user-info {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    bottom: 7vh;
-    left: 35vw;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-left: -200px;
+  margin-top: 250px;
+  gap: 10px;
 }
 
 .username {
-    font-size: 1.8rem;
-    font-family: 'Verdana', 'sans-serif';
-    font-weight: 900;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  font-size: 1.8rem;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 7vh;
+  left: 35vw;
+  gap: 10px;
+}
+
+.username {
+  font-size: 1.8rem;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .bio {
-    font-size: 1.2rem;
-    font-family: 'Verdana', 'sans-serif';
-    font-weight: 900;
-    max-width: 400px;
+  font-size: 1.2rem;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  max-width: 400px;
 }
 
 .followers {
-    display: flex;
-    gap: 20px;
-    margin-top: 10px;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  flex-wrap: wrap;
 }
 
 .followers button {
-    border-radius: 40px;
-    background-color: navy;
-    color: white;
-    padding: 10px;
-    font-size: 1rem;
-    font-family: 'Verdana', 'sans-serif';
-    font-weight: 900;
-    cursor: pointer;
+  border-radius: 40px;
+  background-color: navy;
+  color: white;
+  padding: 10px;
+  font-size: 1rem;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  cursor: pointer;
 }
 
 .edit-profile button {
-    background-color: navy;
-    color: white;
-    border-radius: 50px;
-    padding: 15px 30px;
-    font-size: 1rem;
-    font-family: 'Verdana', 'sans-serif';
-    font-weight: 900;
-    cursor: pointer;
-    margin-left: 20vw;
+  background-color: navy;
+  color: white;
+  border-radius: 50px;
+  padding: 15px 30px;
+  font-size: 1rem;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.edit-profile button {
+  background-color: navy;
+  color: white;
+  border-radius: 50px;
+  padding: 15px 30px;
+  font-size: 1rem;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  cursor: pointer;
+  margin-left: 20vw;
 }
 
 button:hover {
-    background-color: violet;
-    animation: bubble 1s ease-out;
+  background-color: violet;
+  animation: bubble 1s ease-out;
 }
 
 @keyframes bubble {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
-
