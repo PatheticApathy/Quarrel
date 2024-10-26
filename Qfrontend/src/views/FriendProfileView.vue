@@ -4,13 +4,11 @@ import { ref } from "vue"
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const UID: number = Number(get_id());
-const profile = ref<User>({UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..."});
-display_data();
 
 const go_to_edit_profile = () => {
   router.push('/edit-profile') 
 }
+
 const go_to_followers = () => {
    router.push('/followers')
 }
@@ -19,39 +17,13 @@ const go_to_following = () => {
   router.push('/following')
 }
 
-function get_id() {
-  const client_id = localStorage.getItem('QuarrelSessionID');
-  if (!client_id) {
-    return;
-  } else {
-    return client_id;
-  }
-}
-
-async function display_data() {
-    const base_path = `http://localhost:8081/user/find/${UID}`;
-    try {
-    const resp = await fetch(base_path,
-      {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
-    if (!resp.ok) {
-      const error: Api_Error = await resp.json();
-      console.error(`Response status: ${resp.status} with errror ${error.error}`);
-    } else {
-       const user: User = await resp.json();
-       console.log(JSON.stringify(user));
-       profile.value.UID = user.UID;
-       profile.value.Follow_count = user.Follow_count;
-       profile.value.Username = user.Username;
-    }
-  }
-  catch (err) {
-    console.error(`Error parsing json: ${err}`)
-  }
-}
+const user = ref<User>({
+  UID: 12346,
+  Username: "Champ",
+  Password: "Latech1894",
+  Follow_count: 593,
+  Bio: "Loves: Louisiana Tech \n Hates: Squirrels"
+})
 </script>
 
 <template>
@@ -65,15 +37,15 @@ async function display_data() {
                 </div>
             </div>
             <div class="user-info">
-                <div class="username">{{ profile.Username }}
+                <div class="username">{{ user.Username }}
                   <div class="edit-profile">
-                    <button @click="go_to_edit_profile">Edit Profile</button>
+                    <button>Follow</button>
                   </div>
                 </div>
-                <div class="bio">{{ profile.Bio }}</div>
+                <div class="bio">{{ user.Bio }}</div>
                 <div class="followers">
-                    <button @click="go_to_followers">Followers: {{ profile.Follow_count }}</button>
-                    <button @click="go_to_following">Following: 0</button>
+                    <button>Followers: {{ user.Follow_count }}</button>
+                    <button>Following: 12414</button>
                 </div>
             </div>
         </div>
@@ -82,9 +54,8 @@ async function display_data() {
 
 <style scoped>
 .profile-content{
-  display: flex;
+  display: block;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .profile-page {
@@ -111,6 +82,7 @@ async function display_data() {
     filter: blur(2px);
 }
 
+
 .profile-pic {
     position: absolute;
     bottom: -75px;
@@ -131,9 +103,8 @@ async function display_data() {
 .user-info {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    bottom: 7vh;
-    left: 35vw;
+    margin-left: -200px; 
+    margin-top: 250px;
     gap: 10px;
 }
 
@@ -143,7 +114,6 @@ async function display_data() {
     font-weight: 900;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
 }
 
 .bio {
@@ -162,13 +132,20 @@ async function display_data() {
 
 .followers button {
     border-radius: 40px;
-    background-color: navy;
+    background-color: transparent;
     color: white;
     padding: 10px;
     font-size: 1rem;
     font-family: 'Verdana', 'sans-serif';
     font-weight: 900;
     cursor: pointer;
+}
+
+
+.edit-profile {
+    position: absolute;
+    top: 350px; 
+    right: 150px;
 }
 
 .edit-profile button {
@@ -180,10 +157,9 @@ async function display_data() {
     font-family: 'Verdana', 'sans-serif';
     font-weight: 900;
     cursor: pointer;
-    margin-left: 20vw;
 }
 
-button:hover {
+.username button:hover {
     background-color: violet;
     animation: bubble 1s ease-out;
 }
@@ -200,4 +176,3 @@ button:hover {
     }
 }
 </style>
-
