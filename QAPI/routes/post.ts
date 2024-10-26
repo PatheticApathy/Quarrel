@@ -24,6 +24,8 @@ export function post_routes(req: IncomingMessage, res: ServerResponse, route: Ar
           }
           try {
             const post: Post = JSON.parse(json!);
+            post.Likes = 0;
+            post.Views = 0;
             post_handler(res, post, sql);
           }
           catch (error) {
