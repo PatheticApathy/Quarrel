@@ -9,7 +9,6 @@ import { RouterLink } from 'vue-router'
         <div class="logo">
           <span class="logospan">Quarrel</span>
         </div>
-        
         <div class="leftNavBarDiv1">
           <nav class="leftNavBarNav" aria-label="Primary" role="Navigation">
             <RouterLink to="/home">
