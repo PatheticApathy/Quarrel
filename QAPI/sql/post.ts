@@ -18,8 +18,8 @@ export function get_post_by_id(id: number, sql: Pool, callback: (err: Error | un
 };
 
 export function add_post(post: Post, sql: Pool, callback: (err: Error | undefined, id: number | undefined) => void): void {
-  sql.query('INSERT INTO Post (Comment, Likes, Views, Poster) VALUES (?, ?, ?, ?)',
-    [post.Comment, post.Likes, post.Views, post.Poster], function (error, result: OkPacket, _) {
+  sql.query('INSERT INTO Post (Comment, Likes, Views, Poster, Hyperlink) VALUES (?, ?, ?, ?, ?)',
+    [post.Comment, post.Likes, post.Views, post.Poster, post.Hyperlink], function (error, result: OkPacket, _) {
       if (error) {
         console.error('Could not complete transaction:', error);
         callback(error, undefined);

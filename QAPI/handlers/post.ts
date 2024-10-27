@@ -21,7 +21,8 @@ export function post_handler(res: ServerResponse, post: Post, sql: Pool): void {
   add_post(post, sql, (err, id: number | undefined) => {
     if (err) {
       res.writeHead(500);
-      res.end('Coud not complete transaction');
+      console.error(`Error: ${err}`);
+      res.end({ error: err });
     } else {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(id));

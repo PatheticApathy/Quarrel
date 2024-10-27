@@ -120,7 +120,7 @@ async function register_user() {
     }
   }
   catch (err) {
-    console.error(`Error parsing json: ${err}`)
+    console.error(`Connection error: ${err}`)
   }
 }
 
