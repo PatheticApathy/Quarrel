@@ -2,19 +2,57 @@
 import Navbar from './NavBarView.vue'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue';
-
 //TODO: argumnets have not been implemented yet. Wil have to decide next sprint probably
+//
+const router = useRouter()
 const content_type = ref<string>("post");
 const comment = ref<string>("");
 const hyperlink = ref<string>("");
+const error_message = ref<string>("");
 
-function create_content() {
-  if (content_type.value === "post") {
-    "pass";
-  } else {
-    "pass"
+async function create_content() {
+  const UID: number = Number(localStorage.getItem("QuarrelSessionID"));
+  let content_link: string | null = null;
+  if (!UID) {
+    console.error("No User ID, must login again");
+    return;
   }
-
+  if (hyperlink.value !== "") {
+    content_link = hyperlink.value
+  }
+  if (content_type.value === "post") {
+    const posts: Post = {
+      PID: 0,
+      Comment: comment.value,
+      Likes: 0,
+      Views: 0,
+      Poster: UID,
+      Hyperlink: content_link
+    }
+    try {
+      const resp = await fetch("http://localhost:8081/post/post", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(posts)
+      });
+      if (!resp.ok) {
+        const error: Api_Error = await resp.json();
+        error_message.value = error.error;
+        console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      } else {
+        const id: PID = await resp.json();
+        console.log(`Post has ID: ${id.PID}`);
+        go_to_home();
+      }
+    } catch (err) {
+      console.error(`Connection error: ${err}`)
+    }
+  } else {
+    console.log("Arguments are a WIP");
+  }
+}
+function go_to_home() {
+  router.push('/home') // Navigate to home page after login
 }
 </script>
 
@@ -28,7 +66,7 @@ function create_content() {
         Choose input type
         <div>
           <input v-model="content_type" type="radio" id="args" value="args" />
-          <label label for="args">Arguents</label>
+          <label label for="args">Arguments</label>
           <input v-model="content_type" type="radio" id="post" value="post" />
           <label for="post">Post</label>
         </div>
@@ -36,7 +74,9 @@ function create_content() {
       <div>
         <textarea v-model="comment" id="comment" cols="100" rows="40" width="500" maxlength="280" name="comment"
           placeholder="Insert Comment here"></textarea>
-        <input v-model="hyperlink" type="text">
+        <label for="hyperlink">Link:</label>
+        <input id="hyperlink" v-model="hyperlink" type="text">
+        <input type="submit" @click="create_content">
       </div>
     </div>
   </div>

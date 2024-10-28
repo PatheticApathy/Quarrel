@@ -25,7 +25,7 @@ export function get_user_by_id(id: number, sql: Pool, callback: (err: Error | un
     if (result.length == 0) {
       callback(undefined, undefined);
     } else {
-      callback(undefined, result);
+      callback(undefined, result[0]);
     }
   })
 };

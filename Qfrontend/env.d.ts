@@ -77,3 +77,7 @@ interface Api_Error {
 interface UID {
   UID: number
 }
+
+interface PID {
+  PID: number
+}
