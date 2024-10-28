@@ -4,13 +4,7 @@ import { ref } from "vue"
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-  
-try {
-  const UID: number = Number(get_id());
-} catch(error) {
-  console.error(`Error, ${error}`);
-}
-
+const UID: number = Number(get_id());
 const profile = ref<User>({UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..."});
 display_data();
 
@@ -28,7 +22,7 @@ const go_to_following = () => {
 function get_id() {
   const client_id = localStorage.getItem('QuarrelSessionID');
   if (!client_id) {
-    throw new Error("No session id found. Try logging in again");
+    return;
   } else {
     return client_id;
   }
@@ -61,29 +55,29 @@ async function display_data() {
 </script>
 
 <template>
-    <div class="profile-page">
-        <Navbar />
-        <div class="profile-content">
-            <div class="background-container">
-                <img class="background-image" src="../assets/background-image.jpg" alt="Background Image">
-                <div class="profile-pic">
-                    <img src="../assets/profile-pic.jpg" alt="Profile Picture">
-                </div>
-            </div>
-            <div class="user-info">
-                <div class="username">{{ profile.Username }}
-                  <div class="edit-profile">
-                    <button @click="go_to_edit_profile">Edit Profile</button>
-                  </div>
-                </div>
-                <div class="bio">{{ profile.Bio }}</div>
-                <div class="followers">
-                    <button @click="go_to_followers">Followers: {{ profile.Follow_count }}</button>
-                    <button @click="go_to_following">Following: 0</button>
-                </div>
-            </div>
+  <div class="profile-page">
+    <Navbar />
+    <div class="profile-content">
+      <div class="background-container">
+        <img class="background-image" src="../assets/background-image.jpg" alt="Background Image">
+        <div class="profile-pic">
+          <img src="../assets/profile-pic.jpg" alt="Profile Picture">
         </div>
+      </div>
+      <div class="user-info">
+        <div class="username">{{ profile.Username }}
+          <div class="edit-profile">
+            <button @click="go_to_edit_profile">Edit Profile</button>
+          </div>
+        </div>
+        <div class="bio">{{ profile.Bio }}</div>
+        <div class="followers">
+          <button @click="go_to_followers">Followers: {{ profile.Follow_count }}</button>
+          <button @click="go_to_following">Following: 0</button>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
@@ -104,7 +98,7 @@ async function display_data() {
   position: absolute;
   top: 0;
   right: 0;
-  width: 73vw;
+  width: 68vw;
   height: 40vh;
   display: flex;
   justify-content: flex-start;
@@ -141,6 +135,19 @@ async function display_data() {
   flex-direction: column;
   margin-left: -200px;
   margin-top: 250px;
+  position: absolute;
+  bottom: 10vh;
+  gap: 10px;
+}
+
+.username {
+  font-size: 1.8rem;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
@@ -172,6 +179,17 @@ async function display_data() {
   background-color: navy;
   color: white;
   padding: 10px;
+  font-size: 1rem;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.edit-profile button {
+  background-color: navy;
+  color: white;
+  border-radius: 50px;
+  padding: 15px 30px;
   font-size: 1rem;
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;
