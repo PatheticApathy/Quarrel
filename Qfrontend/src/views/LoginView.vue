@@ -98,7 +98,7 @@ async function register_user() {
     Username: user.value.username,
     Password: user.value.password,
     Follow_count: 0,
-    Bio: "blah"
+    Bio: ""
   }
   try {
     const resp = await fetch('http://localhost:8081/user/signup',
@@ -120,7 +120,7 @@ async function register_user() {
     }
   }
   catch (err) {
-    console.error(`Error parsing json: ${err}`)
+    console.error(`Connection error: ${err}`)
   }
 }
 
