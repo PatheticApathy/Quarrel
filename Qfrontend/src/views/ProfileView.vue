@@ -4,15 +4,8 @@ import { ref } from "vue"
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-let UID: number;
-try {
-  UID = Number(get_id());
-} catch (error) {
-  console.error(`Error, ${error}`);
-}
-
-const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..." });
+const UID: number = Number(get_id());
+const profile = ref<User>({UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..."});
 display_data();
 
 const go_to_edit_profile = () => {
@@ -29,7 +22,7 @@ const go_to_following = () => {
 function get_id() {
   const client_id = localStorage.getItem('QuarrelSessionID');
   if (!client_id) {
-    throw new Error("No session id found. Try logging in again");
+    return;
   } else {
     return client_id;
   }
@@ -93,6 +86,7 @@ async function display_data() {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 5vh;
 }
 
 .profile-page {
@@ -142,20 +136,8 @@ async function display_data() {
   flex-direction: column;
   margin-left: -200px;
   margin-top: 250px;
-  gap: 10px;
-}
-
-.username {
-  font-size: 1.8rem;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
-  display: flex;
-  flex-direction: row;
-  display: flex;
-  flex-direction: column;
   position: absolute;
-  bottom: 7vh;
-  left: 35vw;
+  bottom: 10vh;
   gap: 10px;
 }
 
@@ -187,17 +169,6 @@ async function display_data() {
   background-color: navy;
   color: white;
   padding: 10px;
-  font-size: 1rem;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.edit-profile button {
-  background-color: navy;
-  color: white;
-  border-radius: 50px;
-  padding: 15px 30px;
   font-size: 1rem;
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;
