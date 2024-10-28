@@ -79,29 +79,6 @@ async function display_data() {
       </div>
     </div>
   </div>
-  <div class="profile-page">
-    <Navbar />
-    <div class="profile-content">
-      <div class="background-container">
-        <img class="background-image" src="../assets/background-image.jpg" alt="Background Image">
-        <div class="profile-pic">
-          <img src="../assets/profile-pic.jpg" alt="Profile Picture">
-        </div>
-      </div>
-      <div class="user-info">
-        <div class="username">{{ profile.Username }}
-          <div class="edit-profile">
-            <button @click="go_to_edit_profile">Edit Profile</button>
-          </div>
-        </div>
-        <div class="bio">{{ profile.Bio }}</div>
-        <div class="followers">
-          <button @click="go_to_followers">Followers: {{ profile.Follow_count }}</button>
-          <button @click="go_to_following">Following: 0</button>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 
 <style scoped>
@@ -170,17 +147,6 @@ async function display_data() {
   font-weight: 900;
   display: flex;
   flex-direction: row;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.username {
-  font-size: 1.8rem;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
 }
 
@@ -203,17 +169,6 @@ async function display_data() {
   background-color: navy;
   color: white;
   padding: 10px;
-  font-size: 1rem;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.edit-profile button {
-  background-color: navy;
-  color: white;
-  border-radius: 50px;
-  padding: 15px 30px;
   font-size: 1rem;
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;
