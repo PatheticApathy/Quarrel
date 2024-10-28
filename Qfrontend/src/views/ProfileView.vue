@@ -29,7 +29,7 @@ const go_to_following = () => {
 function get_id() {
   const client_id = localStorage.getItem('QuarrelSessionID');
   if (!client_id) {
-    return;
+    throw new Error("No session id found. Try logging in again");
   } else {
     return client_id;
   }
