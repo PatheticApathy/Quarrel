@@ -66,7 +66,7 @@ function go_to_home() {
         Choose input type
         <div>
           <input v-model="content_type" type="radio" id="args" value="args" />
-          <label label for="args">Arguents</label>
+          <label label for="args">Arguments</label>
           <input v-model="content_type" type="radio" id="post" value="post" />
           <label for="post">Post</label>
         </div>
