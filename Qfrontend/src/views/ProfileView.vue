@@ -85,6 +85,7 @@ async function display_data() {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 5vh;
 }
 
 .profile-page {
@@ -97,7 +98,7 @@ async function display_data() {
   position: absolute;
   top: 0;
   right: 0;
-  width: 68vw;
+  width: 73vw;
   height: 40vh;
   display: flex;
   justify-content: flex-start;
@@ -143,20 +144,6 @@ async function display_data() {
   font-weight: 900;
   display: flex;
   flex-direction: row;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  bottom: 7vh;
-  left: 35vw;
-  gap: 10px;
-}
-
-.username {
-  font-size: 1.8rem;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
 }
 
@@ -179,17 +166,6 @@ async function display_data() {
   background-color: navy;
   color: white;
   padding: 10px;
-  font-size: 1rem;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.edit-profile button {
-  background-color: navy;
-  color: white;
-  border-radius: 50px;
-  padding: 15px 30px;
   font-size: 1rem;
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;
