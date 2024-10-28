@@ -4,7 +4,13 @@ import { ref } from "vue"
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const UID: number = Number(get_id());
+  
+try {
+  const UID: number = Number(get_id());
+} catch(error) {
+  console.error(`Error, ${error}`);
+}
+
 const profile = ref<User>({UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..."});
 display_data();
 
@@ -22,7 +28,7 @@ const go_to_following = () => {
 function get_id() {
   const client_id = localStorage.getItem('QuarrelSessionID');
   if (!client_id) {
-    return;
+    throw new Error("No session id found. Try logging in again");
   } else {
     return client_id;
   }
