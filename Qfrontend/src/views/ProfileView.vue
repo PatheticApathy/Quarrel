@@ -4,14 +4,15 @@ import { ref } from "vue"
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-  
+
+let UID: number;
 try {
-  const UID: number = Number(get_id());
-} catch(error) {
+  UID = Number(get_id());
+} catch (error) {
   console.error(`Error, ${error}`);
 }
 
-const profile = ref<User>({UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..."});
+const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..." });
 display_data();
 
 const go_to_edit_profile = () => {
@@ -35,8 +36,9 @@ function get_id() {
 }
 
 async function display_data() {
-    const base_path = `http://localhost:8081/user/find/${UID}`;
-    try {
+  if (!UID) { console.error("No ID, login again") }
+  const base_path = `http://localhost:8081/user/find/${UID}`;
+  try {
     const resp = await fetch(base_path,
       {
         method: 'GET',
@@ -47,11 +49,11 @@ async function display_data() {
       const error: Api_Error = await resp.json();
       console.error(`Response status: ${resp.status} with errror ${error.error}`);
     } else {
-       const user: User = await resp.json();
-       console.log(JSON.stringify(user));
-       profile.value.UID = user.UID;
-       profile.value.Follow_count = user.Follow_count;
-       profile.value.Username = user.Username;
+      const user: User = await resp.json();
+      console.log(JSON.stringify(user));
+      profile.value.UID = user.UID;
+      profile.value.Follow_count = user.Follow_count;
+      profile.value.Username = user.Username;
     }
   }
   catch (err) {
@@ -61,29 +63,29 @@ async function display_data() {
 </script>
 
 <template>
-    <div class="profile-page">
-        <Navbar />
-        <div class="profile-content">
-            <div class="background-container">
-                <img class="background-image" src="../assets/background-image.jpg" alt="Background Image">
-                <div class="profile-pic">
-                    <img src="../assets/profile-pic.jpg" alt="Profile Picture">
-                </div>
-            </div>
-            <div class="user-info">
-                <div class="username">{{ profile.Username }}
-                  <div class="edit-profile">
-                    <button @click="go_to_edit_profile">Edit Profile</button>
-                  </div>
-                </div>
-                <div class="bio">{{ profile.Bio }}</div>
-                <div class="followers">
-                    <button @click="go_to_followers">Followers: {{ profile.Follow_count }}</button>
-                    <button @click="go_to_following">Following: 0</button>
-                </div>
-            </div>
+  <div class="profile-page">
+    <Navbar />
+    <div class="profile-content">
+      <div class="background-container">
+        <img class="background-image" src="../assets/background-image.jpg" alt="Background Image">
+        <div class="profile-pic">
+          <img src="../assets/profile-pic.jpg" alt="Profile Picture">
         </div>
+      </div>
+      <div class="user-info">
+        <div class="username">{{ profile.Username }}
+          <div class="edit-profile">
+            <button @click="go_to_edit_profile">Edit Profile</button>
+          </div>
+        </div>
+        <div class="bio">{{ profile.Bio }}</div>
+        <div class="followers">
+          <button @click="go_to_followers">Followers: {{ profile.Follow_count }}</button>
+          <button @click="go_to_following">Following: 0</button>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
