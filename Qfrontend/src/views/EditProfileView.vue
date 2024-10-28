@@ -1,40 +1,87 @@
 <template>
-    <div class="edit-page">
-        <div class="top-bar">
-            <button @click="go_to_profile_page">Back to Profile Page</button>
-            <h1>Edit Profile</h1>
-            <button @click="go_to_profile_page">Save</button>
-        </div>
-        <div class="upload_background_image">
-            <button>
-            <img src="../assets/upload-image.png" alt="Clickable Image" style="width: 50px; height: 50px;">
-            </button>
-        </div>
-        <span class="dot"></span>
-        <div class="upload_profile_pic">
-            <button>
-            <img src="../assets/upload-image.png" alt="Clickable Image" style="width: 50px; height: 50px;">
-            </button>
-        </div>
-        <div class="edit-name">
-            <p>Name:</p>
-            <input type="text" placeholder="enter new username...">
-        </div>
-        <div class="edit-bio">
-            <p>Bio:</p>
-            <input type="text" placeholder="enter new bio...">
-        </div>
-    </div>
-    <Navbar />
+  <div class="edit-page">
+      <div class="top-bar">
+          <button @click="go_to_profile_page">Back to Profile Page</button>
+          <h1>Edit Profile</h1>
+          <button @click="update_profile">Save</button>
+      </div>
+      <div class="upload_background_image">
+          <button>
+              <img src="../assets/upload-image.png" alt="Clickable Image" style="width: 50px; height: 50px;">
+          </button>
+      </div>
+      <span class="dot"></span>
+      <div class="upload_profile_pic">
+          <button>
+              <img src="../assets/upload-image.png" alt="Clickable Image" style="width: 50px; height: 50px;">
+          </button>
+      </div>
+      <div class="edit-name">
+          <p>Name:</p>
+          <input type="text" v-model="username_edit" placeholder="Enter new username...">
+      </div>
+      <div class="edit-bio">
+          <p>Bio:</p>
+          <input type="text" v-model="bio_edit" placeholder="Enter new bio...">
+      </div>
+  </div>
+  <Navbar />
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
-import Navbar from './NavBarView.vue'
+import { useRouter } from 'vue-router';
+import Navbar from './NavBarView.vue';
+import { ref } from 'vue';
+
 const router = useRouter();
 
+// State variables to hold the new name and bio input
+const username_edit = ref('');
+const bio_edit = ref('');
+
+// Navigation back to profile page
 function go_to_profile_page(){
-    router.push("/profile");
+  router.push("/profile");
+}
+
+// Function to send the updated profile information to the server
+async function update_profile() {
+// Fetching the client ID from local storage
+const clientId = localStorage.getItem('QuarrelSessionID');
+
+// Check if client ID exists before proceeding
+if (!clientId) {
+  console.error("Client ID not found in local storage.");
+  return;
+}
+
+console.log(`Updating profile for client ID: ${clientId}`);
+
+// Constructing the updated user object
+const updatedUser = {
+  Username: username_edit.value,
+  Bio: bio_edit.value
+};
+
+try {
+  const response = await fetch(`http://localhost:8081/user/find/${clientId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedUser),
+  });
+
+  if (!response.ok) {
+    // Log detailed error if request fails
+    const errorData = await response.json();
+    console.error(`Failed to update profile. Status: ${response.status}, Error: ${errorData.error}`);
+  } else {
+    // Confirm successful update
+    console.log('Profile updated successfully');
+    go_to_profile_page(); // Navigate back to the profile page
+  }
+} catch (error) {
+  console.error(`Error updating profile: ${error}`);
+}
 }
 </script>
 
