@@ -36,7 +36,9 @@ test(`signup a user(valid)`, (done) => {
     UID: 0,
     Username: "test2",
     Password: "testy",
-    Follow_count: 0
+    Follow_count: 0,
+    Bio: "",
+    Profile_pic: ""
   }
   request(serv)
     .post("/user/signup")
@@ -49,7 +51,9 @@ test(`signup a user(duplicate login)`, (done) => {
     UID: 0,
     Username: "test2",
     Password: "testy",
-    Follow_count: 0
+    Follow_count: 0,
+    Bio: "",
+    Profile_pic: ""
   }
   request(serv)
     .post("/user/signup")
@@ -80,7 +84,7 @@ test(`User login attempt(invalid)`, (done) => {
     .send(login)
     .set("Accept", "application/json")
     .expect('Content-Type', 'application/json')
-    .expect(404, done);
+    .expect(404, done)
 })
 
 
