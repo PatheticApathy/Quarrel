@@ -1,7 +1,7 @@
 import { genSaltSync, hashSync } from 'bcrypt'
 import '../models';
 import { Pool } from 'mysql';
-import { insert_new_user, get_user_by_id, get_userid_by_login, get_random_users } from '../sql/sql';
+import { insert_new_user, get_user_by_id, get_userid_by_login, get_random_users, update_user_profile } from '../sql/sql';
 import { Request, Response, NextFunction } from 'express';
 
 const SALT = "$2a$10$3rG14pYiZyUNs0Z9FfFJ5u";
@@ -66,3 +66,19 @@ export function get_random_users_handler(req: Request, res: Response<Array<User>
     }
   })
 }
+
+export function update_profile_handler(req: Request<User>, res: Response, next: NextFunction, sql: Pool): void {
+  let updateData: User = req.body;
+  update_user_profile(updateData, sql, (err, update) => {
+    if (err) {
+      next(err);
+    }
+    else if (!update) {
+      res.status(404);
+      res.json({ error: "Could not update" });
+    } else {
+      res.status(200);
+      res.json(update);
+    }
+  });
+};
