@@ -1,6 +1,5 @@
 import { beforeAll, expect, jest, test } from '@jest/globals';
-import { createPool } from 'mysql';
-import { user_router } from '../routes/user';
+import { createPool } from 'mysql'; import { user_router } from '../routes/user';
 import { createServer, Server } from 'http';
 import request from 'supertest';
 import { Express, Response, Request, NextFunction } from 'express';
@@ -15,8 +14,8 @@ const pool = createPool({
 
 let serv: Express = express();
 
-serv.use('/user', user_router(pool));
 serv.use(express.json());
+serv.use('/user', user_router(pool));
 serv.use((_req, res, _next) => {
   res.status(404);
   res.json("Page does not exist");
