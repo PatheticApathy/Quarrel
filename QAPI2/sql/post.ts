@@ -63,7 +63,7 @@ export function get_reply_by_id(id: number, sql: Pool, callback: (err: Error | u
   })
 };
 
-export function add_reply(replies: Replies, sql: Pool, callback: (err: Error | undefined, reply: Replies | undefined) => void): void {
+export function add_reply(replies: Replies, sql: Pool, callback: (err: Error | undefined, replies: number | undefined) => void): void {
   //TODO: Update Replies_args and Replies_post
   sql.query('INSERT INTO Reply (Comment, Likes, Views, Poster) VALUES (?, ?, ?, ?)',
     [replies.Comment, replies.Likes, replies.Views, replies.Poster], function (error, result: Replies, _) {
@@ -71,8 +71,8 @@ export function add_reply(replies: Replies, sql: Pool, callback: (err: Error | u
         console.error('Could not complete transaction:', error);
         callback(error, undefined);
       }
-      console.log(`Post ${result} added`);
-      callback(undefined, result);
+      console.log(`Reply ${result.RID} added`);
+      callback(undefined, result.RID);
     });
 };
 

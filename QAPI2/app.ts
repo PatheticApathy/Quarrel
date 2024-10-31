@@ -4,7 +4,6 @@ import { Express, Response, Request, NextFunction } from 'express';
 import express = require("express");
 
 const app: Express = express();
-app.use(express.json());
 const port: String = '8081';
 
 const pool: Pool = createPool({
