@@ -2,6 +2,7 @@ import { createPool, Pool } from 'mysql';
 import { user_router, post_router, vote_router } from './routes/routes';
 import { Express, Response, Request, NextFunction } from 'express';
 import express = require("express");
+import cors = require('cors');
 
 const app: Express = express();
 const port: String = '8081';
@@ -13,6 +14,7 @@ const pool: Pool = createPool({
   database: 'QuarrelDB'
 });
 
+app.use(cors());
 app.use(express.json());
 app.use("/", express.static("./greeting/index.html"));
 app.use('/user', user_router(pool));
