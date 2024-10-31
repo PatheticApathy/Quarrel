@@ -15,7 +15,7 @@ export function insert_new_user(user: User, sql: Pool, callback: (err: Error | u
   });
 };
 
-export function get_user_by_id(id: number, sql: Pool, callback: (err: Error | undefined, user: Array<User> | undefined) => void): void {
+export function get_user_by_id(id: number, sql: Pool, callback: (err: Error | undefined, user: User | undefined) => void): void {
   sql.query('SELECT * FROM User WHERE UID=?;', id, function (error, result, _) {
     if (error) {
       console.error('Could not complete transaction:', error);

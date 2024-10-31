@@ -1,14 +1,12 @@
 import { createPool, Pool } from 'mysql';
-//import { user_routes, post_routes, vote_routes, user_router } from './routes/routes';
 import { user_router, post_router, vote_router } from './routes/routes';
-import { Express } from 'express';
+import { Express, Response, Request, NextFunction } from 'express';
 import express = require("express");
-import bodyParser = require('body-parser');
 
 const app: Express = express();
 const port: String = '8081';
 
-const pool = createPool({
+const pool: Pool = createPool({
   host: 'localhost',
   user: 'qapi',
   password: 'ARGS',
@@ -16,12 +14,20 @@ const pool = createPool({
 });
 
 app.use(express.json());
-app.use(bodyParser.json());
 app.use("/", express.static("./greeting/index.html"));
 app.use('/user', user_router(pool));
 app.use('/post', post_router(pool));
 app.use('/vote', vote_router(pool));
-//TODO: make 404 route and error handler midleware
+
+//404 route and error handler midleware
+app.use((_req, res, _next) => {
+  res.status(404);
+  res.json("Page does not exist");
+});
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  res.status(500);
+  res.json({ error: err });
+});
 
 app.listen(port, () => {
   console.log(`Running on localhost:${port}`);
