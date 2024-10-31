@@ -1,0 +1,188 @@
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtesting/[22m[1muser_sql.test.ts[22m
+  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      User 408 added
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/user.ts[2m:12:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [{"UID":408}]
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/user.ts[2m:43:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      User id: [object Object] retrieved
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/user.ts[2m:44:15)[22m[2m[22m
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtesting/[22m[1mpost_sql.test.ts[22m
+  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Post 1 retrieved
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/post.ts[2m:13:17)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Post 72 added
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/post.ts[2m:27:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Random posts: [{"PID":36,"Comment":"eeee","Likes":0,"Views":0,"Poster":354,"Hyperlink":null},{"PID":37,"Comment":"The bang gang","Likes":0,"Views":0,"Poster":354,"Hyperlink":"https://imgs.search.brave.com/L0dCLsOkFcI_hA63-qS01p1wnyJBkq-5hPuHkyNv2Bg/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qk56VTFaamxs/WWpBdE5EbGhZaTAw/Wldaa0xXSTNPREF0/TmpVMU56UTFNR0pq/TjJGaVhrRXlYa0Zx/Y0dkZVFWUm9hWEpr/VUdGeWRIbEpibWRs/YzNScGIyNVhiM0py/Wm14dmR3QEAuX1Yx/X1FMNzVfVVg1MDBf/Q1IwLDAsNTAwLDI4/MV8uanBn"},{"PID":2,"Comment":"Pizza is life!","Likes":20,"Views":300,"Poster":2,"Hyperlink":null},{"PID":38,"Comment":"Deez nutz","Likes":0,"Views":0,"Poster":354,"Hyperlink":null},{"PID":3,"Comment":"AI is the future.","Likes":25,"Views":400,"Poster":3,"Hyperlink":"http://example.com/ai-future"},{"PID":40,"Comment":"Bleep","Likes":0,"Views":0,"Poster":361,"Hyperlink":null},{"PID":39,"Comment":"Nutz","Likes":0,"Views":0,"Poster":354,"Hyperlink":"https://i5.walmartimages.com/seo/Professor-Nutz-12-4oz_009bae71-8d31-42b4-afe8-40d10496c351.d277588eb671b9bb6ead7014246b5062.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF"},{"PID":72,"Comment":"Test","Likes":100000,"Views":20,"Poster":1,"Hyperlink":null},{"PID":41,"Comment":"doood","Likes":0,"Views":0,"Poster":362,"Hyperlink":null},{"PID":18,"Comment":"Test","Likes":100000,"Views":20,"Poster":1,"Hyperlink":null}] retrieved
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/post.ts[2m:88:17)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Random arguments: [{"AID":2,"Comment":"Is pineapple on pizza a crime?","Likes":10,"Views":150,"Hyperlink":null,"Poster":2,"T1_votes":20,"T2_votes":2},{"AID":1,"Comment":"Lua is the best programming language?","Likes":5,"Views":100,"Hyperlink":"http://example.com","Poster":1,"T1_votes":10,"T2_votes":5},{"AID":3,"Comment":"Can AI surpass human intelligence?","Likes":8,"Views":200,"Hyperlink":"http://example.com/ai","Poster":3,"T1_votes":15,"T2_votes":10}] retrieved
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/post.ts[2m:104:17)[22m[2m[22m
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtesting/[22m[1mpost_request.test.ts[22m
+  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Random posts: [{"PID":37,"Comment":"The bang gang","Likes":0,"Views":0,"Poster":354,"Hyperlink":"https://imgs.search.brave.com/L0dCLsOkFcI_hA63-qS01p1wnyJBkq-5hPuHkyNv2Bg/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qk56VTFaamxs/WWpBdE5EbGhZaTAw/Wldaa0xXSTNPREF0/TmpVMU56UTFNR0pq/TjJGaVhrRXlYa0Zx/Y0dkZVFWUm9hWEpr/VUdGeWRIbEpibWRs/YzNScGIyNVhiM0py/Wm14dmR3QEAuX1Yx/X1FMNzVfVVg1MDBf/Q1IwLDAsNTAwLDI4/MV8uanBn"},{"PID":39,"Comment":"Nutz","Likes":0,"Views":0,"Poster":354,"Hyperlink":"https://i5.walmartimages.com/seo/Professor-Nutz-12-4oz_009bae71-8d31-42b4-afe8-40d10496c351.d277588eb671b9bb6ead7014246b5062.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF"},{"PID":40,"Comment":"Bleep","Likes":0,"Views":0,"Poster":361,"Hyperlink":null},{"PID":36,"Comment":"eeee","Likes":0,"Views":0,"Poster":354,"Hyperlink":null},{"PID":2,"Comment":"Pizza is life!","Likes":20,"Views":300,"Poster":2,"Hyperlink":null},{"PID":18,"Comment":"Test","Likes":100000,"Views":20,"Poster":1,"Hyperlink":null},{"PID":38,"Comment":"Deez nutz","Likes":0,"Views":0,"Poster":354,"Hyperlink":null},{"PID":41,"Comment":"doood","Likes":0,"Views":0,"Poster":362,"Hyperlink":null},{"PID":3,"Comment":"AI is the future.","Likes":25,"Views":400,"Poster":3,"Hyperlink":"http://example.com/ai-future"},{"PID":1,"Comment":"I love programming!","Likes":15,"Views":250,"Poster":1,"Hyperlink":null}] retrieved
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/post.ts[2m:88:17)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Random arguments: [{"AID":1,"Comment":"Lua is the best programming language?","Likes":5,"Views":100,"Hyperlink":"http://example.com","Poster":1,"T1_votes":10,"T2_votes":5},{"AID":2,"Comment":"Is pineapple on pizza a crime?","Likes":10,"Views":150,"Hyperlink":null,"Poster":2,"T1_votes":20,"T2_votes":2},{"AID":3,"Comment":"Can AI surpass human intelligence?","Likes":8,"Views":200,"Hyperlink":"http://example.com/ai","Poster":3,"T1_votes":15,"T2_votes":10}] retrieved
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/post.ts[2m:104:17)[22m[2m[22m
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtesting/[22m[1muser_request.test.ts[22m
+  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      User [{"UID":1,"Bio":"Alice Smith","Username":"alice123","Password":"password1","Follow_count":10,"Profile_pic":null}] retrieved
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/user.ts[2m:24:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      User [] retrieved
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/user.ts[2m:24:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      {
+        UID: 0,
+        Username: 'test2',
+        Password: 'testy',
+        Follow_count: 0,
+        Bio: '',
+        Profile_pic: ''
+      }
+[2m[22m
+[2m      [2mat log ([22m[2mhandlers/users.ts[2m:12:11)[22m[2m[22m
+
+    [2mconsole.log[22m
+      User 409 added
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/user.ts[2m:12:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      {
+        UID: 0,
+        Username: 'test2',
+        Password: 'testy',
+        Follow_count: 0,
+        Bio: '',
+        Profile_pic: ''
+      }
+[2m[22m
+[2m      [2mat log ([22m[2mhandlers/users.ts[2m:12:11)[22m[2m[22m
+
+    [2m[31mconsole.error[39m[22m
+[31m      Could not complete transaction: Error: ER_DUP_ENTRY: Duplicate entry 'test2' for key 'Username'[39m
+[31m          at Query.Object.<anonymous>.Sequence._packetToError (/home/cw/Documents/Quarrel/QAPI2/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)[39m
+[31m          at Query.Object.<anonymous>.Query.ErrorPacket (/home/cw/Documents/Quarrel/QAPI2/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)[39m
+[31m          at Protocol.Object.<anonymous>.Protocol._parsePacket (/home/cw/Documents/Quarrel/QAPI2/node_modules/mysql/lib/protocol/Protocol.js:291:23)[39m
+[31m          at Parser._parsePacket (/home/cw/Documents/Quarrel/QAPI2/node_modules/mysql/lib/protocol/Parser.js:433:10)[39m
+[31m          at Parser.write (/home/cw/Documents/Quarrel/QAPI2/node_modules/mysql/lib/protocol/Parser.js:43:10)[39m
+[31m          at Protocol.Object.<anonymous>.Protocol.write (/home/cw/Documents/Quarrel/QAPI2/node_modules/mysql/lib/protocol/Protocol.js:38:16)[39m
+[31m          at Socket.<anonymous> (/home/cw/Documents/Quarrel/QAPI2/node_modules/mysql/lib/Connection.js:88:28)[39m
+[31m          at Socket.<anonymous> (/home/cw/Documents/Quarrel/QAPI2/node_modules/mysql/lib/Connection.js:526:10)[39m
+[31m          at Socket.emit (node:events:507:28)[39m
+[31m          at addChunk (node:internal/streams/readable:559:12)[39m
+[31m          at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)[39m
+[31m          at Socket.Readable.push (node:internal/streams/readable:390:5)[39m
+[31m          at TCP.onStreamRead (node:internal/stream_base_commons:189:23)[39m
+[31m          --------------------[39m
+[31m          at Pool.Object.<anonymous>.Pool.query (/home/cw/Documents/Quarrel/QAPI2/node_modules/mysql/lib/Pool.js:199:23)[39m
+[31m          at query (/home/cw/Documents/Quarrel/QAPI2/sql/user.ts:6:7)[39m
+[31m          at add_user_handler (/home/cw/Documents/Quarrel/QAPI2/handlers/users.ts:15:18)[39m
+[31m          at /home/cw/Documents/Quarrel/QAPI2/routes/user.ts:11:89[39m
+[31m          at Layer.handle [as handle_request] (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/layer.js:95:5)[39m
+[31m          at next (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/route.js:149:13)[39m
+[31m          at Route.dispatch (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/route.js:119:3)[39m
+[31m          at Layer.handle [as handle_request] (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/layer.js:95:5)[39m
+[31m          at /home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/index.js:284:15[39m
+[31m          at Function.process_params (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/index.js:346:12)[39m
+[31m          at next (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/index.js:280:10)[39m
+[31m          at Function.handle (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/index.js:175:3)[39m
+[31m          at router (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/index.js:47:12)[39m
+[31m          at Layer.handle [as handle_request] (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/layer.js:95:5)[39m
+[31m          at trim_prefix (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/index.js:328:13)[39m
+[31m          at /home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/index.js:286:9[39m
+[31m          at Function.process_params (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/index.js:346:12)[39m
+[31m          at next (/home/cw/Documents/Quarrel/QAPI2/node_modules/express/lib/router/index.js:280:10)[39m
+[31m          at /home/cw/Documents/Quarrel/QAPI2/node_modules/body-parser/lib/read.js:137:5[39m
+[31m          at AsyncResource.runInAsyncScope (node:async_hooks:211:14)[39m
+[31m          at invokeCallback (/home/cw/Documents/Quarrel/QAPI2/node_modules/raw-body/index.js:238:16)[39m
+[31m          at done (/home/cw/Documents/Quarrel/QAPI2/node_modules/raw-body/index.js:227:7)[39m
+[31m          at IncomingMessage.onEnd (/home/cw/Documents/Quarrel/QAPI2/node_modules/raw-body/index.js:287:7)[39m
+[31m          at IncomingMessage.emit (node:events:507:28)[39m
+[31m          at endReadableNT (node:internal/streams/readable:1696:12)[39m
+[31m          at processTicksAndRejections (node:internal/process/task_queues:90:21) {[39m
+[31m        code: 'ER_DUP_ENTRY',[39m
+[31m        errno: 1062,[39m
+[31m        sqlMessage: "Duplicate entry 'test2' for key 'Username'",[39m
+[31m        sqlState: '23000',[39m
+[31m        index: 0,[39m
+[31m        sql: "INSERT INTO User(username,password,follow_count) VALUES ('test2','$2a$10$3rG14pYiZyUNs0Z9FfFJ5uOgTx4GfsiWIRfhBJjG.U/GnNDGIKd9.',0);"[39m
+[31m      }[39m
+[2m[22m
+[2m    [0m [90m  6 |[39m   sql[33m.[39mquery([32m'INSERT INTO User(username,password,follow_count) VALUES (?,?,?);'[39m[33m,[39m [user[33m.[39m[33mUsername[39m[33m,[39m user[33m.[39m[33mPassword[39m[33m,[39m user[33m.[39m[33mFollow_count[39m][33m,[39m [36mfunction[39m (error[33m,[39m result[33m:[39m [33mOkPacket[39m[33m,[39m _) {[22m
+[2m     [90m  7 |[39m     [36mif[39m (error) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m  8 |[39m       console[33m.[39merror([32m'Could not complete transaction:'[39m[33m,[39m error)[33m;[39m[22m
+[2m     [90m    |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m  9 |[39m       callback(error[33m,[39m undefined)[33m;[39m[22m
+[2m     [90m 10 |[39m     } [36melse[39m {[22m
+[2m     [90m 11 |[39m       [36mlet[39m id [33m=[39m result[33m.[39minsertId[33m;[39m[0m[22m
+[2m[22m
+[2m      [2mat Query.error ([22m[2msql/user.ts[2m:8:15)[22m[2m[22m
+[2m      [2mat Query.<anonymous> ([22m[2mnode_modules/mysql/lib/Connection.js[2m:526:10)[22m[2m[22m
+[2m      [2mat Query._callback ([22m[2mnode_modules/mysql/lib/Connection.js[2m:488:16)[22m[2m[22m
+[2m      [2mat Query.Object.<anonymous>.Sequence.end ([22m[2mnode_modules/mysql/lib/protocol/sequences/Sequence.js[2m:83:24)[22m[2m[22m
+[2m      [2mat Query.Object.<anonymous>.Query.ErrorPacket ([22m[2mnode_modules/mysql/lib/protocol/sequences/Query.js[2m:92:8)[22m[2m[22m
+[2m      [2mat Protocol.Object.<anonymous>.Protocol._parsePacket ([22m[2mnode_modules/mysql/lib/protocol/Protocol.js[2m:291:23)[22m[2m[22m
+[2m      [2mat Parser._parsePacket ([22m[2mnode_modules/mysql/lib/protocol/Parser.js[2m:433:10)[22m[2m[22m
+[2m      [2mat Parser.write ([22m[2mnode_modules/mysql/lib/protocol/Parser.js[2m:43:10)[22m[2m[22m
+[2m      [2mat Protocol.Object.<anonymous>.Protocol.write ([22m[2mnode_modules/mysql/lib/protocol/Protocol.js[2m:38:16)[22m[2m[22m
+[2m      [2mat Socket.<anonymous> ([22m[2mnode_modules/mysql/lib/Connection.js[2m:88:28)[22m[2m[22m
+[2m      [2mat Socket.<anonymous> ([22m[2mnode_modules/mysql/lib/Connection.js[2m:526:10)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [{"UID":409}]
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/user.ts[2m:43:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      User id: [object Object] retrieved
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/user.ts[2m:44:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Invalid login attempt
+[2m[22m
+[2m      [2mat Query.log ([22m[2msql/user.ts[2m:40:15)[22m[2m[22m
+
+[33mA worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --detectOpenHandles to find leaks. Active timers can also cause this, ensure that .unref() was called on them.[39m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 total
+[1mTests:       [22m[1m[32m15 passed[39m[22m, 15 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2.099 s
+[2mRan all test suites[22m[2m.[22m
