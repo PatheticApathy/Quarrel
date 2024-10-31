@@ -1,9 +1,10 @@
 import { createPool, Pool } from 'mysql';
-import { user_router, post_router } from './routes/routes';
+import { user_router, post_router, vote_router } from './routes/routes';
 import { Express, Response, Request, NextFunction } from 'express';
 import express = require("express");
 
 const app: Express = express();
+app.use(express.json());
 const port: String = '8081';
 
 const pool: Pool = createPool({
@@ -17,7 +18,7 @@ app.use(express.json());
 app.use("/", express.static("./greeting/index.html"));
 app.use('/user', user_router(pool));
 app.use('/post', post_router(pool));
-//app.use('vote', vote_routes);
+app.use('/vote', vote_router(pool));
 
 //404 route and error handler midleware
 app.use((_req, res, _next) => {
