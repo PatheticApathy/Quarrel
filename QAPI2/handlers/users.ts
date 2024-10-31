@@ -1,7 +1,7 @@
 import { genSaltSync, hashSync } from 'bcrypt'
 import '../models';
 import { Pool } from 'mysql';
-import { insert_new_user, get_user_by_id, get_userid_by_login } from '../sql/sql';
+import { insert_new_user, get_user_by_id, get_userid_by_login, get_random_users } from '../sql/sql';
 import { Request, Response, NextFunction } from 'express';
 
 const SALT = "$2a$10$3rG14pYiZyUNs0Z9FfFJ5u";
@@ -52,4 +52,17 @@ export function post_login_request_handler(req: Request<Login>, res: Response<nu
       res.json(id);
     }
   });
+}
+
+export function get_random_users_handler(req: Request, res: Response<Array<User> | { error: string }>, next: NextFunction, pool: Pool) {
+  get_random_users(pool, (err, users) => {
+    if (err) {
+      next(err);
+    } else {
+      if (!users) {
+        res.status(400).json({ error: "No users in database" });
+      }
+      res.status(200).json(users)
+    }
+  })
 }

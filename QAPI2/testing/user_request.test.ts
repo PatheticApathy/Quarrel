@@ -96,6 +96,7 @@ test(`User login attempt(invalid)`, (done) => {
     .expect(404, done)
 })
 
+//NOTE:Test getting random users
 
 //delete test user from DB 
 afterAll((done) => {

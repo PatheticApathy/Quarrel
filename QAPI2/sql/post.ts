@@ -107,3 +107,4 @@ export function get_rand_args(sql: Pool, callback: (err: Error | undefined, args
     }
   })
 };
+

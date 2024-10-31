@@ -57,3 +57,18 @@ export function drop_user_by_id(id: number, sql: Pool, callback: (err: Error | u
     callback(undefined, true);
   })
 }
+
+export function get_random_users(sql: Pool, callback: (err: Error | undefined, users: Array<User> | undefined) => void): void {
+  sql.query('SELECT * FROM User ORDER BY RAND()+1 LIMIT 3;', function (error, result, _) {
+    if (error) {
+      console.error('Could not complete transaction:', error);
+      callback(error, undefined);
+    }
+    console.log(`User ${JSON.stringify(result)} retrieved`);
+    if (result.length == 0) {
+      callback(undefined, undefined);
+    } else {
+      callback(undefined, result);
+    }
+  })
+};
