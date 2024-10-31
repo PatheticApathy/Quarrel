@@ -1,6 +1,5 @@
 import { beforeAll, expect, jest, test } from '@jest/globals';
 import { createPool } from 'mysql'; import { user_router } from '../routes/user';
-import { createServer, Server } from 'http';
 import request from 'supertest';
 import { Express, Response, Request, NextFunction } from 'express';
 import express = require('express');
@@ -34,6 +33,7 @@ test('Get user by id(existing user)', (done) => {
 test('Get user by id(non-existing user)', (done) => {
   request(serv)
     .get('/user/find/100000000')
+    .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(404, done)
 });
 
@@ -48,7 +48,7 @@ test(`signup a user(valid)`, (done) => {
   }
   request(serv)
     .post("/user/signup")
-    .set('Content-Type', 'application/json')
+    .set('Content-Type', 'application/json; charset=utf-8')
     .send(user)
     .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(200, done)
@@ -99,5 +99,5 @@ test(`User login attempt(invalid)`, (done) => {
 
 //delete test user from DB 
 afterAll((done) => {
-  pool.query("DELETE FROM User WHERE Username='test2';", (err, _bad, _also_bad) => { if (err) { throw err } })
+  pool.query("DELETE FROM User WHERE Username='test2';", (err, _bad, _also_bad) => { if (err) { done(err) } else { done() } })
 });
