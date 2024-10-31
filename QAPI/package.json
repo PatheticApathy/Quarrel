@@ -1,10 +1,12 @@
 {
-  "name": "qapi",
-  "version": "1.0.0",
+  "name": "qapi2",
+  "version": "2.0.0",
   "description": "Api for quarrel",
   "dependencies": {
+    "@types/express": "^5.0.0",
     "@types/mysql": "^2.15.26",
     "@types/node": "^22.7.4",
+    "express": "^4.21.1",
     "mysql": "^2.18.1",
     "ts-node": "^10.9.2"
   },
@@ -25,6 +27,6 @@
   },
   "scripts": {
     "test": "jest",
-    "app": "ts-node app.ts"
+    "start": "ts-node app.ts"
   }
 }
