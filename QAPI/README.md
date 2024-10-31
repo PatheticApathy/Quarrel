@@ -4,7 +4,4 @@
 2. In the API directory, run
    `npm install`
 3. Run the typescript
-   `npx ts-node app.ts`
-
-> EDIT!:
-> If app.ts is updated, Lee need to change his port number to 1303
+   `npm start`

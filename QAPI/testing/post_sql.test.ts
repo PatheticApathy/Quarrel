@@ -71,6 +71,7 @@ test('get random arguments', (done) => {
       done(err);
     } else {
       expect(result).toBeDefined();
+      expect(result)
       done();
     }
   })

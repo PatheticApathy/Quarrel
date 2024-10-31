@@ -1,43 +1,48 @@
-import { ServerResponse } from 'http';
 import '../models';
 import { Pool, Query } from 'mysql';
 import { get_vote_by_id, check_existing_vote, update_votes, record_user_vote } from '../sql/sql';
+import { Request, Response, NextFunction } from 'express';
 
-export function get_vote_handler(res: ServerResponse, id: number, sql: Pool): void {
-  get_vote_by_id(id, sql, (err, post) => {
+export function get_vote_handler(req: Request<{ id: number }>, res: Response, sql: Pool, next: NextFunction): void {
+  const id: number = req.params.id;
+  get_vote_by_id(id, sql, (err, vote) => {
     if (err) {
-      res.writeHead(500);
-      res.end('Coud not complete transaction');
+      next(err);
+    }
+    else if (!vote) {
+      res.status(404);
+      res.json({ error: "Vote does not exist" });
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-      res.end(JSON.stringify(post));
+      res.status(200);
+      res.json(vote);
     }
   });
 };
 
-export function vote_handler(res: ServerResponse, voteData: { UID: number, AID: number, voteSide: 'T1' | 'T2' }, sql: Pool): void {
-  const voteColumn = voteData.voteSide === 'T1' ? 'T1_votes' : 'T2_votes';
+export function vote_handler(req: Request<{ UID: number, AID: number, voteSide: 'T1' | 'T2' }>, res: Response, sql: Pool, next: NextFunction): void {
+  const UID = req.body.UID;
+  const AID = req.body.AID;
+  const voteSide = req.body.voteSide === 'T1' ? 'T1_votes' : 'T2_votes';
 
-  check_existing_vote(voteData.UID, voteData.AID, sql, (err, hasVoted) => {
+  check_existing_vote(UID, AID, sql, (err, hasVoted) => {
     if (err) {
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'Error checking vote' }));
+      next(err);
     } else if (hasVoted) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'User has already voted on this argument' }));
+      res.status(400);
+      res.json({ error: "User has already voted" });
     } else {
-      update_votes(voteData.AID, voteColumn, sql, (err) => {
+      update_votes(AID, voteSide, sql, (err) => {
         if (err) {
-          res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Error updating vote' }));
+          res.status(500);
+          res.json({ error: 'Error updating vote' });
         } else {
-          record_user_vote(voteData.UID, voteData.AID, sql, (err) => {
+          record_user_vote(UID, AID, sql, (err) => {
             if (err) {
-              res.writeHead(500, { 'Content-Type': 'application/json' });
-              res.end(JSON.stringify({ error: 'Error recording vote' }));
+              res.status(500);
+              res.json({ error: 'Error recording vote' });
             } else {
-              res.writeHead(200, { 'Content-Type': 'application/json' });
-              res.end(JSON.stringify({ message: 'Vote recorded successfully' }));
+              res.status(200);
+              res.json({ message: 'Vote recorded successfully' });
             }
           });
         }
