@@ -1,11 +1,12 @@
 import { beforeAll, expect, jest, test } from '@jest/globals';
-import { createServer, Server } from 'http';
-import { route_request } from '../app';
 import { createPool } from 'mysql';
+import { post_router } from '../routes/post';
 import request from 'supertest';
+import { Express } from 'express';
+import express = require('express');
 
 
-let serv: Server;
+const serv: Express = express();
 
 const pool = createPool({
   host: 'localhost',
@@ -15,25 +16,18 @@ const pool = createPool({
 });
 
 beforeAll(() => {
-  const server = createServer((req, res) => {
-    route_request(req, res, pool);
-  });
-  serv = server.listen(3001)
+  serv.use('/post', post_router(pool));
 });
 
 test('Get 10 random args request', (done) => {
   request(serv)
     .get('/post/post/batch')
-    .expect('Content-Type', 'application/json')
+    .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(200, done);
 });
 test('Get 10 random posts request', (done) => {
   request(serv)
     .get('/post/args/batch')
-    .expect('Content-Type', 'application/json')
+    .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(200, done);
 })
-
-afterAll((done) => {
-  serv.close(done);
-});

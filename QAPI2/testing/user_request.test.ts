@@ -1,10 +1,11 @@
 import { beforeAll, expect, jest, test } from '@jest/globals';
 import { createPool } from 'mysql';
-import { route_request } from '../app'
+import { user_router } from '../routes/user';
 import { createServer, Server } from 'http';
 import request from 'supertest';
+import { Express, Response, Request, NextFunction } from 'express';
+import express = require('express');
 
-let serv: Server;
 const pool = createPool({
   host: 'localhost',
   user: 'qapi',
@@ -12,24 +13,30 @@ const pool = createPool({
   database: 'QuarrelDB'
 });
 
-beforeAll(() => {
-  const server = createServer((req, res) => {
-    route_request(req, res, pool);
-  });
-  serv = server.listen(3030)
+let serv: Express = express();
+
+serv.use('/user', user_router(pool));
+serv.use(express.json());
+serv.use((_req, res, _next) => {
+  res.status(404);
+  res.json("Page does not exist");
+});
+serv.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  res.status(500);
+  res.json({ error: err });
 });
 
 test('Get user by id(existing user)', (done) => {
   request(serv)
     .get('/user/find/1')
-    .expect('Content-Type', 'application/json')
+    .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(200, done)
-})
+});
 test('Get user by id(non-existing user)', (done) => {
   request(serv)
     .get('/user/find/100000000')
     .expect(404, done)
-})
+});
 
 test(`signup a user(valid)`, (done) => {
   const user: User = {
@@ -42,8 +49,9 @@ test(`signup a user(valid)`, (done) => {
   }
   request(serv)
     .post("/user/signup")
+    .set('Content-Type', 'application/json')
     .send(user)
-    .expect('Content-Type', 'application/json')
+    .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(200, done)
 })
 test(`signup a user(duplicate login)`, (done) => {
@@ -57,8 +65,10 @@ test(`signup a user(duplicate login)`, (done) => {
   }
   request(serv)
     .post("/user/signup")
+    .set('Content-Type', 'application/json')
+    .accept('Accept', 'application/json')
     .send(user)
-    .expect('Content-Type', 'application/json')
+    .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(500, done)
 })
 
@@ -69,9 +79,9 @@ test(`User login attempt(valid)`, (done) => {
   }
   request(serv)
     .post("/user/login")
+    .set('Content-Type', 'application/json')
     .send(login)
-    .set("Accept", "application/json")
-    .expect('Content-Type', 'application/json')
+    .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(200, done);
 })
 test(`User login attempt(invalid)`, (done) => {
@@ -81,9 +91,9 @@ test(`User login attempt(invalid)`, (done) => {
   }
   request(serv)
     .post("/user/login")
+    .set('Content-Type', 'application/json')
     .send(login)
-    .set("Accept", "application/json")
-    .expect('Content-Type', 'application/json')
+    .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(404, done)
 })
 
@@ -91,5 +101,4 @@ test(`User login attempt(invalid)`, (done) => {
 //delete test user from DB 
 afterAll((done) => {
   pool.query("DELETE FROM User WHERE Username='test2';", (err, _bad, _also_bad) => { if (err) { throw err } })
-  serv.close(done);
 });

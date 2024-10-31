@@ -92,8 +92,8 @@ export function get_rand_posts(sql: Pool, callback: (err: Error | undefined, pos
   })
 };
 
-export function get_rand_args(sql: Pool, callback: (err: Error | undefined, posts: Array<Post> | undefined) => void): void {
-  sql.query('SELECT * FROM Arguments ORDER BY RAND()+1 LIMIT 10;', function (error: MysqlError, result: Array<Post>, _) {
+export function get_rand_args(sql: Pool, callback: (err: Error | undefined, args: Array<Arguments> | undefined) => void): void {
+  sql.query('SELECT * FROM Arguments ORDER BY RAND()+1 LIMIT 10;', function (error: MysqlError, result: Array<Arguments>, _) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);

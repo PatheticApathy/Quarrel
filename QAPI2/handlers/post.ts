@@ -1,106 +1,98 @@
-import { ServerResponse } from 'http';
 import '../models';
-import { Pool, Query } from 'mysql';
+import { Pool } from 'mysql';
 import { get_post_by_id, add_post, get_arg_by_id, add_argument, get_reply_by_id, add_reply, get_rand_posts, get_rand_args } from '../sql/sql';
-import { Response, Request } from 'express';
+import { Response, Request, NextFunction } from 'express';
 
-/*
-//NOTE: NEED to determine if 'batch' or number
-
-export function get_post_handler(res: ): void {
-  get_post_by_id(id, sql, (err, post: Post | undefined) => {
+export function get_post_handler(req: Request<{ id: number }>, res: Response<Post>, next: NextFunction, pool: Pool): void {
+  const id: number = req.params.id;
+  get_post_by_id(id, pool, (err, post: Post | undefined) => {
     if (err) {
-      res.writeHead(500);
-      res.end('Coud not complete transaction');
+      next(err);
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(post));
+      res.status(200);
+      res.json(post);
     }
   });
 };
 
-export function post_handler(res: ServerResponse, post: Post, sql: Pool): void {
-  add_post(post, sql, (err, id: number | undefined) => {
+export function post_handler(req: Request<Post>, res: Response<number>, next: NextFunction, pool: Pool): void {
+  const post: Post = req.params;
+  add_post(post, pool, (err, id: number | undefined) => {
     if (err) {
-      res.writeHead(500);
-      console.error(`Error: ${err}`);
-      res.end({ error: err });
+      next(err);
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(id));
+      res.status(200);
+      res.json(id);
     }
   });
 };
 
-export function get_arg_handler(res: ServerResponse, id: number, sql: Pool): void {
-  get_arg_by_id(id, sql, (err, arg: Arguments | undefined) => {
+export function get_arg_handler(req: Request<{ id: number }>, res: Response<Arguments>, next: NextFunction, pool: Pool): void {
+  const id: number = req.params.id;
+  get_arg_by_id(id, pool, (err, arg: Arguments | undefined) => {
     if (err) {
-      res.writeHead(500);
-      res.end('Coud not complete transaction');
+      next(err);
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(arg));
+      res.status(200);
+      res.json(arg);
     }
   });
 };
 
-export function argument_handler(res: ServerResponse, arg: Arguments, sql: Pool): void {
-  add_argument(arg, sql, (err, id: number | undefined) => {
+export function argument_handler(req: Request<Arguments>, res: Response<number>, next: NextFunction, pool: Pool): void {
+  const arg: Arguments = req.params;
+  add_argument(arg, pool, (err, id: number | undefined) => {
     if (err) {
-      res.writeHead(500);
-      res.end('Coud not complete transaction');
+      next(err);
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(id));
+      res.status(200);
+      res.json(id);
     }
   });
 };
 
-export function get_reply_handler(res: ServerResponse, id: number, sql: Pool): void {
-  get_reply_by_id(id, sql, (err, post) => {
+export function get_reply_handler(req: Request<{ id: number }>, res: Response<Replies>, next: NextFunction, pool: Pool): void {
+  const id: number = req.params.id;
+  get_reply_by_id(id, pool, (err, reply) => {
     if (err) {
-      res.writeHead(500);
-      res.end('Coud not complete transaction');
+      next(err);
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(post));
+      res.status(200);
+      res.json(reply);
     }
   });
 };
 
-export function reply_handler(res: ServerResponse, replies: Replies, sql: Pool): void {
-  add_reply(replies, sql, (err, user) => {
+export function reply_handler(req: Request<Replies>, res: Response, next: NextFunction, pool: Pool): void {
+  const replies: Replies = req.params;
+  add_reply(replies, pool, (err, user) => {
     if (err) {
-      res.writeHead(500);
-      res.end('Coud not complete transaction');
+      next(err);
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(user));
+      res.status(200);
+      res.json(user);
     }
   });
 }
 
-export function get_random_posts_handler(res: ServerResponse, sql: Pool): void {
-  get_rand_posts(sql, (err, posts) => {
+export function get_random_posts_handler(_req: Request, res: Response<Array<Post>>, next: NextFunction, pool: Pool): void {
+  get_rand_posts(pool, (err, posts) => {
     if (err) {
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: err }));
+      next(err);
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json' })
-      res.end(JSON.stringify(posts));
+      res.status(200);
+      res.json(posts);
     }
   });
 }
 
-export function get_random_args_handler(res: ServerResponse, sql: Pool): void {
-  get_rand_args(sql, (err, args) => {
+export function get_random_args_handler(_req: Request, res: Response<Array<Arguments>>, next: NextFunction, pool: Pool): void {
+  get_rand_args(pool, (err, args) => {
     if (err) {
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: err }));
+      next(err);
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(args));
+      res.status(200);
+      res.json(args);
     }
   });
 }
-*/
