@@ -31,7 +31,7 @@ const home_error_message = ref<String>('');
 async function get_user() {
   console.log('Fetching users');
   try {
-    const resp = await fetch('http://localhost:8081/user/find/1',
+    const resp = await fetch('http://localhost:8081/user/batch',
       {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -88,7 +88,7 @@ async function get_args() {
 
         <div class="followSuggestions">Who to Follow
             <div class="follow">
-                <div v-for="u in users.slice(0, Math.min(3, users.length))" class="followObject">
+                <div v-for="u in users" class="followObject">
                     <span v-if="!u.Profile_pic">
                         <img class="userImg" src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg">
                     </span>
