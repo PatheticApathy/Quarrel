@@ -27,6 +27,6 @@
   },
   "scripts": {
     "test": "jest",
-    "app": "ts-node app.ts"
+    "start": "ts-node app.ts"
   }
 }
