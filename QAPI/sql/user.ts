@@ -85,4 +85,36 @@ export function regex_username(search_string: string, sql: Pool, callback: (err:
     }
   })
 };
+export function update_user_profile({ UID, Username, Profile_pic, Bio }: User, sql: Pool, callback: (err: Error | undefined, success: boolean) => void): void {
+  const updates: string[] = [];
+  const values: (string | number)[] = [];
 
+  if (Username) {
+    updates.push('username = ?');
+    values.push(Username);
+  }
+  if (Profile_pic) {
+    updates.push('profile_pic = ?');
+    values.push(Profile_pic);
+  }
+  if (Bio) {
+    updates.push('bio = ?');
+    values.push(Bio);
+  }
+
+  values.push(UID);
+
+  if (updates.length > 0) {
+    const query = `UPDATE User SET ${updates.join(', ')} WHERE UID = ?`;
+    sql.query(query, values, (err, result) => {
+      if (err) {
+        console.error('Could not update profile:', err);
+        callback(err, false);
+      } else {
+        callback(undefined, true);
+      }
+    });
+  } else {
+    callback(undefined, false);
+  }
+}
