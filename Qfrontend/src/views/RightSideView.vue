@@ -1,27 +1,6 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
-
-/* const users = ref<Array<User>> 
-(
-    [
-        {
-            UID: 123456789,
-            Username: "alice123",
-            Password: "password1",
-            Follow_count: 10,
-            Bio: "Alice Person",
-            Profile_pic: ""
-        },
-        {
-            UID: 987654321,
-            Username: "bowman",
-            Password: "password2",
-            Follow_count: 10,
-            Bio: "Thomas Bowman",
-            Profile_pic: "../src/assets/profile-pic.jpg"
-        }
-    ]
-) */
 
 let users = ref<Array<User>>([]);
 get_user();
@@ -31,7 +10,7 @@ const home_error_message = ref<String>('');
 async function get_user() {
   console.log('Fetching users');
   try {
-    const resp = await fetch('http://localhost:8081/user/find/1',
+    const resp = await fetch('http://localhost:8081/user/batch',
       {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -88,14 +67,16 @@ async function get_args() {
 
         <div class="followSuggestions">Who to Follow
             <div class="follow">
-                <div v-for="u in users.slice(0, Math.min(3, users.length))" class="followObject">
-                    <span v-if="!u.Profile_pic">
-                        <img class="userImg" src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg">
-                    </span>
-                    <span v-else>
-                        <img class="userImg" v-bind:src=u.Profile_pic>
-                    </span>
-                    <span>{{ '\u00A0\u00A0' + u.Username }}</span>
+                <div v-for="u in users" class="followObject">
+                    <RouterLink :to="{ name: 'profile', params: { id: u.UID } }">
+                        <span v-if="!u.Profile_pic">
+                            <img class="userImg" src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg">
+                        </span>
+                        <span v-else>
+                            <img class="userImg" v-bind:src=u.Profile_pic>
+                        </span>
+                        <span>{{ '\u00A0\u00A0' + u.Username }}</span>
+                    </RouterLink>
                 </div>
             </div>
         </div>
@@ -189,7 +170,12 @@ async function get_args() {
 }
 
 .followObject {
+    width: 90%;
     padding-bottom: 8.571428571428571428571428571429%;
+}
+
+.followObject:hover {
+    background-color: violet;
 }
 
 .userImg {
