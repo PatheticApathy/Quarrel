@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import Navbar from './NavBarView.vue'
 import { ref } from "vue"
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
-const router = useRouter()
+const router = useRouter();
+const route = useRoute();
 
-let UID: number;
-try {
-  UID = Number(get_id());
-} catch (error) {
-  console.error(`Error, ${error}`);
-}
+const id: number = Number(route.params.id)
 
-const profile = ref<User>({UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..."});
+
+const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..." });
 display_data();
 
 const go_to_edit_profile = () => {
@@ -26,18 +23,10 @@ const go_to_following = () => {
   router.push('/following')
 }
 
-function get_id() {
-  const client_id = localStorage.getItem('QuarrelSessionID');
-  if (!client_id) {
-    throw new Error("No session id found. Try logging in again");
-  } else {
-    return client_id;
-  }
-}
 
 async function display_data() {
-  if (!UID) { console.error("No ID, login again") }
-  const base_path = `http://localhost:8081/user/find/${UID}`;
+  if (!id) { console.error("No ID, login again") }
+  const base_path = `http://localhost:8081/user/find/${id}`;
   try {
     const resp = await fetch(base_path,
       {
@@ -54,6 +43,7 @@ async function display_data() {
       profile.value.UID = user.UID;
       profile.value.Follow_count = user.Follow_count;
       profile.value.Username = user.Username;
+      profile.value.Bio = user.Bio;
     }
   }
   catch (err) {
