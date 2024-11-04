@@ -57,14 +57,13 @@ export function drop_user_by_id(id: number, sql: Pool, callback: (err: Error | u
     callback(undefined, true);
   })
 }
-
 export function get_random_users(sql: Pool, callback: (err: Error | undefined, users: Array<User> | undefined) => void): void {
   sql.query('SELECT * FROM User ORDER BY RAND()+1 LIMIT 3;', function (error, result, _) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);
     }
-    console.log(`User ${JSON.stringify(result)} retrieved`);
+    console.log(`Users ${JSON.stringify(result)} retrieved`);
     if (result.length == 0) {
       callback(undefined, undefined);
     } else {
@@ -72,3 +71,50 @@ export function get_random_users(sql: Pool, callback: (err: Error | undefined, u
     }
   })
 };
+export function regex_username(search_string: string, sql: Pool, callback: (err: Error | undefined, users: Array<User> | undefined) => void): void {
+  sql.query("SELECT * FROM User WHERE username REGEXP ?", `[A-Za-z]*${search_string}[A-Za-z]*`, function (error, result, _) {
+    if (error) {
+      console.error('Could not complete transaction:', error);
+      callback(error, undefined);
+    }
+    console.log(`Users ${JSON.stringify(result)} retrieved`);
+    if (result.length == 0) {
+      callback(undefined, undefined);
+    } else {
+      callback(undefined, result);
+    }
+  })
+};
+export function update_user_profile({ UID, Username, Profile_pic, Bio }: User, sql: Pool, callback: (err: Error | undefined, success: boolean) => void): void {
+  const updates: string[] = [];
+  const values: (string | number)[] = [];
+
+  if (Username) {
+    updates.push('username = ?');
+    values.push(Username);
+  }
+  if (Profile_pic) {
+    updates.push('profile_pic = ?');
+    values.push(Profile_pic);
+  }
+  if (Bio) {
+    updates.push('bio = ?');
+    values.push(Bio);
+  }
+
+  values.push(UID);
+
+  if (updates.length > 0) {
+    const query = `UPDATE User SET ${updates.join(', ')} WHERE UID = ?`;
+    sql.query(query, values, (err, result) => {
+      if (err) {
+        console.error('Could not update profile:', err);
+        callback(err, false);
+      } else {
+        callback(undefined, true);
+      }
+    });
+  } else {
+    callback(undefined, false);
+  }
+}

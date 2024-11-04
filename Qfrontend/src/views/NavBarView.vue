@@ -1,5 +1,22 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { ref } from 'vue';
+
+const UID = ref<number>(0);
+try {
+  UID.value = Number(get_id());
+} catch (error) {
+  console.error(`Error, ${error}`);
+}
+
+function get_id() {
+  const client_id = localStorage.getItem('QuarrelSessionID');
+  if (!client_id) {
+    throw new Error("No session id found. Try logging in again");
+  } else {
+    return client_id;
+  }
+}
 </script>
 
 <template>
@@ -69,7 +86,7 @@ import { RouterLink } from 'vue-router'
                 </div>
               </div>
             </RouterLink>
-            <RouterLink to="/profile">
+            <RouterLink :to="{ name: 'profile', params: { id: UID } }">
               <div class="leftNavBarDiv2">
                 <div class="leftNavBarDiv3">
                   <svg class="leftNavBarSvg" view-box="0 0 24 24" aria-hidden="true">
@@ -147,8 +164,8 @@ nav a:hover {
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;
 }
-cd one
-.leftNavBarDiv2:hover {
+
+cd one .leftNavBarDiv2:hover {
   color: darkblue;
 }
 

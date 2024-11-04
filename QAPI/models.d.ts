@@ -79,3 +79,8 @@ interface User_votes {
   UID: number,
   AID: number
 }
+
+interface User_likes {
+  UID: number,
+  PID: number
+}
