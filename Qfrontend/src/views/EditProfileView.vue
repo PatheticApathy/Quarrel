@@ -15,6 +15,7 @@
           <button>
               <img src="../assets/upload-image.png" alt="Clickable Image" style="width: 50px; height: 50px;">
           </button>
+          <input type="text" v-model="profile_pic_edit" placeholder="enter profile pic URL">
       </div>
       <div class="edit-name">
           <p>Name:</p>
@@ -38,6 +39,7 @@ const router = useRouter();
 // State variables to hold the new name and bio input
 const username_edit = ref('');
 const bio_edit = ref('');
+const profile_pic_edit = ref('');
 
 // Navigation back to profile page
 function go_to_profile_page(){
@@ -58,13 +60,14 @@ if (!clientId) {
 console.log(`Updating profile for client ID: ${clientId}`);
 
 // Constructing the updated user object
-const updatedUser = {
+const updatedUser : UpdateUser = {
   Username: username_edit.value,
-  Bio: bio_edit.value
+  Bio: bio_edit.value,
+  ProfilePic: profile_pic_edit.value
 };
 
 try {
-  const response = await fetch(`http://localhost:8081/user/find/${clientId}`, {
+  const response = await fetch(`http://localhost:8081/user/update`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedUser),
@@ -131,6 +134,13 @@ try {
     height: 100px;
     width: 100px;
     border-radius: 50%;
+}
+
+.upload_profile_pic input {
+  position: absolute;
+  top: 60vh;
+  right: 40vw;
+  width: 20vw;
 }
 
 .edit-name {

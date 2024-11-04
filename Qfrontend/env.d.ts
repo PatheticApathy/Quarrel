@@ -7,6 +7,12 @@ interface User {
   Profile_pic: string
 }
 
+interface UpdateUser {
+  Username: string,
+  Bio: String,
+  ProfilePic: string
+}
+
 interface Follower {
   FR: number
   Follows: number,
