@@ -8,9 +8,10 @@ interface User {
 }
 
 interface UpdateUser {
+  UID: number,
   Username: string,
   Bio: String,
-  ProfilePic: string
+  Profile_pic: string
 }
 
 interface Follower {

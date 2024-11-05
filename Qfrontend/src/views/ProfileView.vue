@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import Navbar from './NavBarView.vue'
-import { ref } from "vue"
-import { useRouter, useRoute } from 'vue-router'
+import { ref, watch } from "vue"
+import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router'
 
 const router = useRouter();
 const route = useRoute();
 
-const id: number = Number(route.params.id)
+let id: number = Number(route.params.id)
 
 
-const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..." });
+const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here...", Profile_pic: "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg" });
 display_data();
+onBeforeRouteUpdate((to, form, next) => {id = Number(route.params.id); display_data(); next()});
 
 const go_to_edit_profile = () => {
   router.push('/edit-profile')
@@ -44,12 +45,14 @@ async function display_data() {
       profile.value.Follow_count = user.Follow_count;
       profile.value.Username = user.Username;
       profile.value.Bio = user.Bio;
+      if(!user.Profile_pic){profile.value.Profile_pic = user.Profile_pic}
     }
   }
   catch (err) {
     console.error(`Error parsing json: ${err}`)
   }
 }
+
 </script>
 
 <template>
@@ -59,7 +62,7 @@ async function display_data() {
       <div class="background-container">
         <img class="background-image" src="../assets/background-image.jpg" alt="Background Image">
         <div class="profile-pic">
-          <img src="../assets/profile-pic.jpg" alt="Profile Picture">
+          <img v-bind:src="profile.Profile_pic" alt="Profile Picture">
         </div>
       </div>
       <div class="user-info">
