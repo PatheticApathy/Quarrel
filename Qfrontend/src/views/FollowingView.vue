@@ -1,8 +1,7 @@
 <template>
   <div class="top-row">
-      <button @click="go_to_profile_page">Back to Profile Page</button>
+      <button @click="go_back">Back to Profile Page</button>
       <h1>Following</h1>
-      <button @click="go_to_profile_page">Save</button>
   </div>
   <div class="follower-info">
       <!-- Use v-for to iterate through the followers array -->
@@ -21,8 +20,8 @@ import { useRouter } from 'vue-router'
 import Navbar from './NavBarView.vue'
 const router = useRouter();
 
-function go_to_profile_page() {
-  router.push("/profile");
+function go_back() {
+  router.go(-1);
 }
 
 let followers = [

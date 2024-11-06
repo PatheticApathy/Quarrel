@@ -1,17 +1,21 @@
 <template>
     <div class="top-row">
-        <button @click="go_to_profile_page">Back to Profile Page</button>
+        <button @click="go_back">Back to Profile Page</button>
         <h1>Followers</h1>
-        <button @click="go_to_profile_page">Save</button>
     </div>
     <div class="follower-info">
         <!-- Use v-for to iterate through the followers array -->
-        <button v-for="(follower, index) in followers" :key="index" class="follower-button">
-            <div id="rectangle">
-                <img :src="follower[1]" width="50" height="50">
-                <span class="follower-name">{{ follower[0] }}</span>
+        <RouterLink v-for="(follower, index) in followers" :key="index" :to="{ name: 'profile', params: { id: follower.UID } }" class="follower-button">
+            <div id="rectangle" class="follower-container">
+                <span v-if="!follower.Profile_pic">
+                    <img class="userImg" src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg">
+                </span>
+                <span v-else>
+                    <img class="userImg" :src="follower.Profile_pic">
+                </span>
+                <span class="username">{{ '\u00A0\u00A0' + follower.Username }}</span>
             </div>
-        </button>
+        </RouterLink>
     </div>
     <Navbar />
 </template>
@@ -19,17 +23,42 @@
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
 import Navbar from './NavBarView.vue'
+import { ref } from 'vue'
 const router = useRouter();
 
-function go_to_profile_page() {
-    router.push("/profile");
+function go_back() {
+    router.go(-1);
 }
 
-let followers = [
-    ["champ", "../assets/champ-profile-pic.jpg"],
-    ["alex", "../assets/alex-profile-pic.jpg"],
-    ["jordan", "../assets/jordan-profile-pic.jpg"]
-];
+let followers = ref<Array<User>>([]);
+get_follower();
+
+const home_error_message = ref<String>('');
+
+async function get_follower() {
+  console.log('Fetching users');
+  try {
+    const resp = await fetch('http://localhost:8081/user/batch',
+      {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      home_error_message.value = error.error;
+    } else {
+      let text = await resp.text();
+      followers.value = JSON.parse(text);
+      console.log("Succesfully fetched");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
 </script>
 
 <style>
@@ -42,7 +71,6 @@ let followers = [
     display: flex;
     flex-direction: row;
     padding: 20px;
-
 }
 
 .back h1 {
@@ -57,6 +85,8 @@ let followers = [
     background-color: violet;
     display: flex;
     align-items: center;
+    border-radius: 8px;
+    padding: 5px;
 }
 
 .follower-info {
@@ -73,12 +103,20 @@ let followers = [
     background-color: violet;
     display: flex;
     align-items: center;
-    padding: 5px;
+    padding: 10px;
     border: none;
+    border-radius: 8px;
     width: fit-content;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.follower-info button{
+.follower-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.follower-info button {
     background-color: violet;
 }
 
@@ -95,4 +133,5 @@ let followers = [
     font-weight: bold;
     color: white;
 }
+
 </style>
