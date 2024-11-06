@@ -36,15 +36,16 @@ async function get_args() {
   console.log(10);
 }
 
+const clientId = Number(localStorage.getItem('QuarrelSessionID'));
+
 </script>
 
 <template>
-    <div class="full">
-
+    <div class="full">  
         <div class="searchDiv">
-            <input class="search" placeholder="Search" type="text">
+            <input class="search" placeholder="Search" type="text" v-model="searchTerm">
+            <button class="searchButton" @click="$router.push('/search/' + searchTerm)">Search</button>
         </div>
-
         <div class="trendingSuggestions">What's Happening
             <div class="trending">
                 <div>Trending
@@ -67,20 +68,21 @@ async function get_args() {
 
         <div class="followSuggestions">Who to Follow
             <div class="follow">
-                <div v-for="u in users" class="followObject">
-                    <RouterLink :to="{ name: 'profile', params: { id: u.UID } }">
-                        <span v-if="!u.Profile_pic">
+                <RouterLink :to="{ name: 'profile', params: { id: u.UID } }" v-for="u in users">
+                    <div class="followObject">
+                        <span v-if="!(clientId === u.UID)">
+                            <span v-if="!u.Profile_pic">
                             <img class="userImg" src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg">
-                        </span>
-                        <span v-else>
+                            </span>
+                            <span v-else>
                             <img class="userImg" v-bind:src=u.Profile_pic>
+                            </span>
+                            <span>{{ '\u00A0\u00A0' + u.Username }}</span>
                         </span>
-                        <span>{{ '\u00A0\u00A0' + u.Username }}</span>
-                    </RouterLink>
-                </div>
+                    </div>
+                </RouterLink>
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -127,6 +129,12 @@ async function get_args() {
     outline: none;
 }
 
+.searchButton {
+    position: relative;
+    top: -60% ;
+    left: 105%
+}
+
 .trendingSuggestions {
     position: relative;
     left: 6.666666666666666666666666666667%;
@@ -169,14 +177,10 @@ async function get_args() {
     font-size: 20px;
 }
 
-.followObject {
-    width: 90%;
-    padding-bottom: 8.571428571428571428571428571429%;
-}
-
 .followObject:hover {
     background-color: violet;
 }
+
 
 .userImg {
     height: 50px;
