@@ -10,12 +10,12 @@ interface User {
 interface UpdateUser {
   UID: number,
   Username: string,
-  Bio: String,
-  Profile_pic: string
+  Bio: string,
+  ProfilePic: string
 }
 
 interface Follower {
-  FR: number
+  FR: number,
   Follows: number,
   Influencer: number
 }

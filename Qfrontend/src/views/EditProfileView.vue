@@ -41,10 +41,13 @@ const username_edit = ref('');
 const bio_edit = ref('');
 const profile_pic_edit = ref('');
 
-// Navigation back to profile page
-function go_to_profile_page(){
-  const clientId = Number(localStorage.getItem('QuarrelSessionID'));
-  router.push("/profile/" + clientId);
+function go_to_profile_page() {
+  const clientId = localStorage.getItem('QuarrelSessionID');
+  if (clientId) {
+    router.push(`/profile/${clientId}`);
+  } else {
+    console.error("Client ID not found in local storage.");
+  }
 }
 
 // Function to send the updated profile information to the server
