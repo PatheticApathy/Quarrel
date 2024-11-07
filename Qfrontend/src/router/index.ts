@@ -61,11 +61,6 @@ const router = createRouter({
       path: '/following',
       name: 'following',
       component: () => import('../views/FollowingView.vue')
-    },
-    {
-      path: '/explore-profiles',
-      name: 'friends profile',
-      component: () => import('../views/FriendProfileView.vue')
     }
   ]
 })

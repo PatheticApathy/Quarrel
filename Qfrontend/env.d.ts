@@ -11,7 +11,7 @@ interface UpdateUser {
   UID: number,
   Username: string,
   Bio: string,
-  ProfilePic: string
+  Profile_pic: string
 }
 
 interface Follower {
