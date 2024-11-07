@@ -61,6 +61,11 @@ const router = createRouter({
       path: '/following',
       name: 'following',
       component: () => import('../views/FollowingView.vue')
+    },
+    {
+      path: '/search/:query',
+      name: 'search',
+      component: () => import('../views/SearchView.vue')
     }
   ]
 })
