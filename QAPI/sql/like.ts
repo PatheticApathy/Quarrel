@@ -1,6 +1,7 @@
 import '../models';
 import { OkPacket, Pool } from 'mysql';
 
+//FIXME: May not be used on frontend, and thefore be removed in a future patch
 export function get_likes_post(id: number, sql: Pool, callback: (err: Error | undefined, likes: Likes | undefined) => void): void {
   sql.query('SELECT Likes FROM Post WHERE PID=?;', id, function (error, result: Array<Likes>, _) {
     if (error) {
@@ -40,7 +41,7 @@ export function like_post(PID: number, sql: Pool, callback: (err: Error | undefi
       console.error('Error updating like count:', error);
       callback(error, undefined);
     } else {
-      if (result.affectedRows <= 0) {
+      if (result.changedRows <= 0) {
         console.error(`Likes not updated for any row`);
         callback(undefined, false);
       } else {
@@ -58,7 +59,7 @@ export function unlike_post(PID: number, sql: Pool, callback: (err: Error | unde
       console.error('Error updating like count:', error);
       callback(error, undefined);
     } else {
-      if (result.affectedRows <= 0) {
+      if (result.changedRows <= 0) {
         console.error(`Likes not updated for any row`);
         callback(undefined, false);
       } else {
