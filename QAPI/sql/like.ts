@@ -42,10 +42,10 @@ export function like_post(PID: number, sql: Pool, callback: (err: Error | undefi
       callback(error, undefined);
     } else {
       if (result.changedRows <= 0) {
-        console.error(`Likes not updated for any row`);
+        console.error(`Likes not updated for post id: ${PID}`);
         callback(undefined, false);
       } else {
-        console.log(`Likes updated for post, ${result.message}`);
+        console.log(`Likes added for post id:${PID}`);
         callback(undefined, true);
       }
     };
@@ -60,10 +60,10 @@ export function unlike_post(PID: number, sql: Pool, callback: (err: Error | unde
       callback(error, undefined);
     } else {
       if (result.changedRows <= 0) {
-        console.error(`Likes not updated for any row`);
+        console.error(`Likes not updated for post id: ${PID}`);
         callback(undefined, false);
       } else {
-        console.log(`Likes updated for argument, ${result.message}`);
+        console.log(`Likes subtracted for post with id: ${PID}`);
         callback(undefined, true);
       }
     };
