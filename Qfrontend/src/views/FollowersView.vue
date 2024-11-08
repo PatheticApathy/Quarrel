@@ -1,11 +1,14 @@
 <template>
     <div class="top-row">
         <button @click="go_back">Back to Profile Page</button>
+        <div class="search-bar">
+            <input type="text" v-model="searchQuery" placeholder="Search followers..." />
+        </div>
         <h1>Followers</h1>
     </div>
     <div class="follower-info">
-        <!-- Use v-for to iterate through the followers array -->
-        <RouterLink v-for="(follower, index) in followers" :key="index" :to="{ name: 'profile', params: { id: follower.UID } }" class="follower-button">
+        <!-- Use v-for to iterate through the filteredFollowers array -->
+        <RouterLink v-for="(follower, index) in filteredFollowers" :key="index" :to="{ name: 'profile', params: { id: follower.UID } }" class="follower-button">
             <div id="rectangle" class="follower-container">
                 <span v-if="!follower.Profile_pic">
                     <img class="userImg" src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg">
@@ -23,17 +26,24 @@
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
 import Navbar from './NavBarView.vue'
-import { ref } from 'vue'
-const router = useRouter();
+import { ref, computed } from 'vue'
 
+const router = useRouter();
 function go_back() {
     router.go(-1);
 }
 
+// Ensure `searchQuery` is a reactive reference
+const searchQuery = ref<string>('');
 let followers = ref<Array<User>>([]);
-get_follower();
-
 const home_error_message = ref<String>('');
+
+// Computed property for filtering followers based on the search query
+const filteredFollowers = computed(() => {
+    return followers.value.filter(follower => 
+        follower.Username.toLowerCase().startsWith(searchQuery.value.toLowerCase())
+    );
+});
 
 async function get_follower() {
   console.log('Fetching users');
@@ -46,19 +56,21 @@ async function get_follower() {
     );
     if (!resp.ok) {
       const error: Api_Error = await resp.json();
-      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      console.error(`Response status: ${resp.status} with error ${error.error}`);
       home_error_message.value = error.error;
     } else {
       let text = await resp.text();
       followers.value = JSON.parse(text);
-      console.log("Succesfully fetched");
+      console.log("Successfully fetched");
     }
   }
   catch (err) {
-    console.error(`Error parsing json: ${err}`)
+    console.error(`Error parsing JSON: ${err}`)
   }
 }
 
+// Initial function call to populate followers
+get_follower();
 </script>
 
 <style>
@@ -73,10 +85,20 @@ async function get_follower() {
     padding: 20px;
 }
 
-.back h1 {
-    position: absolute;
-    top: 25px;
-    left: 730px;
+.search-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 20px;
+    gap: 10px;
+}
+
+.search-bar input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 400px;
 }
 
 #rectangle {
@@ -91,7 +113,7 @@ async function get_follower() {
 
 .follower-info {
     position: absolute;
-    top: 100px;
+    top: 150px;
     right: 20px;
     width: 65vw;
     display: flex;
@@ -116,10 +138,6 @@ async function get_follower() {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.follower-info button {
-    background-color: violet;
-}
-
 .follower-info img {
     height: 50px;
     width: 50px;
@@ -128,10 +146,9 @@ async function get_follower() {
     margin-right: 10px;
 }
 
-.follower-name {
+.username {
     font-size: 18px;
     font-weight: bold;
     color: white;
 }
-
 </style>

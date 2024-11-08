@@ -63,11 +63,6 @@ const router = createRouter({
       component: () => import('../views/FollowingView.vue')
     },
     {
-      path: '/explore-profiles',
-      name: 'friends profile',
-      component: () => import('../views/FriendProfileView.vue')
-    },
-    {
       path: '/search/:query',
       name: 'search',
       component: () => import('../views/SearchView.vue')
