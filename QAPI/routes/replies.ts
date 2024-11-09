@@ -12,7 +12,7 @@ export function reply_router(pool: Pool) {
   router.post('/arg', (req: Request<{ AID: number, reply: Replies }>, res: Response<{ RID: number }>, next: NextFunction) => { post_reply_arg_handler(req, res, next, pool) });
   router.delete('/del', (req: Request<{ RID: number }>, res: Response<{ deleted: boolean }>, next: NextFunction) => { delete_reply_handler(req, res, next, pool) });
   router.put('/like', (req: Request<{ RID: number }>, res: Response<{ liked: boolean } | { error: string }>, next: NextFunction) => { put_reply_like_handler(req, res, next, pool) });
-  router.put('/unlike', (req: Request<{ RID: number }>, res: Response<{ unliked: boolean }>, next) => { put_reply_unlike_handler(req, res, next, pool) });
+  router.put('/unlike', (req: Request<{ RID: number }>, res: Response<{ unliked: boolean }>, next: NextFunction) => { put_reply_unlike_handler(req, res, next, pool) });
 
   return router;
 }

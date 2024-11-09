@@ -1,6 +1,6 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { Pool } from 'mysql';
-import { argument_handler, get_arg_handler, get_post_handler, get_random_args_handler, get_random_posts_handler, get_reply_handler, post_handler, reply_handler } from '../handlers/handlers';
+import { argument_handler, get_arg_handler, get_post_handler, get_random_args_handler, get_random_posts_handler, post_handler } from '../handlers/handlers';
 import express = require('express');
 
 export function post_router(pool: Pool) {
