@@ -1,6 +1,6 @@
 import '../models';
 import { Pool } from 'mysql';
-import { get_post_by_id, add_post, get_arg_by_id, add_argument, get_reply_by_id, add_reply, get_rand_posts, get_rand_args } from '../sql/sql';
+import { get_post_by_id, add_post, get_arg_by_id, add_argument, get_rand_posts, get_rand_args } from '../sql/sql';
 import { Response, Request, NextFunction } from 'express';
 
 export function get_post_handler(req: Request<{ id: number }>, res: Response<Post>, next: NextFunction, pool: Pool): void {
@@ -50,30 +50,6 @@ export function argument_handler(req: Request<Arguments>, res: Response<number>,
     }
   });
 };
-
-export function get_reply_handler(req: Request<{ id: number }>, res: Response<Replies>, next: NextFunction, pool: Pool): void {
-  const id: number = req.params.id;
-  get_reply_by_id(id, pool, (err, reply) => {
-    if (err) {
-      next(err);
-    } else {
-      res.status(200);
-      res.json(reply);
-    }
-  });
-};
-
-export function reply_handler(req: Request<Replies>, res: Response, next: NextFunction, pool: Pool): void {
-  const replies: Replies = req.params;
-  add_reply(replies, pool, (err, user) => {
-    if (err) {
-      next(err);
-    } else {
-      res.status(200);
-      res.json(user);
-    }
-  });
-}
 
 export function get_random_posts_handler(_req: Request, res: Response<Array<Post>>, next: NextFunction, pool: Pool): void {
   get_rand_posts(pool, (err, posts) => {

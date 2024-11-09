@@ -27,7 +27,7 @@ beforeAll(() => {
   });
 })
 
-test('Get likes by id for a post)', (done) => {
+test('Get likes by id for a post', (done) => {
   request(serv)
     .get('/like/1')
     .expect('Content-Type', 'application/json; charset=utf-8')
@@ -42,7 +42,7 @@ test('Get user by id for post(non-existing)', (done) => {
 
 test('Like a post', (done) => {
   request(serv)
-    .post('/like/like')
+    .put('/like/like')
     .set('Content-Type', 'application/json')
     .send({ UID: 1, PID: 2 })
     .expect('Content-Type', 'application/json; charset=utf-8')
@@ -65,7 +65,7 @@ test(`Check if user liked a list of post`, (done) => {
 
 test('Unlike a post', (done) => {
   request(serv)
-    .post('/like/unlike')
+    .put('/like/unlike')
     .set('Content-Type', 'application/json')
     .send({ UID: 1, PID: 2 })
     .expect('Content-Type', 'application/json; charset=utf-8')

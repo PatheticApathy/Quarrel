@@ -108,31 +108,7 @@ test('Unlike reply', (done) => {
       done();
     }
   })
-})
-
-//TODO: Make cascades in DB to delete properly
-/*
-test('Delete post reply', (done) => {
-  reply_sql.delete_post_reply(PRID, pool, (err, result) => {
-    if (err) {
-      done(err);
-    } else {
-      expect(result).toBeTruthy();
-      done();
-    }
-  })
 });
-test('Delete arg reply', (done) => {
-  reply_sql.delete_arg_reply(ARID, pool, (err, result) => {
-    if (err) {
-      done(err);
-    } else {
-      expect(result).toBeTruthy();
-      done();
-    }
-  })
-});
-*/
 
 afterAll((done) => {
   pool.query("DELETE FROM Replies WHERE RID=?", [RID], (err, _bad, _also_bad) => { if (err) { done(err) } else { done() } })

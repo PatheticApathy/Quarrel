@@ -12,8 +12,6 @@ export function post_router(pool: Pool) {
   router.get('/args/batch', (req: Request, res: Response<Array<Arguments>>, next: NextFunction) => { get_random_args_handler(req, res, next, pool) });
   router.get('/args/:id', (req: Request<{ id: number }>, res: Response<Arguments>, next: NextFunction) => { get_arg_handler(req, res, next, pool) });
   router.post('/args', (req: Request<Arguments>, res: Response, next) => { argument_handler(req, res, next, pool) });
-  router.get('/replies/:id', (req: Request<{ id: number }>, res: Response<Replies>, next: NextFunction) => { get_reply_handler(req, res, next, pool) });
-  router.post('/replies', (req: Request<Replies>, res: Response, next) => { reply_handler(req, res, next, pool) });
 
   return router;
 

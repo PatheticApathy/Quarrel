@@ -52,32 +52,8 @@ export function add_argument(argument: Arguments, sql: Pool, callback: (err: Err
     });
 };
 
-export function get_reply_by_id(id: number, sql: Pool, callback: (err: Error | undefined, replies: Replies | undefined) => void): void {
-  sql.query('SELECT * FROM Replies WHERE RID=?;', id, function (error, result: Replies, _) {
-    if (error) {
-      console.error('Could not complete transaction:', error);
-      callback(error, undefined);
-    }
-    console.log(`Reply ${result} retrieved`);
-    callback(undefined, result);
-  })
-};
-
-export function add_reply(replies: Replies, sql: Pool, callback: (err: Error | undefined, replies: number | undefined) => void): void {
-  //TODO: Update Replies_args and Replies_post
-  sql.query('INSERT INTO Reply (Comment, Likes, Views, Poster) VALUES (?, ?, ?, ?)',
-    [replies.Comment, replies.Likes, replies.Views, replies.Poster], function (error, result: Replies, _) {
-      if (error) {
-        console.error('Could not complete transaction:', error);
-        callback(error, undefined);
-      }
-      console.log(`Reply ${result.RID} added`);
-      callback(undefined, result.RID);
-    });
-};
-
 export function get_rand_posts(sql: Pool, callback: (err: Error | undefined, posts: Array<Post> | undefined) => void): void {
-  sql.query('SELECT * FROM Post ORDER BY RAND()+1 LIMIT 10;', function (error: MysqlError, result: Array<Post>, _) {
+  sql.query('SELECT * FROM Post ORDER BY RAND()+1 LIMIT 10;', function (error: MysqlError, result: Array<Post>) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);
@@ -93,7 +69,7 @@ export function get_rand_posts(sql: Pool, callback: (err: Error | undefined, pos
 };
 
 export function get_rand_args(sql: Pool, callback: (err: Error | undefined, args: Array<Arguments> | undefined) => void): void {
-  sql.query('SELECT * FROM Arguments ORDER BY RAND()+1 LIMIT 10;', function (error: MysqlError, result: Array<Arguments>, _) {
+  sql.query('SELECT * FROM Arguments ORDER BY RAND()+1 LIMIT 10;', function (error: MysqlError, result: Array<Arguments>) {
     if (error) {
       console.error('Could not complete transaction:', error);
       callback(error, undefined);

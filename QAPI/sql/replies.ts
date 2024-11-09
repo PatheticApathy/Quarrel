@@ -7,19 +7,20 @@ export function get_replies_post(PID: number, sql: Pool, callback: (err: Error |
     SELECT r.RID, r.Poster, r.Likes, r.Views, r.Comment
     FROM Replies r
     JOIN Replies_to_post rp ON rp.reply = r.RID
-    JOIN Post p ON rp.post = p.PID'
+    JOIN Post p ON rp.post = p.PID
     WHERE p.PID = ?;
     `,
     PID,
-    (err, result: Array<Replies> | undefined) => {
+    (err, results: Array<Replies> | undefined) => {
       if (err) {
         console.error(`Error could not complete transaction: ${err}`);
         callback(err, undefined);
-      } else if (result?.length == 0) {
+      } else if (results?.length == 0) {
         console.log("No replies found");
         callback(undefined, undefined);
       } else {
-        console.log(`Post ${PID} has replies ${JSON.stringify(result)}`)
+        console.log(`Post ${PID} has replies ${JSON.stringify(results)}`)
+        callback(undefined, results);
       }
     }
   );
@@ -35,22 +36,23 @@ export function get_replies_args(AID: number, sql: Pool, callback: (err: Error |
     WHERE a.AID = ?;
     `,
     AID,
-    (err, result: Array<Replies> | undefined) => {
+    (err, results: Array<Replies> | undefined) => {
       if (err) {
         console.error(`Error could not complete transaction: ${err}`);
         callback(err, undefined);
-      } else if (result?.length == 0) {
+      } else if (results?.length == 0) {
         console.log("No replies found");
         callback(undefined, undefined);
       } else {
-        console.log(`Argument ${AID} has replies ${JSON.stringify(result)}`)
+        console.log(`Argument ${AID} has replies ${JSON.stringify(results)}`)
+        callback(undefined, results);
       }
     }
   );
 }
 
 export function insert_reply(reply: Replies, sql: Pool, callback: (err: Error | undefined, RID: number | undefined) => void) {
-  sql.query('INSERT INTO Replies(Coment,Views,Likes,Poster) VALUES (?,?,?,?)', [reply.Comment, reply.Views, reply.Likes, reply.Poster], (err, result: OkPacket) => {
+  sql.query('INSERT INTO Replies(Comment,Views,Likes,Poster) VALUES (?,?,?,?)', [reply.Comment, reply.Views, reply.Likes, reply.Poster], (err, result: OkPacket) => {
     if (err) {
       console.error('Could not complete transaction')
       callback(err, undefined);
@@ -87,8 +89,8 @@ export function insert_arg_reply(transac: Replies_to_args, sql: Pool, callback: 
   });
 }
 
-export function delete_post_reply(PRID: number, sql: Pool, callback: (err: Error | undefined, deleted: boolean | undefined) => void) {
-  sql.query('DELETE FROM Replies_to_post WHERE PRID = ?', PRID, (err, result: OkPacket) => {
+export function delete_reply(RID: number, sql: Pool, callback: (err: Error | undefined, deleted: boolean | undefined) => void) {
+  sql.query('DELETE FROM Replies WHERE RID=?', RID, (err, result: OkPacket) => {
     if (err) {
       console.error(`Could not verify reply status: ${err}`);
       callback(err, undefined)
@@ -96,21 +98,7 @@ export function delete_post_reply(PRID: number, sql: Pool, callback: (err: Error
       console.error('No rows deleted');
       callback(undefined, false);
     } else {
-      console.log(`Post reply ${PRID} deleted`);
-      callback(undefined, true);
-    }
-  });
-}
-export function delete_arg_reply(ARID: number, sql: Pool, callback: (err: Error | undefined, deleted: boolean | undefined) => void) {
-  sql.query('DELETE FROM Replies_to_args WHERE ARID = ?', ARID, (err, result: OkPacket) => {
-    if (err) {
-      console.error(`Could not verify reply status: ${err}`);
-      callback(err, undefined)
-    } else if (result.affectedRows <= 0) {
-      console.error('No rows deleted');
-      callback(undefined, false);
-    } else {
-      console.log(`Argument reply ${ARID} deleted`);
+      console.log(`Reply ${RID} deleted`);
       callback(undefined, true);
     }
   });
@@ -125,7 +113,7 @@ export function like_reply(RID: number, sql: Pool, callback: (err: Error | undef
       console.error(`No likes added for reply: ${RID}`)
       callback(undefined, false);
     } else {
-      console.error(`Like added for reply: ${RID}`)
+      console.log(`Like added for reply: ${RID}`)
       callback(undefined, true);
     }
   });
@@ -139,7 +127,7 @@ export function unlike_reply(RID: number, sql: Pool, callback: (err: Error | und
       console.error(`No likes subtracted for reply: ${RID}`)
       callback(undefined, false);
     } else {
-      console.error(`Like subtracted for reply: ${RID}`)
+      console.log(`Like subtracted for reply: ${RID}`)
       callback(undefined, true);
     }
   });
