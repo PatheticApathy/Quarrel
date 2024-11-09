@@ -9,7 +9,7 @@ const route = useRoute();
 const id: number = Number(route.params.id)
 
 
-const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here..." });
+const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here...", Profile_pic: ""});
 display_data();
 
 const go_to_edit_profile = () => {

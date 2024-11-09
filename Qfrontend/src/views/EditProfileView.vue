@@ -41,29 +41,33 @@ const username_edit = ref('');
 const bio_edit = ref('');
 const profile_pic_edit = ref('');
 
-// Navigation back to profile page
-function go_to_profile_page(){
-  router.push("/profile");
+function go_to_profile_page() {
+  const clientId = localStorage.getItem('QuarrelSessionID');
+  if (clientId) {
+    router.push(`/profile/${clientId}`);
+  } else {
+    console.error("Client ID not found in local storage.");
+  }
 }
 
 // Function to send the updated profile information to the server
 async function update_profile() {
-// Fetching the client ID from local storage
-const clientId = localStorage.getItem('QuarrelSessionID');
+  // Fetching the client ID from local storage
+  const clientId = localStorage.getItem('QuarrelSessionID');
 
-// Check if client ID exists before proceeding
-if (!clientId) {
-  console.error("Client ID not found in local storage.");
-  return;
-}
+  // Check if client ID exists before proceeding
+  if (!clientId) {
+    console.error("Client ID not found in local storage.");
+    return;
+  }
 
-console.log(`Updating profile for client ID: ${clientId}`);
+  console.log(`Updating profile for client ID: ${clientId}`);
 
-// Constructing the updated user object
-const updatedUser : UpdateUser = {
-  Username: username_edit.value,
-  Bio: bio_edit.value,
-  ProfilePic: profile_pic_edit.value
+  // Constructing the updated user object
+  const updatedUser : UpdateUser = {
+    Username: username_edit.value,
+    Bio: bio_edit.value,
+    ProfilePic: profile_pic_edit.value
 };
 
 try {
