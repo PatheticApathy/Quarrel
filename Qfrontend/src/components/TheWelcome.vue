@@ -1,40 +1,18 @@
 <script setup lang="ts">
-import WelcomeItem from './WelcomeItem.vue'
-import DocumentationIcon from './icons/IconDocumentation.vue'
-import ToolingIcon from './icons/IconTooling.vue'
-import EcosystemIcon from './icons/IconEcosystem.vue'
-import CommunityIcon from './icons/IconCommunity.vue'
-import SupportIcon from './icons/IconSupport.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-//const posts = ref<Array<Post>> (
-//  [
-//  {
-//    PID: 72,
-//    Comment: "Jeffey",
-//    Likes: 32,
-//    Views: 7,
-//    Poster: 0,
-//    Hyperlink: ""
-//  },
-//  {
-//   PID: 27,
-//    Comment: "This shit may or may not work",
-//   Likes: 5000000000,
-//  Views: 0,
-// Poster: 2,
-// Hyperlink: "https://imgs.search.brave.com/qqE_mtUsi44VqSRHrTcBOrjrwFYeo2FjIh8tpXTs_z8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/a2luZ2ljZS5jb20v/Y2RuL3Nob3AvZmls/ZXMvc29uaWMtdGhl/LWhlZGdlaG9nLXgt/a2luZy1pY2UtbWV0/YWwtc29uaWMtbmVj/a2xhY2Uta2luZy1p/Y2UtMzkxNTUyNDk1/NDUzOTEuanBnP3Y9/MTcyNzI5OTMxMyZ3/aWR0aD0xMTAw"
-// }
-//]
-//)
+const router = useRouter();
+const posts = ref<Array<Post>>([]);
+const args = ref<Array<Arguments>>([]);
 
-let posts = ref<Array<Post>>([]);
 get_post();
+get_args();
 
 const home_error_message = ref<String>('');
 
 async function get_post() {
-  console.log('Fetching post');
+  console.log('Fetching posts');
   try {
     const resp = await fetch('http://localhost:8081/post/post/batch',
       {
@@ -47,8 +25,8 @@ async function get_post() {
       console.error(`Response status: ${resp.status} with errror ${error.error}`);
       home_error_message.value = error.error;
     } else {
-      let text = await resp.text();
-      posts.value = JSON.parse(text);
+      let fetched_posts = await resp.json();
+      posts.value = fetched_posts;
       console.log("Succesfully fetched");
     }
   }
@@ -58,8 +36,27 @@ async function get_post() {
 }
 
 async function get_args() {
-  //TODO:
-  console.log(10);
+  console.log('Fetching args');
+  try {
+    const resp = await fetch('http://localhost:8081/post/args/batch',
+      {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      home_error_message.value = error.error;
+    } else {
+      let fetched_args = await resp.json();
+      args.value = fetched_args;
+      console.log("Succesfully fetched");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
 }
 </script>
 
@@ -71,7 +68,9 @@ async function get_args() {
       <div v-else>
         <img class="postImg" v-bind:src=p.Hyperlink>
       </div>
-      <div style="text-align: left;">Likes: {{ p.Likes }} Views: {{ p.Views }} Replies: 10</div>
+      <div style="text-align: left;">Likes: {{ p.Likes }} Views: {{ p.Views }} <input type="submit" value="Replies: 0"
+          @click="router.push(`replies/post/${p.PID}`)">
+      </div>
     </div>
   </div>
 </template>
