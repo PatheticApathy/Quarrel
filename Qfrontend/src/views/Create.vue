@@ -2,16 +2,23 @@
 import Navbar from './NavBarView.vue'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue';
-//TODO: argumnets have not been implemented yet. Wil have to decide next sprint probably
-//
-const router = useRouter()
+
+const router = useRouter();
 const content_type = ref<string>("post");
 const comment = ref<string>("");
 const hyperlink = ref<string>("");
 const error_message = ref<string>("");
 
+function get_id() {
+  const client_id = localStorage.getItem('QuarrelSessionID');
+  if (!client_id) {
+    throw new Error("No session id found. Try logging in again");
+  } else {
+    return Number(client_id);
+  }
+}
 async function create_content() {
-  const UID: number = Number(localStorage.getItem("QuarrelSessionID"));
+  const UID: number = get_id();
   let content_link: string | null = null;
   if (!UID) {
     console.error("No User ID, must login again");
