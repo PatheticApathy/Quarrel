@@ -84,7 +84,7 @@ export function post_reply_arg_handler(req: Request<{ AID: number, reply: Replie
 }
 
 export function delete_reply_handler(req: Request<{ RID: number }>, res: Response<{ deleted: boolean }>, next: NextFunction, pool: Pool) {
-  const reply_id = req.params.RID;
+  const reply_id = req.body.RID;
   delete_reply(reply_id, pool, (err, isdeleted) => {
     if (err) {
       next(err);
@@ -97,7 +97,7 @@ export function delete_reply_handler(req: Request<{ RID: number }>, res: Respons
 }
 
 export function put_reply_like_handler(req: Request<{ RID: number }>, res: Response<{ liked: boolean }>, next: NextFunction, pool: Pool) {
-  const reply_id = req.params.RID;
+  const reply_id = req.body.RID;
   like_reply(reply_id, pool, (err, isliked) => {
     if (err) {
       next(err);
@@ -109,7 +109,7 @@ export function put_reply_like_handler(req: Request<{ RID: number }>, res: Respo
   });
 };
 export function put_reply_unlike_handler(req: Request<{ RID: number }>, res: Response<{ unliked: boolean }>, next: NextFunction, pool: Pool) {
-  const reply_id = req.params.RID;
+  const reply_id = req.body.RID;
   unlike_reply(reply_id, pool, (err, isliked) => {
     if (err) {
       next(err);

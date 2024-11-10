@@ -16,13 +16,12 @@ export function get_post_handler(req: Request<{ id: number }>, res: Response<Pos
 };
 
 export function post_handler(req: Request<Post>, res: Response<number>, next: NextFunction, pool: Pool): void {
-  const post: Post = req.params;
+  const post: Post = req.body;
   add_post(post, pool, (err, id: number | undefined) => {
     if (err) {
       next(err);
     } else {
-      res.status(200);
-      res.json(id);
+      res.status(200).json(id);
     }
   });
 };
@@ -40,7 +39,7 @@ export function get_arg_handler(req: Request<{ id: number }>, res: Response<Argu
 };
 
 export function argument_handler(req: Request<Arguments>, res: Response<number>, next: NextFunction, pool: Pool): void {
-  const arg: Arguments = req.params;
+  const arg: Arguments = req.body;
   add_argument(arg, pool, (err, id: number | undefined) => {
     if (err) {
       next(err);
