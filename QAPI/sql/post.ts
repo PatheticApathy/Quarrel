@@ -23,9 +23,10 @@ export function add_post(post: Post, sql: Pool, callback: (err: Error | undefine
       if (error) {
         console.error('Could not complete transaction:', error);
         callback(error, undefined);
+      } else {
+        console.log(`Post ${result.insertId} added`);
+        callback(undefined, result.insertId);
       }
-      console.log(`Post ${result.insertId} added`);
-      callback(undefined, result.insertId);
     });
 };
 
