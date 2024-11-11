@@ -4,7 +4,8 @@ interface User {
   Bio: string,
   Profile_pic: string,
   Password: string,
-  Follow_count: number
+  Follow_count: number,
+  Following_count: number
 }
 
 interface Follower {

@@ -3,14 +3,16 @@ interface User {
   Username: string,
   Password: string,
   Follow_count: number,
+  Following_count: number,
   Bio: string,
   Profile_pic: string
 }
 
 interface UpdateUser {
+  UID: number,
   Username: string,
   Bio: string,
-  ProfilePic: string
+  Profile_pic: string
 }
 
 interface Follower {

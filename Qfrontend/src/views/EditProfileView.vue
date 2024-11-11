@@ -53,21 +53,24 @@ function go_to_profile_page() {
 // Function to send the updated profile information to the server
 async function update_profile() {
   // Fetching the client ID from local storage
-  const clientId = localStorage.getItem('QuarrelSessionID');
-
+  const clientId = Number(localStorage.getItem('QuarrelSessionID'));
+  
+  
   // Check if client ID exists before proceeding
   if (!clientId) {
     console.error("Client ID not found in local storage.");
     return;
   }
-
+  
   console.log(`Updating profile for client ID: ${clientId}`);
+  
 
-  // Constructing the updated user object
-  const updatedUser : UpdateUser = {
-    Username: username_edit.value,
-    Bio: bio_edit.value,
-    ProfilePic: profile_pic_edit.value
+// Constructing the updated user object
+const updatedUser : UpdateUser = {
+  UID: clientId,
+  Username: username_edit.value,
+  Bio: bio_edit.value,
+  Profile_pic: profile_pic_edit.value
 };
 
 try {

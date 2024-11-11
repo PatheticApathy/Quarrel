@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Navbar from './NavBarView.vue'
 import { ref } from "vue"
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router'
 
 const router = useRouter();
 const route = useRoute();
@@ -22,23 +22,24 @@ function get_id() {
   }
 }
  // Replace this with your actual logic to get the current user ID
-const id: number = Number(route.params.id)
+let id: number = Number(route.params.id)
 
-const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here...", Profile_pic: "" });
+const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Following_count: 0, Bio: "Bio goes here...", Profile_pic: "" });
 display_data();
+onBeforeRouteUpdate((to, _, next) => { id = Number(to.params.id); display_data(); next() });
 
 const go_to_edit_profile = () => {
   router.push('/edit-profile')
 }
 const go_to_followers = () => {
-  router.push('/followers')
+  router.push(`/followers/${id}`)
 }
 const go_to_following = () => {
-  router.push('/following')
+  router.push(`/following/${id}`)
 }
 
 const followUser = () => {
-  console.log("Follow button clicked");
+  follow();
 }
 
 async function display_data() {
@@ -62,6 +63,31 @@ async function display_data() {
     console.error(`Error parsing json: ${err}`)
   }
 }
+
+async function follow() {
+  const user_follow = {
+    FID: get_id(),
+    IID: id
+  }
+  const base_path = `http://localhost:8081/follow`;
+  try {
+    const resp = await fetch(base_path, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user_follow),
+    });
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with error ${error.error}`);
+    } else {
+      console.log(`User ${user_follow.FID} followed/unfollowed user ${user_follow.IID}`);
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
 </script>
 
 <template>
@@ -71,7 +97,7 @@ async function display_data() {
       <div class="background-container">
         <img class="background-image" src="../assets/background-image.jpg" alt="Background Image">
         <div class="profile-pic">
-          <img src="../assets/profile-pic.jpg" alt="Profile Picture">
+          <img v-bind:src="profile.Profile_pic" alt="Profile Picture">
         </div>
       </div>
       <div class="user-info">
@@ -86,7 +112,7 @@ async function display_data() {
         <div class="bio">{{ profile.Bio }}</div>
         <div class="followers">
           <button @click="go_to_followers">Followers: {{ profile.Follow_count }}</button>
-          <button @click="go_to_following">Following: 0</button>
+          <button @click="go_to_following">Following: {{ profile.Following_count }}</button>
         </div>
       </div>
     </div>
