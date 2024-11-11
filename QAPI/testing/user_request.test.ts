@@ -1,5 +1,6 @@
 import { beforeAll, expect, jest, test } from '@jest/globals';
-import { createPool } from 'mysql'; import { user_router } from '../routes/user';
+import { createPool } from 'mysql';
+import { user_router } from '../routes/user';
 import request from 'supertest';
 import { Express, Response, Request, NextFunction } from 'express';
 import express = require('express');
