@@ -36,9 +36,9 @@ get_follower();
 const home_error_message = ref<String>('');
 
 async function get_follower() {
-  console.log('Fetching users');
-  try {
-    const resp = await fetch('http://localhost:8081/user/batch',
+    console.log('Fetching users');
+    try {
+    const resp = await fetch('http://localhost:8081/follow/followers/',
       {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },

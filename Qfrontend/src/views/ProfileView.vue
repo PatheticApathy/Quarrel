@@ -9,7 +9,7 @@ const route = useRoute();
 let id: number = Number(route.params.id)
 
 
-const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Bio: "Bio goes here...", Profile_pic: "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg" });
+const profile = ref<User>({ UID: 0, Username: "Babaoey", Password: "", Follow_count: 0, Following_count: 0, Bio: "Bio goes here...", Profile_pic: "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg" });
 display_data();
 onBeforeRouteUpdate((to, _, next) => { id = Number(to.params.id); display_data(); next() });
 
@@ -43,6 +43,7 @@ async function display_data() {
       console.log(JSON.stringify(user));
       profile.value.UID = user.UID;
       profile.value.Follow_count = user.Follow_count;
+      profile.value.Following_count = user.Following_count;
       profile.value.Username = user.Username;
       profile.value.Bio = user.Bio;
       if (!user.Profile_pic) { profile.value.Profile_pic = user.Profile_pic }
@@ -74,7 +75,7 @@ async function display_data() {
         <div class="bio">{{ profile.Bio }}</div>
         <div class="followers">
           <button @click="go_to_followers">Followers: {{ profile.Follow_count }}</button>
-          <button @click="go_to_following">Following: 0</button>
+          <button @click="go_to_following">Following: {{ profile.Following_count }}</button>
         </div>
       </div>
     </div>

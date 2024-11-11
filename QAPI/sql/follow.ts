@@ -13,23 +13,23 @@ export function get_follow_count(id: number, sql: Pool, callback: (err: Error | 
 };
 
 export function get_followers(UID: number, sql: Pool, callback: (err: Error | undefined, users: Array<User> | undefined) => void): void {
-    sql.query('SELECT User.UID, User.Username FROM Follower JOIN User ON Follower.Follows = User.UID WHERE Follower.Influencer = ?;', UID, function (error, result, _) {
+    sql.query('SELECT User.* FROM Follower JOIN User ON Follower.Follows = User.UID WHERE Follower.Influencer = ?;', UID, function (error, result, _) {
         if (error) {
             console.error('Could not complete transaction:', error);
             callback(error, undefined);
         }
-        console.log(`Followers ${result} retrieved`);
+        console.log(`Followers ${JSON.stringify(result)} retrieved`);
         callback(undefined, result);
     })
 };
 
 export function get_following(UID: number, sql: Pool, callback: (err: Error | undefined, users: Array<User> | undefined) => void): void {
-    sql.query('SELECT User.UID, User.Username FROM Follower JOIN User ON Follower.Influencer = User.UID WHERE Follower.Follows = ?;', UID, function (error, result, _) {
+    sql.query('SELECT User.* FROM Follower JOIN User ON Follower.Influencer = User.UID WHERE Follower.Follows = ?;', UID, function (error, result, _) {
         if (error) {
             console.error('Could not complete transaction:', error);
             callback(error, undefined);
         }
-        console.log(`Followers ${result} retrieved`);
+        console.log(`Followers ${JSON.stringify(result)} retrieved`);
         callback(undefined, result);
     })
 };
@@ -62,6 +62,19 @@ export function follow(UID: number, sql: Pool, callback: (err: Error | undefined
     });
 }
 
+export function following(UID: number, sql: Pool, callback: (err: Error | undefined) => void): void {
+    const query = `UPDATE User SET Following_count = Following_count + 1 WHERE UID = ?`;
+    sql.query(query, [UID], (error, result: OkPacket) => {
+        if (error) {
+            console.error('Error updating like count:', error);
+            callback(error);
+        } else {
+            console.log(`Follower count updated for user ${UID}`);
+            callback(undefined);
+        }
+    });
+}
+
 export function unfollow(UID: number, sql: Pool, callback: (err: Error | undefined) => void): void {
     const query = `UPDATE User SET Follow_count = Follow_count - 1 WHERE UID = ?`;
     sql.query(query, [UID], (error, result: OkPacket) => {
@@ -70,6 +83,19 @@ export function unfollow(UID: number, sql: Pool, callback: (err: Error | undefin
             callback(error);
         } else {
             console.log(`Follow count updated for post ${UID}`);
+            callback(undefined);
+        }
+    });
+}
+
+export function unfollowing(UID: number, sql: Pool, callback: (err: Error | undefined) => void): void {
+    const query = `UPDATE User SET Following_count = Following_count - 1 WHERE UID = ?`;
+    sql.query(query, [UID], (error, result: OkPacket) => {
+        if (error) {
+            console.error('Error updating like count:', error);
+            callback(error);
+        } else {
+            console.log(`Follower count updated for user ${UID}`);
             callback(undefined);
         }
     });

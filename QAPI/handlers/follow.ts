@@ -1,6 +1,6 @@
 import '../models';
 import { Pool, Query } from 'mysql';
-import { get_follow_count, get_followers, get_following, check_existing_follow, follow, unfollow, record_follow, remove_follow } from '../sql/sql';
+import { get_follow_count, get_followers, get_following, check_existing_follow, follow, following, unfollow, unfollowing, record_follow, remove_follow } from '../sql/sql';
 import { Request, Response, NextFunction } from 'express';
 
 export function get_follow_count_handler(req: Request<{ id: number }>, res: Response, sql: Pool, next: NextFunction): void {
@@ -65,10 +65,17 @@ export function follow_handler(req: Request<{ FID: number, IID: number}>, res: R
               remove_follow(FID, IID, sql, (err) => {
                 if (err) {
                   res.status(500);
-                  res.json({ error: 'Error recording follow' });
+                  res.json({ error: 'Error removing follow' });
                 } else {
-                  res.status(200);
-                  res.json({ message: 'Follow recorded successfully' });
+                  unfollowing(FID, sql, (err) => {
+                    if (err) {
+                      res.status(500);
+                      res.json({ error: 'Error removing follow' });
+                    } else {
+                      res.status(200);
+                      res.json({ message: 'Follow removed successfully' });
+                    }
+                  })
                 }
               })
             }
@@ -82,9 +89,15 @@ export function follow_handler(req: Request<{ FID: number, IID: number}>, res: R
             if (err) {
               next(err);
             } else {
-              res.status(200);
-              res.json({ message: 'Follow recorded successfully' });
-            }
+              following(FID, sql, (err) => {
+                if (err) {
+                  next(err);
+                } else {
+                  res.status(200);
+                  res.json({ message: 'Follow recorded successfully' });
+                }
+            })
+          }
           });
         }
       });

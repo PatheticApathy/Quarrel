@@ -3,6 +3,7 @@ interface User {
   Username: string,
   Password: string,
   Follow_count: number,
+  Following_count: number,
   Bio: string,
   Profile_pic: string
 }
