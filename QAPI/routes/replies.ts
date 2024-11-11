@@ -1,6 +1,6 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { Pool } from 'mysql';
-import { get_post_replies_handler, get_arg_replies_handler, post_reply_post_handler, post_reply_arg_handler, delete_reply_handler, put_reply_like_handler, put_reply_unlike_handler } from '../handlers/handlers';
+import { get_post_replies_handler, get_arg_replies_handler, post_reply_post_handler, post_reply_arg_handler, delete_reply_handler, put_reply_like_handler, put_reply_unlike_handler, get_posts_reply_count_handler, get_args_reply_count_handler } from '../handlers/handlers';
 import express = require('express');
 
 export function reply_router(pool: Pool) {
@@ -13,6 +13,8 @@ export function reply_router(pool: Pool) {
   router.delete('/del', (req: Request<{ RID: number }>, res: Response<{ deleted: boolean }>, next: NextFunction) => { delete_reply_handler(req, res, next, pool) });
   router.put('/like', (req: Request<{ RID: number }>, res: Response<{ liked: boolean } | { error: string }>, next: NextFunction) => { put_reply_like_handler(req, res, next, pool) });
   router.put('/unlike', (req: Request<{ RID: number }>, res: Response<{ unliked: boolean }>, next: NextFunction) => { put_reply_unlike_handler(req, res, next, pool) });
+  router.post('/post/count', (req: Request<Array<{ PID: number }>>, res: Response<Array<{ PID: number, reply_count: number }>>, next: NextFunction) => { get_posts_reply_count_handler(req, res, next, pool) });
+  router.post('/arg/count', (req: Request<Array<{ AID: number }>>, res: Response<Array<{ AID: number, reply_count: number }>>, next: NextFunction) => { get_args_reply_count_handler(req, res, next, pool) });
 
   return router;
 }

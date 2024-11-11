@@ -8,6 +8,7 @@ const args = ref<Array<Arguments>>([]);
 
 get_post();
 get_args();
+get_post_count();
 
 const home_error_message = ref<String>('');
 
@@ -51,6 +52,31 @@ async function get_args() {
     } else {
       let fetched_args = await resp.json();
       args.value = fetched_args;
+      console.log("Succesfully fetched");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
+async function get_post_count() {
+  console.log('Fetching posts reply count');
+  try {
+    const resp = await fetch('http://localhost:8081/replies/post/count',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify([{ PID: 1 }])
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      home_error_message.value = error.error;
+    } else {
+      let reply_count = await resp.json();
+      console.log(JSON.stringify(reply_count));
       console.log("Succesfully fetched");
     }
   }

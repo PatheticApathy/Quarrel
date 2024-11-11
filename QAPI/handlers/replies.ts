@@ -9,7 +9,9 @@ import {
   insert_reply,
   delete_reply,
   like_reply,
-  unlike_reply
+  unlike_reply,
+  get_replies_count_for_posts,
+  get_replies_count_for_args
 } from '../sql/sql';
 
 export function get_post_replies_handler(req: Request<{ id: number }>, res: Response<Array<Replies>>, next: NextFunction, pool: Pool) {
@@ -120,3 +122,28 @@ export function put_reply_unlike_handler(req: Request<{ RID: number }>, res: Res
     }
   });
 };
+
+export function get_posts_reply_count_handler(req: Request<Array<{ PID: number }>>, res: Response<Array<{ PID: number, reply_count: number }>>, next: NextFunction, pool: Pool) {
+  const PIDs = req.body;
+  get_replies_count_for_posts(PIDs, pool, (err, replies) => {
+    if (err) {
+      next(err);
+    } else if (!replies) {
+      res.status(404).json([]);
+    } else {
+      res.status(200).json(replies);
+    }
+  });
+}
+export function get_args_reply_count_handler(req: Request<Array<{ AID: number }>>, res: Response<Array<{ AID: number, reply_count: number }>>, next: NextFunction, pool: Pool) {
+  const AIDs = req.body;
+  get_replies_count_for_args(AIDs, pool, (err, replies) => {
+    if (err) {
+      next(err);
+    } else if (!replies) {
+      res.status(404).json([]);
+    } else {
+      res.status(200).json(replies);
+    }
+  });
+}

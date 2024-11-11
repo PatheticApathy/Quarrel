@@ -133,3 +133,56 @@ export function unlike_reply(RID: number, sql: Pool, callback: (err: Error | und
   });
 }
 
+export function get_replies_count_for_posts(PIDs: Array<{ PID: number }>, sql: Pool, callback: (err: Error | undefined, replies: Array<{ PID: number, reply_count: number }> | undefined) => void) {
+  const query = PIDs.map(() => '?').join(",");
+  const array = PIDs.map((PID) => PID.PID);
+  sql.query(
+    `
+    SELECT p.PID, COUNT(r.RID) AS reply_count
+    FROM Replies r
+    JOIN Replies_to_post rp ON rp.reply = r.RID
+    JOIN Post p ON rp.post = p.PID
+    WHERE p.PID IN (${query});
+    `,
+    array,
+    (err, results: Array<{ PID: number, reply_count: number }> | undefined) => {
+      if (err) {
+        console.error(`Error could not complete transaction: ${err}`);
+        callback(err, undefined);
+      } else if (results?.length == 0) {
+        console.log("No replies found");
+        callback(undefined, undefined);
+      } else {
+        console.log(`Post reply counts fetched ${JSON.stringify(results)}`)
+        callback(undefined, results);
+      }
+    }
+  );
+}
+
+export function get_replies_count_for_args(AIDs: Array<{ AID: number }>, sql: Pool, callback: (err: Error | undefined, replies: Array<{ AID: number, reply_count: number }> | undefined) => void) {
+  const query = AIDs.map(() => '?').join(",");
+  const array = AIDs.map((AID) => AID.AID);
+  sql.query(
+    `
+    SELECT a.AID, COUNT(r.RID) AS reply_count
+    FROM Replies r
+    JOIN Replies_to_args ra ON ra.reply = r.RID
+    JOIN Arguments a ON ra.arg = a.AID
+    WHERE a.AID IN (${query});
+    `,
+    array,
+    (err, results: Array<{ AID: number, reply_count: number }> | undefined) => {
+      if (err) {
+        console.error(`Error could not complete transaction: ${err}`);
+        callback(err, undefined);
+      } else if (results?.length == 0) {
+        console.log("No replies found");
+        callback(undefined, undefined);
+      } else {
+        console.log(`Post reply counts fetched ${JSON.stringify(results)}`)
+        callback(undefined, results);
+      }
+    }
+  );
+}
