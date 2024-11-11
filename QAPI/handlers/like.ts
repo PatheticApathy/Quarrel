@@ -1,11 +1,11 @@
 import '../models';
 import { Pool, Query } from 'mysql';
-import { like, unlike, get_likes, check_existing_like, record_user_like, remove_user_like } from '../sql/sql';
+import { like_post, unlike_post, get_likes_post, check_existing_like_post, record_user_like_post, remove_user_like_post } from '../sql/sql';
 import { Request, Response, NextFunction } from 'express';
 
-export function get_likes_handler(req: Request<{ id: number }>, res: Response, sql: Pool, next: NextFunction): void {
+export function get_likes_handler_p(req: Request<{ id: number }>, res: Response, sql: Pool, next: NextFunction): void {
   const id: number = req.params.id;
-  get_likes(id, sql, (err, like) => {
+  get_likes_post(id, sql, (err, like) => {
     if (err) {
       next(err);
     }
@@ -19,45 +19,54 @@ export function get_likes_handler(req: Request<{ id: number }>, res: Response, s
   });
 };
 
-export function like_handler(req: Request<{ UID: number, PID: number}>, res: Response, sql: Pool, next: NextFunction): void {
-  const UID = req.body.UID;
-  const PID = req.body.PID;
+export function get_liked_posts_handle_p(req: Request<{ UID: number, PIDs: Array<number> }>, res: Response, sql: Pool, next: NextFunction): void {
+  const { UID, PIDs } = req.body;
 
-  check_existing_like(UID, PID, sql, (err, hasliked) => {
+  check_existing_like_post(UID, PIDs, sql, (err, liked_post) => {
     if (err) {
-        next(err);
-    } else if (hasliked) {
-        unlike(PID, sql, (err) => {
-            if (err) {
-              res.status(500);
-              res.json({ error: 'Error updating vote' });
-            } else {
-              remove_user_like(UID, PID, sql, (err) => {
-                if (err) {
-                  res.status(500);
-                  res.json({ error: 'Error recording vote' });
-                } else {
-                  res.status(200);
-                  res.json({ message: 'Vote recorded successfully' });
-                }
-              })
-            }
-        })
+      next(err);
+    } else if (!liked_post) {
+      res.status(404).json({ error: "User has no liked post" });
     } else {
-      like(PID, sql, (err) => {
+      res.status(200).json(liked_post);
+    }
+  });
+};
+
+export function post_like_handler_p(req: Request<{ PID: number, UID: number }>, res: Response, sql: Pool, next: NextFunction): void {
+  const { PID, UID } = req.body;
+  like_post(PID, sql, (err, liked) => {
+    if (err) {
+      next(err)
+    } else if (!liked) {
+      res.status(500).json({ error: "Could not like post" });
+    } else {
+      record_user_like_post(UID, PID, sql, (err, like_transation_reciept) => {
         if (err) {
           next(err);
         } else {
-          record_user_like(UID, PID, sql, (err) => {
-            if (err) {
-              next(err);
-            } else {
-              res.status(200);
-              res.json({ message: 'Like recorded successfully' });
-            }
-          });
+          res.status(200).json({ reciept: like_transation_reciept });
         }
-      });
+      })
     }
   });
-}
+};
+
+export function post_unlike_handler_p(req: Request<{ PID: number, UID: number }>, res: Response, sql: Pool, next: NextFunction): void {
+  const { PID, UID } = req.body;
+  unlike_post(PID, sql, (err, unliked) => {
+    if (err) {
+      next(err)
+    } else if (!unliked) {
+      res.status(500).json({ error: "Could not unlike post" });
+    } else {
+      remove_user_like_post(UID, PID, sql, (err, complete_message) => {
+        if (err) {
+          next(err);
+        } else {
+          res.status(200).json({ message: complete_message });
+        }
+      })
+    }
+  });
+};

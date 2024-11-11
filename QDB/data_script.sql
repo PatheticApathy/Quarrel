@@ -1,5 +1,5 @@
 -- Insert Users
-INSERT INTO User (Name, Username, Password, Follow_count) VALUES
+INSERT INTO User (Bio, Username, Password, Follow_count) VALUES
 ('Alice Smith', 'alice123', 'password1', 10),
 ('Bob Johnson', 'bobthebuilder', 'password2', 5),
 ('Charlie Brown', 'charlie.b', 'password3', 15),
