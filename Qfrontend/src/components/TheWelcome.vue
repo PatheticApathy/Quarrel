@@ -5,12 +5,11 @@ import { useRouter } from 'vue-router'
 const router = useRouter();
 const posts = ref<Array<Post>>([]);
 const args = ref<Array<Arguments>>([]);
+const post_reply_count = ref<Map<number, number>>(new Map());
+const home_error_message = ref<String>('');
 
 get_post();
 get_args();
-get_post_count();
-
-const home_error_message = ref<String>('');
 
 async function get_post() {
   console.log('Fetching posts');
@@ -34,6 +33,7 @@ async function get_post() {
   catch (err) {
     console.error(`Error parsing json: ${err}`)
   }
+  await get_post_count();
 }
 
 async function get_args() {
@@ -62,12 +62,16 @@ async function get_args() {
 
 async function get_post_count() {
   console.log('Fetching posts reply count');
+  let id_list: Array<{ PID: number }> = [];
+  for (const post of posts.value.values()) {
+    id_list.push({ PID: post.PID });
+  };
   try {
     const resp = await fetch('http://localhost:8081/replies/post/count',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify([{ PID: 1 }])
+        body: JSON.stringify(id_list)
       }
     );
     if (!resp.ok) {
@@ -75,8 +79,10 @@ async function get_post_count() {
       console.error(`Response status: ${resp.status} with errror ${error.error}`);
       home_error_message.value = error.error;
     } else {
-      let reply_count = await resp.json();
-      console.log(JSON.stringify(reply_count));
+      const rep_count: Array<{ PID: number, reply_count: number }> = await resp.json();
+      rep_count.map((coco) => {
+        post_reply_count.value?.set(coco.PID, coco.reply_count);
+      });
       console.log("Succesfully fetched");
     }
   }
@@ -84,6 +90,7 @@ async function get_post_count() {
     console.error(`Error parsing json: ${err}`)
   }
 }
+
 </script>
 
 <template>
@@ -94,7 +101,8 @@ async function get_post_count() {
       <div v-else>
         <img class="postImg" v-bind:src=p.Hyperlink>
       </div>
-      <div style="text-align: left;">Likes: {{ p.Likes }} Views: {{ p.Views }} <input type="submit" value="Replies: 0"
+      <div style="text-align: left;">Likes: {{ p.Likes }} Views: {{ p.Views }} <input type="submit"
+          v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
           @click="router.push(`replies/post/${p.PID}`)">
       </div>
     </div>
