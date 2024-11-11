@@ -32,14 +32,14 @@ const go_to_edit_profile = () => {
   router.push('/edit-profile')
 }
 const go_to_followers = () => {
-  router.push('/followers')
+  router.push(`/followers/${id}`)
 }
 const go_to_following = () => {
-  router.push('/following')
+  router.push(`/following/${id}`)
 }
 
 const followUser = () => {
-  console.log("Follow button clicked");
+  follow();
 }
 
 async function display_data() {
@@ -57,6 +57,30 @@ async function display_data() {
       const user: User = await resp.json();
       console.log(JSON.stringify(user));
       profile.value = user;
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
+async function follow() {
+  const user_follow = {
+    FID: get_id(),
+    IID: id
+  }
+  const base_path = `http://localhost:8081/follow`;
+  try {
+    const resp = await fetch(base_path, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user_follow),
+    });
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with error ${error.error}`);
+    } else {
+      console.log(`User ${user_follow.FID} followed/unfollowed user ${user_follow.IID}`);
     }
   }
   catch (err) {

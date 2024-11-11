@@ -24,9 +24,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import Navbar from './NavBarView.vue'
 import { ref, computed } from 'vue'
+
+const route = useRoute();
+let id: number = Number(route.params.id);
 
 const router = useRouter();
 function go_back() {
@@ -47,8 +50,9 @@ const filteredFollowers = computed(() => {
 
 async function get_follower() {
     console.log('Fetching users');
+    const base = `http://localhost:8081/follow/followers/${id}`;
     try {
-    const resp = await fetch('http://localhost:8081/follow/followers/',
+    const resp = await fetch(base,
       {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
