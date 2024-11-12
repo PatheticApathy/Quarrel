@@ -26,7 +26,7 @@ interface Arguments {
   Comment: string,
   Likes: number,
   Views: number,
-  Hyperlink: string | null,
+  Hyperlink: string,
   Poster: number,
   T1_votes: number,
   T2_votes: number

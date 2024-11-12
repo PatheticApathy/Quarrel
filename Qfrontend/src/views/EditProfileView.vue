@@ -187,7 +187,17 @@ button:hover {
   }
 }
 
-input {
+.edit-name input {
+  display: block;
+  width: 60vw;
+  height: 40px;
+  padding-left: 20px;
+  margin-bottom: 1px;
+  border: 3px solid navy;
+  border-radius: 5px;
+}
+
+.edit-bio input {
   display: block;
   width: 60vw;
   height: 40px;
