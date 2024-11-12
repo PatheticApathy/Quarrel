@@ -91,6 +91,65 @@ async function get_post_count() {
   }
 }
 
+async function like_post(post: Post) {
+  const user_id: number | undefined = get_id();
+  console.log('Liked post');
+  try {
+    const resp = await fetch('http://localhost:8081/like/like',
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ UID: user_id, PID: post.PID })
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      unlike_post(post);
+    } else {
+      post.Likes++
+      console.log("Succesfully liked");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
+async function unlike_post(post: Post) {
+  const user_id: number | undefined = get_id();
+  console.log('Unliked post');
+  try {
+    const resp = await fetch('http://localhost:8081/like/unlike',
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ UID: user_id, PID: post.PID })
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+    } else {
+      post.Likes--
+      console.log("Succesfully unliked");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
+function get_id() {
+  const client_id = localStorage.getItem('QuarrelSessionID');
+  if (!client_id) {
+    console.error("No user ID in local storage")
+    return undefined;
+  } else {
+    console.log(("User_id acquired"))
+    return Number(client_id);
+  }
+}
 </script>
 
 <template>
@@ -101,8 +160,9 @@ async function get_post_count() {
       <div v-else>
         <img class="postImg" v-bind:src=p.Hyperlink>
       </div>
-      <div style="text-align: left;">Likes: {{ p.Likes }} Views: {{ p.Views }} <input type="submit"
-          v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
+      <div style="text-align: left;">
+        <input type="submit" v-bind:value="`Likes: ${p.Likes}`" @click="like_post(p)">
+        <input type="submit" v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
           @click="router.push(`replies/post/${p.PID}`)">
       </div>
     </div>
