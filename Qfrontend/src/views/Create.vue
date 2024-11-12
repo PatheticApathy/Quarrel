@@ -1,3 +1,4 @@
+
 <script setup lang="ts">
 import Navbar from './NavBarView.vue'
 import { useRouter } from 'vue-router'

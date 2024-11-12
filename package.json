@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "start": "npm run start:api & npm run start:frontend",
+    "start:api": "cd ./QAPI/ && npm start",
+    "start:frontend": "cd ./Qfrontend/ && npm run dev"
+  }
+}

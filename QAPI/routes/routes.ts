@@ -3,4 +3,4 @@ export * from './post';
 export * from './vote'
 export * from './like'
 export * from './replies'
-//export * from './follow'
+export * from './follow'

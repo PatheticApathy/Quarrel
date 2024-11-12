@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
+import { computed, ref } from 'vue';
 
 const router = useRouter();
 const posts = ref<Array<Post>>([]);
@@ -52,6 +52,7 @@ async function get_args() {
     } else {
       let fetched_args = await resp.json();
       args.value = fetched_args;
+      console.log(JSON.stringify(fetched_args))
       console.log("Succesfully fetched");
     }
   }
@@ -150,6 +151,27 @@ function get_id() {
     return Number(client_id);
   }
 }
+
+function calculateRectangleStyle(t1Votes: number, t2Votes: number) {
+  const totalVotes = t1Votes + t2Votes;
+  if (totalVotes === 0) return { backgroundColor: 'rgb(128, 128, 128)' }; // Neutral color if no votes
+
+  const redComponent = Math.max(0, 255 * (t1Votes / totalVotes));
+  const blueComponent = Math.max(0, 255 * (t2Votes / totalVotes));
+  return {
+    backgroundColor: `rgb(${redComponent}, 0, ${blueComponent})`,
+  };
+}
+
+function calculateIndicatorStyle(t1Votes: number, t2Votes: number) {
+  const totalVotes = t1Votes + t2Votes;
+  if (totalVotes === 0) return { left: '50%' }; // Center if no votes
+
+  const position = (t1Votes / totalVotes) * 100;
+  return {
+    left: `${position}%`,
+  };
+}
 </script>
 
 <template>
@@ -166,13 +188,25 @@ function get_id() {
           @click="router.push(`replies/post/${p.PID}`)">
       </div>
     </div>
+    <div class="argument_container">
+      <div v-for="a in args" :key="a.AID" class="argument">
+        <h1>{{ a.Comment }} vs {{ a.Hyperlink }}</h1>
+        <div style="text-align: left;">{{ a.Comment }}: {{ a.T1_votes }} {{ a.Hyperlink }}: {{ a.T2_votes }}
+          <input type="submit" value="Argue" @click="router.push(`replies/post/${a.AID}`)">
+        </div>
+        <div class="arg-bar" :style="calculateRectangleStyle(a.T1_votes, a.T2_votes)">
+          <div class="indicator" :style="calculateIndicatorStyle(a.T1_votes, a.T2_votes)"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 
 <style>
-.post_container {
+.feed {
   position: absolute;
+  display: block;
   top: 12.86008230452674897119341563786%;
   left: 25.78125%;
   height: 100%;
@@ -187,8 +221,35 @@ function get_id() {
   padding: 20px;
 }
 
+.argument {
+  margin-top: 4.901960784313725490196078431373%;
+  text-align: center;
+  display: block;
+  background-color: #708090;
+  border-radius: 25px;
+  padding: 50px;
+  gap: 20px;
+}
+
 .postImg {
   max-width: 450px;
   max-height: 300px;
+}
+
+.arg-bar {
+  width: 30vw;
+  height: 5vh;
+  position: relative;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+.indicator {
+  width: 2px;
+  height: 100%;
+  background-color: black;
+  position: absolute;
 }
 </style>

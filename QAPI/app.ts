@@ -1,5 +1,5 @@
 import { createPool, Pool } from 'mysql';
-import { user_router, post_router, vote_router, like_router, reply_router } from './routes/routes';
+import { user_router, post_router, vote_router, like_router, reply_router, follow_router } from './routes/routes';
 import { Express, Response, Request, NextFunction } from 'express';
 import express = require("express");
 import cors = require('cors');
@@ -22,7 +22,7 @@ app.use('/post', post_router(pool));
 app.use('/vote', vote_router(pool));
 app.use('/like', like_router(pool));
 app.use('/replies', reply_router(pool));
-//app.use('/follow', follow_router(pool));
+app.use('/follow', follow_router(pool));
 
 //404 route and error handler midleware
 app.use((_req, res, _next) => {
