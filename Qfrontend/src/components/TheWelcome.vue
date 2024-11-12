@@ -15,11 +15,13 @@
     <div class="argument_container">
       <div v-for="a in args" :key="a.AID" class="argument">
         <h1>{{ a.Comment }} vs {{ a.Hyperlink }}</h1>
-        <div style="text-align: left;">{{ a.Comment }}: {{ a.T1_votes }}    {{ a.Hyperlink }}: {{ a.T2_votes }}
-          <input type="submit" value="Argue" @click="router.push(`replies/post/${a.AID}`)">
-        </div>
+        <input type="submit" value="Argue" @click="router.push(`replies/post/${a.AID}`)">
         <div class="arg-bar" :style="calculateRectangleStyle(a.T1_votes, a.T2_votes)">
           <div class="indicator" :style="calculateIndicatorStyle(a.T1_votes, a.T2_votes)"></div>
+        </div>
+        <div class="vote-buttons">
+          <button @click="voteForTeam(a.AID, 'team1')">Vote for Team 1</button>
+          <button @click="voteForTeam(a.AID, 'team2')">Vote for Team 2</button>
         </div>
       </div>
     </div>
@@ -28,7 +30,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
 const router = useRouter();
 const posts = ref<Array<Post>>([]);
@@ -80,12 +82,12 @@ async function get_args() {
     } else {
       let fetched_args = await resp.json();
       args.value = fetched_args;
-      console.log(JSON.stringify(fetched_args))
+      console.log(JSON.stringify(fetched_args));
       console.log("Succesfully fetched");
     }
   }
   catch (err) {
-    console.error(`Error parsing json: ${err}`)
+    console.error(`Error parsing json: ${err}`);
   }
 }
 
@@ -110,7 +112,29 @@ async function get_post_count() {
     }
   }
   catch (err) {
-    console.error(`Error parsing json: ${err}`)
+    console.error(`Error parsing json: ${err}`);
+  }
+}
+
+async function voteForTeam(aid: number, team: 'team1' | 'team2') {
+  try {
+    const url = `http://localhost:8081/post/args/vote/${aid}`;
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ team })
+    });
+
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with error ${error.error}`);
+      home_error_message.value = error.error;
+    } else {
+      console.log(`Successfully voted for ${team} on argument ${aid}`);
+      get_args(); // Refresh arguments to reflect the new vote counts
+    }
+  } catch (err) {
+    console.error(`Error voting for ${team}: ${err}`);
   }
 }
 
@@ -178,11 +202,19 @@ function calculateIndicatorStyle(t1Votes: number, t2Votes: number) {
   border-radius: 20px;
   margin-top: 10px;
 }
+
 .indicator {
   width: 2px;
   height: 100%;
   background-color: black;
   position: absolute;
 }
+
+.vote-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
 </style>
+
 
