@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
 const router = useRouter();
 const posts = ref<Array<Post>>([]);
@@ -52,7 +52,6 @@ async function get_args() {
     } else {
       let fetched_args = await resp.json();
       args.value = fetched_args;
-      console.log(JSON.stringify(fetched_args))
       console.log("Succesfully fetched");
     }
   }
@@ -201,7 +200,6 @@ function calculateIndicatorStyle(t1Votes: number, t2Votes: number) {
     </div>
   </div>
 </template>
-
 
 <style>
 .feed {
