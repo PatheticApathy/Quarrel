@@ -91,7 +91,7 @@ function go_to_home() {
 </script>
 
 <template>
-  <div>
+  <div class="createDiv">
     <Navbar />
     <h1>Create a post or argument</h1>
     <br>
@@ -106,12 +106,54 @@ function go_to_home() {
         </div>
       </div>
       <div>
-        <textarea v-model="comment" id="comment" cols="100" rows="40" width="500" maxlength="280" name="comment"
+        <textarea class="postArgsInput" v-model="comment" id="comment" cols="100" rows="40" width="500" maxlength="280" name="comment"
           placeholder="Insert Comment here"></textarea>
         <label for="hyperlink">Link:</label>
-        <input id="hyperlink" v-model="hyperlink" type="text">
-        <input type="submit" @click="create_content">
+        <input class="linkInput"id="hyperlink" v-model="hyperlink" type="text">
+        <input class="postArgsCreate" type="submit" v-bind:value="`Create`" @click="create_content">
       </div>
     </div>
   </div>
 </template>
+
+<style>
+
+.createDiv {
+  position: relative;
+  left: -20%;
+}
+
+.postArgsInput {
+  background-color: mediumpurple;
+  border-color: mediumpurple;
+}
+
+.postArgsInput:focus {
+  outline: none;
+  border-color: violet;
+}
+
+.linkInput {
+  background-color: mediumpurple;
+  border-color: mediumpurple;
+}
+
+.linkInput:focus {
+  outline: none;
+  border-color: violet;
+}
+
+.postArgsCreate {
+  position: relative;
+  left: 2%;
+  background-color: mediumpurple;
+  border-color: mediumpurple;
+  color: white;
+}
+
+.postArgsCreate:hover {
+  background-color: violet;
+  border-color: violet;
+}
+
+</style>
