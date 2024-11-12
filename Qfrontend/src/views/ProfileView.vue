@@ -125,7 +125,6 @@ async function is_following() {
     console.error(`Error parsing JSON: ${err}`);
   }
 }
-
 </script>
 
 <template>
@@ -139,18 +138,17 @@ async function is_following() {
         </div>
       </div>
       <div class="user-info">
-        <div class="username">{{ profile.Username }}
-          <div class="edit-profile" v-if="id === UID">
-            <button @click="go_to_edit_profile">Edit Profile</button>
+        <div class="username">{{ profile.Username }}</div>
+        <div class="follow-button-container" v-if="id !== UID">
+          <div v-if="isFollowing">
+            <button @click="followUser" class="follow-button">Unfollow</button>
           </div>
-          <div class="follow-profile" v-else>
-              <div class="unfollow" v-if="isFollowing">
-                <button @click="followUser">Unfollow</button>
-              </div>
-              <div class="follow" v-else>
-                <button @click="followUser">Follow</button>
-              </div>
+          <div v-else>
+            <button @click="followUser" class="follow-button">Follow</button>
           </div>
+        </div>
+        <div class="edit-button-container" v-else>
+          <button @click="go_to_edit_profile" class="edit-button">Edit Profile</button>
         </div>
         <div class="bio">{{ profile.Bio }}</div>
         <div class="followers">
@@ -164,10 +162,8 @@ async function is_following() {
 
 <style scoped>
 .profile-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 5vh;
+  display: block;
+  margin-top: 10vh;
 }
 
 .profile-page {
@@ -213,22 +209,27 @@ async function is_following() {
 }
 
 .user-info {
-  display: flex;
-  flex-direction: column;
+  position: relative;
   margin-left: -200px;
   margin-top: 250px;
-  position: absolute;
-  bottom: 10vh;
-  gap: 10px;
 }
 
 .username {
   font-size: 1.8rem;
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+}
+
+.follow-button-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.edit-button-container {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .bio {
@@ -245,18 +246,7 @@ async function is_following() {
   flex-wrap: wrap;
 }
 
-.followers button {
-  border-radius: 40px;
-  background-color: navy;
-  color: white;
-  padding: 10px;
-  font-size: 1rem;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.edit-profile button {
+.follow-button, .edit-button {
   background-color: navy;
   color: white;
   border-radius: 50px;
@@ -265,19 +255,6 @@ async function is_following() {
   font-family: 'Verdana', 'sans-serif';
   font-weight: 900;
   cursor: pointer;
-  margin-left: 20vw;
-}
-
-.follow-profile button {
-  background-color: navy;
-  color: white;
-  border-radius: 50px;
-  padding: 15px 30px;
-  font-size: 1rem;
-  font-family: 'Verdana', 'sans-serif';
-  font-weight: 900;
-  cursor: pointer;
-  margin-left: 20vw;
 }
 
 button:hover {
@@ -289,11 +266,9 @@ button:hover {
   0% {
     transform: scale(1);
   }
-
   50% {
     transform: scale(1.2);
   }
-
   100% {
     transform: scale(1);
   }
