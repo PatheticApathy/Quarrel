@@ -88,3 +88,7 @@ interface UID {
 interface PID {
   PID: number
 }
+
+interface AID {
+  AID: number
+}

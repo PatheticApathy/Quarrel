@@ -84,3 +84,7 @@ interface User_likes {
   UID: number,
   PID: number
 }
+
+interface Likes {
+  Likes: number
+}

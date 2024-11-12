@@ -1,40 +1,18 @@
 <script setup lang="ts">
-import WelcomeItem from './WelcomeItem.vue'
-import DocumentationIcon from './icons/IconDocumentation.vue'
-import ToolingIcon from './icons/IconTooling.vue'
-import EcosystemIcon from './icons/IconEcosystem.vue'
-import CommunityIcon from './icons/IconCommunity.vue'
-import SupportIcon from './icons/IconSupport.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-//const posts = ref<Array<Post>> (
-//  [
-//  {
-//    PID: 72,
-//    Comment: "Jeffey",
-//    Likes: 32,
-//    Views: 7,
-//    Poster: 0,
-//    Hyperlink: ""
-//  },
-//  {
-//   PID: 27,
-//    Comment: "This shit may or may not work",
-//   Likes: 5000000000,
-//  Views: 0,
-// Poster: 2,
-// Hyperlink: "https://imgs.search.brave.com/qqE_mtUsi44VqSRHrTcBOrjrwFYeo2FjIh8tpXTs_z8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/a2luZ2ljZS5jb20v/Y2RuL3Nob3AvZmls/ZXMvc29uaWMtdGhl/LWhlZGdlaG9nLXgt/a2luZy1pY2UtbWV0/YWwtc29uaWMtbmVj/a2xhY2Uta2luZy1p/Y2UtMzkxNTUyNDk1/NDUzOTEuanBnP3Y9/MTcyNzI5OTMxMyZ3/aWR0aD0xMTAw"
-// }
-//]
-//)
-
-let posts = ref<Array<Post>>([]);
-get_post();
-
+const router = useRouter();
+const posts = ref<Array<Post>>([]);
+const args = ref<Array<Arguments>>([]);
+const post_reply_count = ref<Map<number, number>>(new Map());
 const home_error_message = ref<String>('');
 
+get_post();
+get_args();
+
 async function get_post() {
-  console.log('Fetching post');
+  console.log('Fetching posts');
   try {
     const resp = await fetch('http://localhost:8081/post/post/batch',
       {
@@ -47,8 +25,33 @@ async function get_post() {
       console.error(`Response status: ${resp.status} with errror ${error.error}`);
       home_error_message.value = error.error;
     } else {
-      let text = await resp.text();
-      posts.value = JSON.parse(text);
+      let fetched_posts = await resp.json();
+      posts.value = fetched_posts;
+      console.log("Succesfully fetched");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+  await get_post_count();
+}
+
+async function get_args() {
+  console.log('Fetching args');
+  try {
+    const resp = await fetch('http://localhost:8081/post/args/batch',
+      {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      home_error_message.value = error.error;
+    } else {
+      let fetched_args = await resp.json();
+      args.value = fetched_args;
       console.log("Succesfully fetched");
     }
   }
@@ -57,9 +60,95 @@ async function get_post() {
   }
 }
 
-async function get_args() {
-  //TODO:
-  console.log(10);
+async function get_post_count() {
+  console.log('Fetching posts reply count');
+  let id_list: Array<{ PID: number }> = [];
+  for (const post of posts.value.values()) {
+    id_list.push({ PID: post.PID });
+  };
+  try {
+    const resp = await fetch('http://localhost:8081/replies/post/count',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(id_list)
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      home_error_message.value = error.error;
+    } else {
+      const rep_count: Array<{ PID: number, reply_count: number }> = await resp.json();
+      rep_count.map((coco) => {
+        post_reply_count.value?.set(coco.PID, coco.reply_count);
+      });
+      console.log("Succesfully fetched");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
+async function like_post(post: Post) {
+  const user_id: number | undefined = get_id();
+  console.log('Liked post');
+  try {
+    const resp = await fetch('http://localhost:8081/like/like',
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ UID: user_id, PID: post.PID })
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+      unlike_post(post);
+    } else {
+      post.Likes++
+      console.log("Succesfully liked");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
+async function unlike_post(post: Post) {
+  const user_id: number | undefined = get_id();
+  console.log('Unliked post');
+  try {
+    const resp = await fetch('http://localhost:8081/like/unlike',
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ UID: user_id, PID: post.PID })
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+    } else {
+      post.Likes--
+      console.log("Succesfully unliked");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
+function get_id() {
+  const client_id = localStorage.getItem('QuarrelSessionID');
+  if (!client_id) {
+    console.error("No user ID in local storage")
+    return undefined;
+  } else {
+    console.log(("User_id acquired"))
+    return Number(client_id);
+  }
 }
 </script>
 
@@ -71,7 +160,11 @@ async function get_args() {
       <div v-else>
         <img class="postImg" v-bind:src=p.Hyperlink>
       </div>
-      <div style="text-align: left;">Likes: {{ p.Likes }} Views: {{ p.Views }} Replies: 10</div>
+      <div style="text-align: left;">
+        <input type="submit" v-bind:value="`Likes: ${p.Likes}`" @click="like_post(p)">
+        <input type="submit" v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
+          @click="router.push(`replies/post/${p.PID}`)">
+      </div>
     </div>
   </div>
 </template>
