@@ -210,8 +210,9 @@ function calculateIndicatorStyle(t1Votes: number, t2Votes: number) {
           <img class="postImg" v-bind:src=p.Hyperlink>
         </div>
         <div style="text-align: left;">
-          <input type="submit" v-bind:value="`Likes: ${p.Likes}`" @click="like_post(p)">
-          <input type="submit" v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
+          <input class="likeButton" type="submit" v-bind:value="`Likes: ${p.Likes}`" @click="like_post(p)">
+          <input class="replyButton" type="submit"
+            v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
             @click="router.push(`replies/post/${p.PID}`)">
         </div>
       </div>

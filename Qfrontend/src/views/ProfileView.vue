@@ -18,7 +18,7 @@ try {
 function get_id() {
   const client_id = localStorage.getItem('QuarrelSessionID');
   if (!client_id) {
-    throw new Error("No session id found. Try logging in again");
+    throw new Error("no session id found. try logging in again");
   } else {
     return client_id;
   }
@@ -56,7 +56,6 @@ const followUser = async () => {
   await follow();
   is_following(); // Update follow status after action
 };
-
 async function display_data() {
   if (!id) {
     console.error("No ID, login again");
@@ -251,7 +250,8 @@ async function is_following() {
   flex-wrap: wrap;
 }
 
-.follow-button, .edit-button {
+.follow-button,
+.edit-button {
   background-color: navy;
   color: white;
   border-radius: 50px;
@@ -271,9 +271,11 @@ button:hover {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.2);
   }
+
   100% {
     transform: scale(1);
   }
