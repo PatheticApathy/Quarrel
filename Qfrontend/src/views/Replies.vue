@@ -153,11 +153,11 @@ async function like_reply(reply: Replies) {
   <div class="reply_container">
     <div>
       <h1 style="text-align: center;">Reply:</h1>
-      <textarea v-model="new_reply.Comment" cols="80" rows="5" maxlength="280"
+      <textarea class="replyText" v-model="new_reply.Comment" cols="80" rows="5" maxlength="280"
         placeholder="Insert Comment here"></textarea>
       <input
         @click="(router.params.type == 'post') ? create_replies_for_post(Number(router.params.id)) : create_replies_for_arg(Number(router.params.id))"
-        type="submit" name="Submit reply">
+        type="submit" name="Submit reply" v-bind:value="`Reply`" class="replyInput">
     </div>
     <div v-for="r in replies" class="reply">
       <h1>{{ r.Comment }}</h1>
@@ -170,19 +170,42 @@ async function like_reply(reply: Replies) {
 </template>
 
 <style>
+
 .reply_container {
   position: absolute;
   top: 12.86008230452674897119341563786%;
-  left: 40.78125%;
+  left: 30%;
   height: 100%;
   width: 39.84375%;
+}
+
+.replyText {
+  background-color: mediumpurple;
+  border-color: mediumpurple;
+}
+
+.replyText:focus {
+  outline: none;
+  border-color: violet;
+}
+
+.replyInput {
+  background-color: navy;
+  border-color: navy;
+  color: white;
+}
+
+.replyInput:hover {
+  background-color: violet;
+  border-color: violet;
 }
 
 .reply {
   margin-top: 4.901960784313725490196078431373%;
   text-align: center;
-  background-color: #708090;
+  background-color: darkslateblue;
   border-radius: 25px;
   padding: 20px;
 }
+
 </style>

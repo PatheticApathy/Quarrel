@@ -203,8 +203,9 @@ async function voteForTeam(aid: number, team: 'team1' | 'team2') {
         <img class="postImg" v-bind:src=p.Hyperlink>
       </div>
       <div style="text-align: left;">
-        <input type="submit" v-bind:value="`Likes: ${p.Likes}`" @click="like_post(p)">
-        <input type="submit" v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
+        <input class="likeButton" type="submit" v-bind:value="`Likes: ${p.Likes}`" @click="like_post(p)">
+        <input class="replyButton" type="submit"
+          v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
           @click="router.push(`replies/post/${p.PID}`)">
       </div>
     </div>
@@ -237,7 +238,7 @@ async function voteForTeam(aid: number, team: 'team1' | 'team2') {
 .post {
   margin-top: 4.901960784313725490196078431373%;
   text-align: center;
-  background-color: #708090;
+  background-color: darkslateblue;
   border-radius: 25px;
   padding: 20px;
 }
@@ -272,5 +273,29 @@ async function voteForTeam(aid: number, team: 'team1' | 'team2') {
   height: 100%;
   background-color: black;
   position: absolute;
+}
+
+.likeButton {
+  background-color: navy;
+  border-color: navy;
+  color: white;
+}
+
+.likeButton:hover {
+  background-color: violet;
+  border-color: violet;
+}
+
+.replyButton {
+  position: relative;
+  left: 2%;
+  background-color: navy;
+  border-color: navy;
+  color: white;
+}
+
+.replyButton:hover {
+  background-color: violet;
+  border-color: violet;
 }
 </style>
