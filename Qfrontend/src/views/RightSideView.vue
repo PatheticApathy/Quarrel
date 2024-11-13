@@ -49,19 +49,19 @@ const clientId = Number(localStorage.getItem('QuarrelSessionID'));
         <div class="trendingSuggestions">What's Happening
             <div class="trending">
                 <div>Trending
-                    <div class="trendingObject">Sportsball</div>
+                    <div class="trendingObject">This</div>
                 </div>
                 <div>Trending
-                    <div class="trendingObject">Movies</div>
+                    <div class="trendingObject">Is</div>
                 </div>
                 <div>Trending
-                    <div class="trendingObject">Books</div>
+                    <div class="trendingObject">A</div>
                 </div>
                 <div>Trending
-                    <div class="trendingObject">Video Games</div>
+                    <div class="trendingObject">Scrapped</div>
                 </div>
                 <div>Trending
-                    <div class="trendingObject">Comics</div>
+                    <div class="trendingObject">Feature</div>
                 </div>
             </div>
         </div>
@@ -125,14 +125,13 @@ const clientId = Number(localStorage.getItem('QuarrelSessionID'));
 
 .search:focus {
     border: none;
-    background-color: mediumpurple;
     outline: none;
 }
 
 .searchButton {
-    position: relative;
-    top: -60% ;
-    left: 105%
+    position: absolute;
+    top: 0%;
+    left: 105%;
 }
 
 .trendingSuggestions {
@@ -173,7 +172,6 @@ const clientId = Number(localStorage.getItem('QuarrelSessionID'));
 }
 
 .follow {
-    padding-top: 8.571428571428571428571428571429%;
     font-size: 20px;
 }
 
