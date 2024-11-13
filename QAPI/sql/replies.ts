@@ -172,7 +172,7 @@ export function get_replies_count_for_args(AIDs: Array<{ AID: number }>, sql: Po
     JOIN Replies_to_args ra ON ra.reply = r.RID
     JOIN Arguments a ON ra.arg = a.AID
     WHERE a.AID IN (${query})
-    GROUP BY p.PID;
+    GROUP BY a.PID;
     `,
     array,
     (err, results: Array<{ AID: number, reply_count: number }> | undefined) => {

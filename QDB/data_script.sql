@@ -1,10 +1,10 @@
 -- Insert Users
-INSERT INTO User (Bio, Username, Password, Follow_count) VALUES
-('Alice Smith', 'alice123', 'password1', 10),
-('Bob Johnson', 'bobthebuilder', 'password2', 5),
-('Charlie Brown', 'charlie.b', 'password3', 15),
-('Diana Prince', 'wonderwoman', 'password4', 20),
-('Evan Harris', 'evan_h', 'password5', 8);
+INSERT INTO User (Bio, Username, Password, Follow_count, Following_count) VALUES
+('Alice Smith', 'alice123', 'password1', 10,0),
+('Bob Johnson', 'bobthebuilder', 'password2', 5,0),
+('Charlie Brown', 'charlie.b', 'password3', 15,0),
+('Diana Prince', 'wonderwoman', 'password4', 20,0),
+('Evan Harris', 'evan_h', 'password5', 8,0);
 
 -- Insert Followers
 INSERT INTO Follower (Follows, Influencer) VALUES
