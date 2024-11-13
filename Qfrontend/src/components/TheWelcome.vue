@@ -171,15 +171,19 @@ function calculateIndicatorStyle(t1Votes: number, t2Votes: number) {
     left: `${position}%`,
   };
 }
-async function voteForTeam(aid: number, team: 'team1' | 'team2') {
+async function voteForTeam(aid: number, team: 'T1' | 'T2') {
+  const user_vote = {
+    UID: get_id(),
+    AID: aid,
+    voteSide: team
+  };
   try {
-    const url = `http://localhost:8081/post/args/vote/${aid}`;
+    const url = `http://localhost:8081/vote/vote`;
     const resp = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ team })
+      body: JSON.stringify(user_vote)
     });
-
     if (!resp.ok) {
       const error: Api_Error = await resp.json();
       console.error(`Response status: ${resp.status} with error ${error.error}`);
@@ -216,8 +220,8 @@ async function voteForTeam(aid: number, team: 'team1' | 'team2') {
           <div class="indicator" :style="calculateIndicatorStyle(a.T1_votes, a.T2_votes)"></div>
         </div>
         <div class="vote-buttons">
-          <button @click="voteForTeam(a.AID, 'team1')">Vote for Team 1</button>
-          <button @click="voteForTeam(a.AID, 'team2')">Vote for Team 2</button>
+          <button @click="voteForTeam(a.AID, 'T1')">Vote for Team 1</button>
+          <button @click="voteForTeam(a.AID, 'T2')">Vote for Team 2</button>
         </div>
       </div>
     </div>
