@@ -192,11 +192,6 @@ function get_id() {
   width: 39.84375%;
 }
 
-.replyText {
-  background-color: mediumpurple;
-  border-color: mediumpurple;
-}
-
 .replyText:focus {
   outline: none;
   border-color: violet;
