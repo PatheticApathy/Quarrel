@@ -146,16 +146,6 @@ async function like_reply(reply: Replies) {
     console.error(`Error parsing json: ${err}`)
   }
 }
-
-
-function get_id() {
-  const client_id = localStorage.getItem('QuarrelSessionID');
-  if (!client_id) {
-    throw new Error("No session id found. Try logging in again");
-  } else {
-    return Number(client_id);
-  }
-}
 </script>
 
 
