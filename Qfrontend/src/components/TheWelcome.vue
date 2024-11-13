@@ -91,15 +91,19 @@ async function get_post_count() {
   }
 }
 
-async function voteForTeam(aid: number, team: 'team1' | 'team2') {
+async function voteForTeam(aid: number, team: 'T1' | 'T2') {
+  const user_vote = {
+    UID: get_id(),
+    AID: aid,
+    voteSide: team
+  };
   try {
-    const url = `http://localhost:8081/post/args/vote/${aid}`;
+    const url = `http://localhost:8081/vote/vote`;
     const resp = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ team })
+      body: JSON.stringify(user_vote)
     });
-
     if (!resp.ok) {
       const error: Api_Error = await resp.json();
       console.error(`Response status: ${resp.status} with error ${error.error}`);
@@ -206,21 +210,22 @@ function calculateIndicatorStyle(t1Votes: number, t2Votes: number) {
           <img class="postImg" v-bind:src=p.Hyperlink>
         </div>
         <div style="text-align: left;">
-          <input type="submit" v-bind:value="`Likes: ${p.Likes}`" @click="like_post(p)">
-          <input type="submit" v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
+          <input class="likeButton" type="submit" v-bind:value="`Likes: ${p.Likes}`" @click="like_post(p)">
+          <input class="replyButton" type="submit"
+            v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
             @click="router.push(`replies/post/${p.PID}`)">
         </div>
       </div>
       <div class="argument_container">
         <div v-for="a in args" :key="a.AID" class="argument">
           <h1>{{ a.Comment }} vs {{ a.Hyperlink }}</h1>
-          <input type="submit" value="Argue" @click="router.push(`replies/post/${a.AID}`)">
+          <input type="submit" value="Argue" @click="router.push(`replies/args/${a.AID}`)">
           <div class="arg-bar" :style="calculateRectangleStyle(a.T1_votes, a.T2_votes)">
             <div class="indicator" :style="calculateIndicatorStyle(a.T1_votes, a.T2_votes)"></div>
           </div>
           <div class="vote-buttons">
-            <button @click="voteForTeam(a.AID, 'team1')">Vote for Team 1</button>
-            <button @click="voteForTeam(a.AID, 'team2')">Vote for Team 2</button>
+            <button @click="voteForTeam(a.AID, 'T1')">Vote for Team 1</button>
+            <button @click="voteForTeam(a.AID, 'T2')">Vote for Team 2</button>
           </div>
         </div>
       </div>
