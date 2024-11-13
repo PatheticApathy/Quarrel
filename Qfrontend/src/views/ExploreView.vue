@@ -106,21 +106,25 @@ function go_to_home() {
         </div>
       </div>
       <div v-if="content_type === 'post'">
-        <textarea v-model="comment" id="comment" cols="100" rows="10" maxlength="280" placeholder="Insert Comment here"></textarea>
-        <label for="hyperlink">Link:</label>
-        <input id="hyperlink" v-model="hyperlink" type="text">
+        <div class="post_input">
+          <textarea v-model="comment" id="comment" cols="100" rows="10" maxlength="280" placeholder="Insert Comment here"></textarea>
+          <label for="hyperlink">Link:</label>
+          <input id="hyperlink" v-model="hyperlink" type="text">
+        </div>
       </div>
       <div v-else-if="content_type === 'args'">
-        <div>
-          <label for="team1Comment">Team 1:</label>
-          <input id="team1Comment" v-model="team1Comment" type="text" placeholder="Insert Team 1" />
-        </div>
-        <div>
-          <label for="team2Hyperlink">Team 2:</label>
-          <input id="team2Hyperlink" v-model="team2Hyperlink" type="text" placeholder="Insert Team 2" />
+        <div class="teams">
+          <div>
+            <label for="team1Comment">Team 1:</label>
+            <input id="team1Comment" v-model="team1Comment" type="text" placeholder="Insert Team 1" />
+          </div>
+          <div>
+            <label for="team2Hyperlink">Team 2:</label>
+            <input id="team2Hyperlink" v-model="team2Hyperlink" type="text" placeholder="Insert Team 2" />
+          </div>
         </div>
       </div>
-      <div>
+      <div class="submit_button">
         <input type="submit" @click="create_content" value="Submit">
       </div>
       <p v-if="error_message">{{ error_message }}</p>
@@ -128,4 +132,55 @@ function go_to_home() {
   </div>
 </template>
 
+<style>
 
+.post_input input{
+  border: 3px solid navy;
+  border-radius: 5px;
+}
+
+.post_input textarea{
+  border: 3px solid navy;
+  border-radius: 5px;
+}
+
+.teams input {
+  width: 60vw;
+  height: 50px;
+  border: 3px solid navy;
+  border-radius: 5px;
+}
+
+.submit_button input {
+  width: 500px;
+  height: 40px;
+  border: 0px solid navy;
+  background-color: navy;
+  color: white;
+  cursor: pointer;
+  border-radius: 0px;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  margin-top: 20px;
+  border-radius: 20px;
+}
+
+.submit_button input:hover {
+  background-color: violet;
+  animation: bubble 1s ease-out;
+}
+
+@keyframes bubble {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+</style>
