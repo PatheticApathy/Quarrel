@@ -124,6 +124,30 @@ async function create_replies_for_post(post_id: number) {
   }
 }
 
+async function like_reply(reply: Replies) {
+  console.log('Liked post');
+  try {
+    const resp = await fetch('http://localhost:8081/replies/like',
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ RID: reply.RID })
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+    } else {
+      reply.Likes++
+      console.log("Succesfully liked");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
+
+
 function get_id() {
   const client_id = localStorage.getItem('QuarrelSessionID');
   if (!client_id) {
@@ -148,7 +172,7 @@ function get_id() {
     <div v-for="r in replies" class="reply">
       <h1>{{ r.Comment }}</h1>
       <div style="text-align: left;">
-        Likes: {{ r.Likes }} Views: {{ r.Views }}
+        <input type="submit" v-bind:value="`Likes: ${r.Likes}`" @click="like_reply(r)">
       </div>
     </div>
   </div>
