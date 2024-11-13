@@ -136,13 +136,15 @@ export function unlike_reply(RID: number, sql: Pool, callback: (err: Error | und
 export function get_replies_count_for_posts(PIDs: Array<{ PID: number }>, sql: Pool, callback: (err: Error | undefined, replies: Array<{ PID: number, reply_count: number }> | undefined) => void) {
   const query = PIDs.map(() => '?').join(",");
   const array = PIDs.map((PID) => PID.PID);
+  console.log(query);
   sql.query(
     `
     SELECT p.PID, COUNT(r.RID) AS reply_count
     FROM Replies r
     JOIN Replies_to_post rp ON rp.reply = r.RID
     JOIN Post p ON rp.post = p.PID
-    WHERE p.PID IN (${query});
+    WHERE p.PID IN (${query})
+    GROUP BY p.PID;
     `,
     array,
     (err, results: Array<{ PID: number, reply_count: number }> | undefined) => {
@@ -169,7 +171,8 @@ export function get_replies_count_for_args(AIDs: Array<{ AID: number }>, sql: Po
     FROM Replies r
     JOIN Replies_to_args ra ON ra.reply = r.RID
     JOIN Arguments a ON ra.arg = a.AID
-    WHERE a.AID IN (${query});
+    WHERE a.AID IN (${query})
+    GROUP BY p.PID;
     `,
     array,
     (err, results: Array<{ AID: number, reply_count: number }> | undefined) => {
