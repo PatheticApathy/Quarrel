@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Navbar from './NavBarView.vue'
+import { routes } from 'vue-router/auto-routes';
 
 const router = useRoute();
 const replies = ref<Array<Replies>>([]);
@@ -120,10 +121,32 @@ async function create_replies_for_post(post_id: number) {
   }
 }
 
+async function like_reply(reply: Replies) {
+  console.log('Liked post');
+  try {
+    const resp = await fetch('http://localhost:8081/replies/like',
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ RID: reply.RID })
+      }
+    );
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with errror ${error.error}`);
+    } else {
+      reply.Likes++
+      console.log("Succesfully liked");
+    }
+  }
+  catch (err) {
+    console.error(`Error parsing json: ${err}`)
+  }
+}
 function get_id() {
   const client_id = localStorage.getItem('QuarrelSessionID');
   if (!client_id) {
-    throw new Error("No session id found. Try logging in again");
+    throw new Error("no session id found. try logging in again");
   } else {
     return Number(client_id);
   }
@@ -134,9 +157,9 @@ function get_id() {
   <div class="reply_container">
     <div>
       <h1 style="text-align: center;">Reply:</h1>
-      <textarea v-model="new_reply.Comment" cols="80" rows="5" maxlength="280"
+      <textarea class="replyText" v-model="new_reply.Comment" cols="80" rows="5" maxlength="280"
         placeholder="Insert Comment here"></textarea>
-      <div>
+      <div v-if="router.params.type == 'arg'">
         <label>
           <input type="radio" v-model="selectedTeam" :value="0" /> Team 1 (Blue)
         </label>
@@ -152,6 +175,9 @@ function get_id() {
      </div>
     <div v-for="r in replies" :key="r.RID" class="reply" :style="{ backgroundColor: r.Views === 0 ? '#1873DA' : '#DA3A18' }">
       <h1>{{ r.Comment }}</h1>
+      <div style="text-align: left;">
+        <input type="submit" v-bind:value="`Likes: ${r.Likes}`" @click="like_reply(r)">
+      </div>
     </div>
   </div>
   <Navbar />
@@ -161,14 +187,36 @@ function get_id() {
 .reply_container {
   position: absolute;
   top: 12.86008230452674897119341563786%;
-  left: 40.78125%;
+  left: 30%;
   height: 100%;
   width: 39.84375%;
+}
+
+.replyText {
+  background-color: mediumpurple;
+  border-color: mediumpurple;
+}
+
+.replyText:focus {
+  outline: none;
+  border-color: violet;
+}
+
+.replyInput {
+  background-color: navy;
+  border-color: navy;
+  color: white;
+}
+
+.replyInput:hover {
+  background-color: violet;
+  border-color: violet;
 }
 
 .reply {
   margin-top: 4.901960784313725490196078431373%;
   text-align: center;
+  background-color: darkslateblue;
   border-radius: 25px;
   padding: 20px;
 }
