@@ -56,7 +56,7 @@ async function get_args() {
     }
   }
   catch (err) {
-    console.error(`Error parsing json: ${err}`)
+    console.error(`Error parsing json: ${err}`);
   }
 }
 
@@ -87,7 +87,29 @@ async function get_post_count() {
     }
   }
   catch (err) {
-    console.error(`Error parsing json: ${err}`)
+    console.error(`Error parsing json: ${err}`);
+  }
+}
+
+async function voteForTeam(aid: number, team: 'team1' | 'team2') {
+  try {
+    const url = `http://localhost:8081/post/args/vote/${aid}`;
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ team })
+    });
+
+    if (!resp.ok) {
+      const error: Api_Error = await resp.json();
+      console.error(`Response status: ${resp.status} with error ${error.error}`);
+      home_error_message.value = error.error;
+    } else {
+      console.log(`Successfully voted for ${team} on argument ${aid}`);
+      get_args(); // Refresh arguments to reflect the new vote counts
+    }
+  } catch (err) {
+    console.error(`Error voting for ${team}: ${err}`);
   }
 }
 
@@ -272,5 +294,11 @@ async function voteForTeam(aid: number, team: 'team1' | 'team2') {
   height: 100%;
   background-color: black;
   position: absolute;
+}
+
+.vote-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 </style>
