@@ -215,7 +215,7 @@ async function voteForTeam(aid: number, team: 'T1' | 'T2') {
     <div class="argument_container">
       <div v-for="a in args" :key="a.AID" class="argument">
         <h1>{{ a.Comment }} vs {{ a.Hyperlink }}</h1>
-        <input type="submit" value="Argue" @click="router.push(`replies/post/${a.AID}`)">
+        <input type="submit" value="Argue" @click="router.push(`replies/arg/${a.AID}`)">
         <div class="arg-bar" :style="calculateRectangleStyle(a.T1_votes, a.T2_votes)">
           <div class="indicator" :style="calculateIndicatorStyle(a.T1_votes, a.T2_votes)"></div>
         </div>
