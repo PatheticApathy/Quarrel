@@ -23,12 +23,12 @@ const router = createRouter({
     {
       path: '/create',
       name: 'create',
-      component: () => import('../views/Create.vue')
+      component: () => import('../views/ExploreView.vue')
     },
     {
       path: '/explore',
       name: 'explore',
-      component: () => import('../views/ExploreView.vue')
+      component: () => import('../views/MessagesView.vue')
     },
     {
       path: '/messages',

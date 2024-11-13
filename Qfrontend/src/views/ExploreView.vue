@@ -86,7 +86,7 @@ async function create_content() {
   }
 }
 function go_to_home() {
-  router.push('/home') // Navigate to home page after content creation
+  router.push('/home')
 }
 </script>
 
@@ -113,11 +113,11 @@ function go_to_home() {
       <div v-else-if="content_type === 'args'">
         <div>
           <label for="team1Comment">Team 1:</label>
-          <input id="team1Comment" v-model="team1Comment" type="text" placeholder="Insert Team 1 Comment" />
+          <input id="team1Comment" v-model="team1Comment" type="text" placeholder="Insert Team 1" />
         </div>
         <div>
           <label for="team2Hyperlink">Team 2:</label>
-          <input id="team2Hyperlink" v-model="team2Hyperlink" type="text" placeholder="Insert Team 2 Hyperlink" />
+          <input id="team2Hyperlink" v-model="team2Hyperlink" type="text" placeholder="Insert Team 2" />
         </div>
       </div>
       <div>
@@ -128,7 +128,4 @@ function go_to_home() {
   </div>
 </template>
 
-<style>
-/* Add any additional styling if needed */
-</style>
 

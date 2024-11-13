@@ -193,53 +193,35 @@ function calculateIndicatorStyle(t1Votes: number, t2Votes: number) {
     left: `${position}%`,
   };
 }
-async function voteForTeam(aid: number, team: 'team1' | 'team2') {
-  try {
-    const url = `http://localhost:8081/post/args/vote/${aid}`;
-    const resp = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ team })
-    });
 
-    if (!resp.ok) {
-      const error: Api_Error = await resp.json();
-      console.error(`Response status: ${resp.status} with error ${error.error}`);
-      home_error_message.value = error.error;
-    } else {
-      console.log(`Successfully voted for ${team} on argument ${aid}`);
-      get_args(); // Refresh arguments to reflect the new vote counts
-    }
-  } catch (err) {
-    console.error(`Error voting for ${team}: ${err}`);
-  }
-}
 </script>
 
 <template>
-  <div class="post_container">
-    <div v-for="p in posts" class="post">
-      <h1>{{ p.Comment }}</h1>
-      <div v-if="!p.Hyperlink"></div>
-      <div v-else>
-        <img class="postImg" v-bind:src=p.Hyperlink>
-      </div>
-      <div style="text-align: left;">
-        <input type="submit" v-bind:value="`Likes: ${p.Likes}`" @click="like_post(p)">
-        <input type="submit" v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
-          @click="router.push(`replies/post/${p.PID}`)">
-      </div>
-    </div>
-    <div class="argument_container">
-      <div v-for="a in args" :key="a.AID" class="argument">
-        <h1>{{ a.Comment }} vs {{ a.Hyperlink }}</h1>
-        <input type="submit" value="Argue" @click="router.push(`replies/post/${a.AID}`)">
-        <div class="arg-bar" :style="calculateRectangleStyle(a.T1_votes, a.T2_votes)">
-          <div class="indicator" :style="calculateIndicatorStyle(a.T1_votes, a.T2_votes)"></div>
+  <div class="feed">
+    <div class="post_container">
+      <div v-for="p in posts" class="post">
+        <h1>{{ p.Comment }}</h1>
+        <div v-if="!p.Hyperlink"></div>
+        <div v-else>
+          <img class="postImg" v-bind:src=p.Hyperlink>
         </div>
-        <div class="vote-buttons">
-          <button @click="voteForTeam(a.AID, 'team1')">Vote for Team 1</button>
-          <button @click="voteForTeam(a.AID, 'team2')">Vote for Team 2</button>
+        <div style="text-align: left;">
+          <input type="submit" v-bind:value="`Likes: ${p.Likes}`" @click="like_post(p)">
+          <input type="submit" v-bind:value="`Replies: ${post_reply_count.has(p.PID) ? post_reply_count.get(p.PID) : 0}`"
+            @click="router.push(`replies/post/${p.PID}`)">
+        </div>
+      </div>
+      <div class="argument_container">
+        <div v-for="a in args" :key="a.AID" class="argument">
+          <h1>{{ a.Comment }} vs {{ a.Hyperlink }}</h1>
+          <input type="submit" value="Argue" @click="router.push(`replies/post/${a.AID}`)">
+          <div class="arg-bar" :style="calculateRectangleStyle(a.T1_votes, a.T2_votes)">
+            <div class="indicator" :style="calculateIndicatorStyle(a.T1_votes, a.T2_votes)"></div>
+          </div>
+          <div class="vote-buttons">
+            <button @click="voteForTeam(a.AID, 'team1')">Vote for Team 1</button>
+            <button @click="voteForTeam(a.AID, 'team2')">Vote for Team 2</button>
+          </div>
         </div>
       </div>
     </div>
@@ -262,6 +244,7 @@ async function voteForTeam(aid: number, team: 'team1' | 'team2') {
   background-color: #708090;
   border-radius: 25px;
   padding: 20px;
+
 }
 
 .argument {
@@ -290,7 +273,7 @@ async function voteForTeam(aid: number, team: 'team1' | 'team2') {
 }
 
 .indicator {
-  width: 2px;
+  width: 4px;
   height: 100%;
   background-color: black;
   position: absolute;

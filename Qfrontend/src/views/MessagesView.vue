@@ -4,7 +4,7 @@ import Navbar from './NavBarView.vue'
 
 <template>
     <div class="messages">
-      <h1>This is a messages page</h1>
+      <h1>Coming Soon!</h1>
     </div>
     <Navbar />
 </template>
