@@ -49,19 +49,19 @@ const clientId = Number(localStorage.getItem('QuarrelSessionID'));
         <div class="trendingSuggestions">What's Happening
             <div class="trending">
                 <div>Trending
-                    <div class="trendingObject">This</div>
+                    <div class="trendingObject">Movies</div>
                 </div>
                 <div>Trending
-                    <div class="trendingObject">Is</div>
+                    <div class="trendingObject">Sports</div>
                 </div>
                 <div>Trending
-                    <div class="trendingObject">A</div>
+                    <div class="trendingObject">Games</div>
                 </div>
                 <div>Trending
-                    <div class="trendingObject">Scrapped</div>
+                    <div class="trendingObject">Music</div>
                 </div>
                 <div>Trending
-                    <div class="trendingObject">Feature</div>
+                    <div class="trendingObject">Trends</div>
                 </div>
             </div>
         </div>

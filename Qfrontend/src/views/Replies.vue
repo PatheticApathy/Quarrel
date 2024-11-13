@@ -167,12 +167,13 @@ function get_id() {
           <input type="radio" v-model="selectedTeam" :value="1" /> Team 2 (Red)
         </label>
       </div>
+      <div class="submit-reply">
       <input
         @click="(router.params.type == 'post') ? create_replies_for_post(Number(router.params.id)) : create_replies_for_arg(Number(router.params.id))"
-        type="submit" name="Submit reply" v-bind:value="`Reply`" class="replyInput">
-    </div>
-    <div v-for="r in replies" :key="r.RID" class="reply"
-      :style="{ backgroundColor: r.Views === 0 ? '#1873DA' : '#DA3A18' }">
+        type="submit" name="Submit reply">
+      </div>
+     </div>
+    <div v-for="r in replies" :key="r.RID" class="reply" :style="{ backgroundColor: r.Views === 0 ? '#1873DA' : '#DA3A18' }">
       <h1>{{ r.Comment }}</h1>
       <div style="text-align: left;">
         <input type="submit" v-bind:value="`Likes: ${r.Likes}`" @click="like_reply(r)">
@@ -189,11 +190,6 @@ function get_id() {
   left: 30%;
   height: 100%;
   width: 39.84375%;
-}
-
-.replyText {
-  background-color: mediumpurple;
-  border-color: mediumpurple;
 }
 
 .replyText:focus {
@@ -218,5 +214,38 @@ function get_id() {
   background-color: darkslateblue;
   border-radius: 25px;
   padding: 20px;
+}
+
+.submit-reply input {
+  width: 500px;
+  height: 40px;
+  border: 0px solid navy;
+  background-color: navy;
+  color: white;
+  cursor: pointer;
+  border-radius: 0px;
+  font-family: 'Verdana', 'sans-serif';
+  font-weight: 900;
+  margin-top: 20px;
+  border-radius: 20px;
+}
+
+.submit-reply input:hover {
+  background-color: violet;
+  animation: bubble 1s ease-out;
+}
+
+@keyframes bubble {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

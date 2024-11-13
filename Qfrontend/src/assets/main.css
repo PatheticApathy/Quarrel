@@ -63,4 +63,15 @@ transform: scale(1);
 }
 }
 
+input{
+  border: 3px solid navy;
+  border-radius: 5px;
+}
+
+textarea{
+  border: 3px solid navy;
+  border-radius: 5px;
+}
+
+
 }
