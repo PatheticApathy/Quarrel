@@ -23,12 +23,12 @@ const router = createRouter({
     {
       path: '/create',
       name: 'create',
-      component: () => import('../views/Create.vue')
+      component: () => import('../views/ExploreView.vue')
     },
     {
       path: '/explore',
       name: 'explore',
-      component: () => import('../views/ExploreView.vue')
+      component: () => import('../views/MessagesView.vue')
     },
     {
       path: '/messages',
@@ -51,12 +51,12 @@ const router = createRouter({
       component: () => import('../views/EditProfileView.vue')
     },
     {
-      path: '/followers',
+      path: '/followers/:id',
       name: 'followers',
       component: () => import('../views/FollowersView.vue')
     },
     {
-      path: '/following',
+      path: '/following/:id',
       name: 'following',
       component: () => import('../views/FollowingView.vue')
     },
