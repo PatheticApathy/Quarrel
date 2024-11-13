@@ -134,7 +134,12 @@ async function is_following() {
       <div class="background-container">
         <img class="background-image" src="../assets/background-image.jpg" alt="Background Image">
         <div class="profile-pic">
-          <img v-bind:src="profile.Profile_pic" alt="Profile Picture">
+          <span v-if="!profile.Profile_pic">
+          <img class="userImg" src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg">
+          </span>
+          <span v-else>
+          <img class="userImg" v-bind:src=profile.Profile_pic>
+          </span>
         </div>
       </div>
       <div class="user-info">
